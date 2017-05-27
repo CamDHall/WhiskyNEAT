@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum Phase { Idle, Moving, Attacking};
+public enum Phase { Idle, Moving, Attacking};
 public class Movement : MonoBehaviour {
 
-    Phase characterPhase;
+    public static Phase characterPhase;
 
     public GameObject indicator;
 
@@ -24,14 +24,15 @@ public class Movement : MonoBehaviour {
 	void Update () {
         if(characterPhase == Phase.Moving)
         {
-            Move();
+            if (Input.GetMouseButtonDown(0)){
+                Move();
+            }
         } else if(characterPhase == Phase.Attacking)
         {
             foreach(GameObject tile in reachableTiles)
             {
                 tile.GetComponent<Renderer>().material.color = Color.white;
             }
-            Attack();
         }
         if(Input.GetMouseButtonDown(0) && characterPhase == Phase.Idle)
         {
@@ -64,44 +65,21 @@ public class Movement : MonoBehaviour {
 
     void Move()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit))
+        if(Physics.Raycast(ray, out hit))
+        {
+            foreach(GameObject tile in reachableTiles)
             {
-                foreach(GameObject tile in reachableTiles)
+                if(tile.transform.position == hit.transform.position)
                 {
-                    if(tile.transform.position == hit.transform.position)
-                    {
-                        characterPhase = Phase.Attacking;
-                        transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
-                        break;
-                    }
+                    characterPhase = Phase.Attacking;
+                    transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+                    break;
+
                 }
             }
-        }
-    }
-
-    void Attack()
-    {
-        foreach(GameObject enemy in mapData.enemies)
-        {
-            if (enemy.transform.position.y == 1)
-                mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z);
-            else if (enemy.transform.position.y == 1.25f)
-                mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.25f;
-            else if (enemy.transform.position.y == 1.5f)
-                mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.5f;
-
-            if (mapData.enenmyInfo[enemy.transform.position] <= range)
-            {
-                Vector3 Pos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity);
-                Debug.Log(mapData.enenmyInfo[enemy.transform.position]);
-            }
-            characterPhase = Phase.Idle;
         }
     }
 }
