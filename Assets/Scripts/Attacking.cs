@@ -10,9 +10,9 @@ public class Attacking : MonoBehaviour
     bool targetsListed; // Only call determine once
     bool characterSelected; // Must select characte before attacking
 
-    List<GameObject> _enemiesInRange;
+    List<GameObject> _enemiesInRange, _charactersInRange;
 
-    GameObject currentEnemy;
+    GameObject currentEnemy, currentCharacter;
 
     // Inspector
     public GameObject indicator;
@@ -23,7 +23,9 @@ public class Attacking : MonoBehaviour
         targetsListed = false;
         characterSelected = false;
         mapData = map.GetComponent<MapData>();
+
         _enemiesInRange = new List<GameObject>();
+        _charactersInRange = new List<GameObject>();
     }
 
     void Update()
@@ -55,11 +57,22 @@ public class Attacking : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+                // Enemy
                 foreach (GameObject enemy in _enemiesInRange)
                 {
                     if (hit.transform.position == enemy.transform.position)
                     {
                         currentEnemy = hit.transform.gameObject;
+                        Damage();
+                    }
+                }
+
+                // Character
+                foreach(GameObject character in _charactersInRange)
+                {
+                    if(hit.transform.position == character.transform.position)
+                    {
+                        currentCharacter = hit.transform.gameObject;
                         Damage();
                     }
                 }
@@ -69,26 +82,55 @@ public class Attacking : MonoBehaviour
 
     void Damage()
     {
-        currentEnemy.GetComponent<BaseCharacter>().health--;
+        if (gameObject.tag == "Character")
+        {
+            currentEnemy.GetComponent<BaseCharacter>().health--;
+        } else
+        {
+            currentCharacter.GetComponent<BaseCharacter>().health--;
+        }
     }
 
     void DetermineTargets()
     {
         targetsListed = true;
-        foreach (GameObject enemy in mapData.enemies)
-        {
-            if (enemy.transform.position.y == 1)
-                mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z);
-            else if (enemy.transform.position.y == 1.25f)
-                mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.25f;
-            else if (enemy.transform.position.y == 1.5f)
-                mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.5f;
 
-            if (mapData.enenmyInfo[enemy.transform.position] <= range)
+        // Check if this is a character or enemy
+        if (gameObject.tag == "Character")
+        {
+            foreach (GameObject enemy in mapData.enemies)
             {
-                _enemiesInRange.Add(enemy);
-                Vector3 Pos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity, enemy.transform);
+                if (enemy.transform.position.y == 1)
+                    mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z);
+                else if (enemy.transform.position.y == 1.25f)
+                    mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.25f;
+                else if (enemy.transform.position.y == 1.5f)
+                    mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.5f;
+
+                if (mapData.enenmyInfo[enemy.transform.position] <= range)
+                {
+                    _enemiesInRange.Add(enemy);
+                    Vector3 Pos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
+                    Instantiate(indicator, Pos, Quaternion.identity, enemy.transform);
+                }
+            }
+        } else
+        {
+            foreach(GameObject character in mapData.characters)
+            {
+                if (character.transform.position.y == 1.0f)
+                    mapData.characterInfo[character.transform.position] = Mathf.Abs(character.transform.position.x - transform.position.x) + Mathf.Abs(character.transform.position.z - transform.position.z);
+                else if (character.transform.position.y == 1.25f)
+                    mapData.characterInfo[character.transform.position] = Mathf.Abs(character.transform.position.x - transform.position.x) + Mathf.Abs(character.transform.position.z - transform.position.z) + 0.25f;
+                else if (character.transform.position.y == 1.5f)
+                    mapData.characterInfo[character.transform.position] = Mathf.Abs(character.transform.position.x - transform.position.x) + Mathf.Abs(character.transform.position.z - transform.position.z) + 0.5f;
+
+                if(mapData.characterInfo[character.transform.position] <= range)
+                {
+                    _charactersInRange.Add(character);
+                    Vector3 Pos = new Vector3(character.transform.position.x, character.transform.position.y + 1, character.transform.position.z);
+                    Instantiate(indicator, Pos, Quaternion.identity, character.transform);
+                }
             }
         }
     }
