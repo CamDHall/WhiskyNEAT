@@ -12,6 +12,8 @@ public class Attacking : MonoBehaviour
 
     List<GameObject> _enemiesInRange;
 
+    GameObject currentEnemy;
+
     // Inspector
     public GameObject indicator;
     public GameObject map;
@@ -57,6 +59,7 @@ public class Attacking : MonoBehaviour
                 {
                     if (hit.transform.position == enemy.transform.position)
                     {
+                        currentEnemy = hit.transform.gameObject;
                         Damage();
                     }
                 }
@@ -66,7 +69,7 @@ public class Attacking : MonoBehaviour
 
     void Damage()
     {
-
+        currentEnemy.GetComponent<BaseCharacter>().health--;
     }
 
     void DetermineTargets()
@@ -85,7 +88,7 @@ public class Attacking : MonoBehaviour
             {
                 _enemiesInRange.Add(enemy);
                 Vector3 Pos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity);
+                Instantiate(indicator, Pos, Quaternion.identity, enemy.transform);
             }
         }
     }
