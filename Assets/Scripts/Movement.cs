@@ -7,8 +7,6 @@ public class Movement : MonoBehaviour {
 
     public static Phase characterPhase;
 
-    public GameObject indicator;
-
     MapData mapData;
     public GameObject Map;
     public List<GameObject> reachableTiles, inRange;

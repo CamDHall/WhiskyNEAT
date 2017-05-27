@@ -2,37 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attacking : MonoBehaviour {
+public class Attacking : MonoBehaviour
+{
 
     MapData mapData;
     int range = 1;
-    List<GameObject> _enemiesInRange;
     bool targetsListed; // Only call determine once
     bool characterSelected; // Must select characte before attacking
+
+    List<GameObject> _enemiesInRange;
 
     // Inspector
     public GameObject indicator;
     public GameObject map;
 
-	void Start () {
+    void Start()
+    {
         targetsListed = false;
         characterSelected = false;
-        _enemiesInRange = new List<GameObject>();
         mapData = map.GetComponent<MapData>();
-	}
-	
-	void Update () {
+        _enemiesInRange = new List<GameObject>();
+    }
+
+    void Update()
+    {
         // Selecting character to perform attack
-        if(Movement.characterPhase == Phase.Attacking && !characterSelected)
+        if (Movement.characterPhase == Phase.Attacking && !characterSelected)
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if(Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if(hit.transform.position == transform.position)
+                    if (hit.transform.position == transform.position)
                     {
                         DetermineTargets();
                         characterSelected = true;
@@ -42,23 +46,28 @@ public class Attacking : MonoBehaviour {
         }
 
         // Selecting target to be attacked
-        if(characterSelected && Input.GetMouseButtonDown(0))
+        if (characterSelected && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit))
             {
-                foreach(GameObject enemy in _enemiesInRange)
+                foreach (GameObject enemy in _enemiesInRange)
                 {
-                    if(hit.transform.position == enemy.transform.position)
+                    if (hit.transform.position == enemy.transform.position)
                     {
-                        Debug.Log("Attack");
+                        Damage();
                     }
                 }
             }
         }
-	}
+    }
+
+    void Damage()
+    {
+
+    }
 
     void DetermineTargets()
     {
