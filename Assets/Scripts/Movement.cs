@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour {
     int moves = 2, range = 1;
 
 	void Start () {
+        GetComponent<Attacking>().enabled = false;
         characterPhase = Phase.Idle;
         mapData = Map.GetComponent<MapData>();
         reachableTiles = new List<GameObject>();
@@ -25,12 +26,16 @@ public class Movement : MonoBehaviour {
             if (Input.GetMouseButtonDown(0)){
                 Move();
             }
-        } else if(characterPhase == Phase.Attacking)
+        }
+
+        if (characterPhase == Phase.Attacking)
         {
             foreach(GameObject tile in reachableTiles)
             {
                 tile.GetComponent<Renderer>().material.color = Color.white;
             }
+
+            GetComponent<Attacking>().enabled = true;
         }
         if(Input.GetMouseButtonDown(0) && characterPhase == Phase.Idle)
         {
