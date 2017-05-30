@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
+
+    // Objects
+    Attacking attacking;
     MapData mapData;
     public GameObject Map;
+
     public List<GameObject> reachableTiles, inRange;
     public int moves;
-    int startingMoves, range = 1;
+    public int startingMoves, range = 1;
+
+    public bool moveAdded = false;
 
 	void Start () {
+        attacking = GetComponent<Attacking>();
         PhaseManager.characterPhase = Phase.Moving;
         mapData = Map.GetComponent<MapData>();
         reachableTiles = new List<GameObject>();
@@ -21,15 +28,19 @@ public class Movement : MonoBehaviour {
 	void Update () {
         if(PhaseManager.characterPhase == Phase.Moving)
         {
-            if (moves > 1)
+            attacking.numOfAttacks = attacking.startingNumAttacks;
+            attacking.attackAdded = false;
+            attacking.targetsListed = false;
+
+            if (moves >= 1)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
                     Move();
                 }
-            } else
+            } else if(!moveAdded)
             {
-                PhaseManager.numMoved++;
+                AddMovement();
             }
         }
 
@@ -83,5 +94,11 @@ public class Movement : MonoBehaviour {
                 }
             }
         }
+    }
+
+    void AddMovement()
+    {
+        moveAdded = true;
+        PhaseManager.numMoved++;
     }
 }

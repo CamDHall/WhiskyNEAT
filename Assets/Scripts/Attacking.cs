@@ -6,14 +6,20 @@ public class Attacking : MonoBehaviour
 {
     MapData mapData;
     int range = 1;
-    bool targetsListed; // Only call determine once
+    public bool targetsListed; // Only call determine once
     bool characterSelected; // Must select characte before attacking
+
+    public bool attackAdded = false;
+
+    Movement movement;
 
     // Set with character stats
     float attackStrength = 1;
-    int numOfAttacks = 1;
+    public int numOfAttacks = 1;
 
-    List<GameObject> _enemiesInRange, _charactersInRange;
+    public int startingNumAttacks;
+
+    [SerializeField] List<GameObject> _enemiesInRange, _charactersInRange;
 
     GameObject currentEnemy, currentCharacter;
 
@@ -23,6 +29,9 @@ public class Attacking : MonoBehaviour
 
     void Start()
     {
+        startingNumAttacks = numOfAttacks;
+        movement = GetComponent<Movement>();
+
         targetsListed = false;
         characterSelected = false;
         mapData = map.GetComponent<MapData>();
@@ -35,19 +44,42 @@ public class Attacking : MonoBehaviour
     {
         if(numOfAttacks == 0)
         {
-            GameObject[] indicators = GameObject.FindGameObjectsWithTag("Overlay");
-
-            foreach(GameObject indicator in indicators)
+            if (!attackAdded)
             {
-                Destroy(indicator);
+                AddAttack();
             }
-
-            PhaseManager.numAttacked++;
         }
+
+        if(PhaseManager.characterPhase == Phase.Attacking)
+        {
+            movement.moves = movement.startingMoves;
+            movement.moveAdded = false;
+        }
+
 
         // Selecting character to perform attack
         if (PhaseManager.characterPhase == Phase.Attacking && !characterSelected)
         {
+            if (!targetsListed)
+            {
+                Debug.Log(gameObject.name);
+                DetermineTargets();
+            }
+            // Check if anything is in range
+            if (gameObject.tag == "Character")
+            {
+                if (_enemiesInRange.Count == 0)
+                {
+                    numOfAttacks = 0;
+                }
+            }
+
+            if (gameObject.tag == "Enemy")
+            {
+                if (_charactersInRange.Count == 0)
+                    numOfAttacks = 0;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -57,14 +89,14 @@ public class Attacking : MonoBehaviour
                 {
                     if (hit.transform.position == transform.position)
                     {
-                        DetermineTargets();
                         characterSelected = true;
+                        SelectTarget();
                     }
                 }
             }
         }
 
-        if (PhaseManager.characterPhase == Phase.Attacking)
+        if (PhaseManager.characterPhase == Phase.Attacking && numOfAttacks > 0)
         {
             // Selecting target to be attacked
             if (characterSelected && Input.GetMouseButtonDown(0))
@@ -100,12 +132,22 @@ public class Attacking : MonoBehaviour
 
     void Damage()
     {
+        characterSelected = false;
+
         if (gameObject.tag == "Character")
         {
             currentEnemy.GetComponent<BaseCharacter>().health -= attackStrength;
+            foreach(GameObject enemy in _enemiesInRange)
+            {
+                Destroy(enemy.transform.GetChild(0).gameObject);
+            }
         } else
         {
             currentCharacter.GetComponent<BaseCharacter>().health -= attackStrength;
+            foreach(GameObject character in _charactersInRange)
+            {
+                Destroy(character.transform.GetChild(0).gameObject);
+            }
         }
 
         numOfAttacks--;
@@ -130,8 +172,6 @@ public class Attacking : MonoBehaviour
                 if (mapData.enenmyInfo[enemy.transform.position] <= range)
                 {
                     _enemiesInRange.Add(enemy);
-                    Vector3 Pos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
-                    Instantiate(indicator, Pos, Quaternion.identity, enemy.transform);
                 }
             }
         } else
@@ -148,10 +188,35 @@ public class Attacking : MonoBehaviour
                 if(mapData.characterInfo[character.transform.position] <= range)
                 {
                     _charactersInRange.Add(character);
-                    Vector3 Pos = new Vector3(character.transform.position.x, character.transform.position.y + 1, character.transform.position.z);
-                    Instantiate(indicator, Pos, Quaternion.identity, character.transform);
                 }
             }
         }
+    }
+
+    void SelectTarget()
+    {
+        if(gameObject.tag == "Character")
+        {
+            foreach(GameObject target in _enemiesInRange)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
+                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
+            }
+        }
+
+        if (gameObject.tag == "Enemy")
+        {
+            foreach (GameObject target in _charactersInRange)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
+                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
+            }
+        }
+    }
+
+    void AddAttack()
+    {
+        attackAdded = true;
+        PhaseManager.numAttacked++;
     }
 }
