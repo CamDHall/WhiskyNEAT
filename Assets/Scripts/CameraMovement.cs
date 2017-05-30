@@ -13,7 +13,8 @@ public class CameraMovement : MonoBehaviour {
 	
 	}
 	
-	void Update () {
+	void FixedUpdate()
+    {
         // transform.LookAt(center);
 
         if (Input.mousePosition.x > Screen.width * 0.95f)
@@ -22,18 +23,18 @@ public class CameraMovement : MonoBehaviour {
             transform.Translate(Vector3.right * (Time.deltaTime * cameraSpeed));
         }
 
-        if(Input.mousePosition.x < Screen.width * 0.05f)
+        if (Input.mousePosition.x < Screen.width * 0.05f)
         {
             transform.LookAt(center);
             transform.Translate(Vector3.left * (Time.deltaTime * cameraSpeed));
         }
-        
-        if(Input.GetKey(KeyCode.W))
+
+        if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * Time.deltaTime * cameraSpeed);
         }
 
-        if(Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.back * Time.deltaTime * cameraSpeed);
         }

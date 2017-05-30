@@ -89,6 +89,8 @@ public class Attacking : MonoBehaviour
         {
             currentCharacter.GetComponent<BaseCharacter>().health--;
         }
+
+        Movement.characterPhase = Phase.Idle;
     }
 
     void DetermineTargets()
