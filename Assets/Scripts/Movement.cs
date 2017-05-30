@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Phase { Idle, Moving, Attacking};
 public class Movement : MonoBehaviour {
-
-    public static Phase characterPhase;
 
     MapData mapData;
     public GameObject Map;
@@ -14,8 +11,7 @@ public class Movement : MonoBehaviour {
     int startingMoves, range = 1;
 
 	void Start () {
-        GetComponent<Attacking>().enabled = false;
-        characterPhase = Phase.Moving;
+        PhaseManager.characterPhase = Phase.Moving;
         mapData = Map.GetComponent<MapData>();
         reachableTiles = new List<GameObject>();
         inRange = new List<GameObject>();
@@ -23,9 +19,9 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(characterPhase == Phase.Moving)
+        if(PhaseManager.characterPhase == Phase.Moving)
         {
-            if (moves > 0)
+            if (moves > 1)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -33,11 +29,11 @@ public class Movement : MonoBehaviour {
                 }
             } else
             {
-                characterPhase = Phase.Attacking;
+                PhaseManager.numMoved++;
             }
         }
 
-        if (characterPhase == Phase.Attacking)
+        if (PhaseManager.characterPhase == Phase.Attacking)
         {
             GetComponent<Attacking>().enabled = true;
         }
@@ -66,7 +62,6 @@ public class Movement : MonoBehaviour {
                         reachableTiles.Add(tile);
                         tile.GetComponent<Renderer>().material.color = Color.black;
                     }
-                    characterPhase = Phase.Moving;
                 }
             }
 
@@ -74,10 +69,9 @@ public class Movement : MonoBehaviour {
             {
                 foreach (GameObject tile in reachableTiles)
                 {
-                    if (tile.transform.position == hit.transform.position)
+                    if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
                     {
-                        moves -= (int)Vector3.Distance(tile.transform.position, transform.position);
-
+                        moves -= (int)mapData.tileInfo[hit.transform.position];
                         transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                         // Reset tile colors
                         foreach (GameObject oldTile in reachableTiles)

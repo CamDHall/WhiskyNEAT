@@ -9,7 +9,8 @@ public class RoundManager : MonoBehaviour {
     public static Turns whosTurn;
     MapData mapData;
     public GameObject map;
-	void Start () {
+
+    void Start () {
         whosTurn = Turns.Friendly;
         mapData = map.GetComponent<MapData>();
 	}
@@ -43,7 +44,7 @@ public class RoundManager : MonoBehaviour {
 
     void SetupFriends()
     {
-        foreach(GameObject friend in mapData.characters)
+        foreach (GameObject friend in mapData.characters)
         {
             friend.GetComponent<Movement>().enabled = true;
             friend.GetComponent<Attacking>().enabled = true;

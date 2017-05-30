@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Attacking : MonoBehaviour
 {
-
     MapData mapData;
     int range = 1;
     bool targetsListed; // Only call determine once
     bool characterSelected; // Must select characte before attacking
+
+    // Set with character stats
+    float attackStrength = 1;
+    int numOfAttacks = 1;
 
     List<GameObject> _enemiesInRange, _charactersInRange;
 
@@ -30,8 +33,20 @@ public class Attacking : MonoBehaviour
 
     void Update()
     {
+        if(numOfAttacks == 0)
+        {
+            GameObject[] indicators = GameObject.FindGameObjectsWithTag("Overlay");
+
+            foreach(GameObject indicator in indicators)
+            {
+                Destroy(indicator);
+            }
+
+            PhaseManager.numAttacked++;
+        }
+
         // Selecting character to perform attack
-        if (Movement.characterPhase == Phase.Attacking && !characterSelected)
+        if (PhaseManager.characterPhase == Phase.Attacking && !characterSelected)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -49,31 +64,34 @@ public class Attacking : MonoBehaviour
             }
         }
 
-        // Selecting target to be attacked
-        if (characterSelected && Input.GetMouseButtonDown(0))
+        if (PhaseManager.characterPhase == Phase.Attacking)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            // Selecting target to be attacked
+            if (characterSelected && Input.GetMouseButtonDown(0))
             {
-                // Enemy
-                foreach (GameObject enemy in _enemiesInRange)
-                {
-                    if (hit.transform.position == enemy.transform.position)
-                    {
-                        currentEnemy = hit.transform.gameObject;
-                        Damage();
-                    }
-                }
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-                // Character
-                foreach(GameObject character in _charactersInRange)
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if(hit.transform.position == character.transform.position)
+                    // Enemy
+                    foreach (GameObject enemy in _enemiesInRange)
                     {
-                        currentCharacter = hit.transform.gameObject;
-                        Damage();
+                        if (hit.transform.position == enemy.transform.position)
+                        {
+                            currentEnemy = hit.transform.gameObject;
+                            Damage();
+                        }
+                    }
+
+                    // Character
+                    foreach (GameObject character in _charactersInRange)
+                    {
+                        if (hit.transform.position == character.transform.position)
+                        {
+                            currentCharacter = hit.transform.gameObject;
+                            Damage();
+                        }
                     }
                 }
             }
@@ -84,13 +102,13 @@ public class Attacking : MonoBehaviour
     {
         if (gameObject.tag == "Character")
         {
-            currentEnemy.GetComponent<BaseCharacter>().health--;
+            currentEnemy.GetComponent<BaseCharacter>().health -= attackStrength;
         } else
         {
-            currentCharacter.GetComponent<BaseCharacter>().health--;
+            currentCharacter.GetComponent<BaseCharacter>().health -= attackStrength;
         }
 
-        Movement.characterPhase = Phase.Idle;
+        numOfAttacks--;
     }
 
     void DetermineTargets()

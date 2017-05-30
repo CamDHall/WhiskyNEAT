@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour {
 
-    public int health = 3;
+    public float health = 3;
 
-	void Start () {
+    void Start () {
 		
 	}
 	
