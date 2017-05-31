@@ -62,7 +62,6 @@ public class Attacking : MonoBehaviour
         {
             if (!targetsListed)
             {
-                Debug.Log(gameObject.name);
                 DetermineTargets();
             }
             // Check if anything is in range
@@ -156,6 +155,10 @@ public class Attacking : MonoBehaviour
     void DetermineTargets()
     {
         targetsListed = true;
+
+
+        _charactersInRange.Clear();
+        _enemiesInRange.Clear();
 
         // Check if this is a character or enemy
         if (gameObject.tag == "Character")

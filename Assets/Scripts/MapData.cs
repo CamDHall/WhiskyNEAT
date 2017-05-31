@@ -9,17 +9,25 @@ public class MapData : MonoBehaviour {
     public Dictionary<Vector3, float> characterInfo;
 
     public GameObject[] tiles;
-    public GameObject[] enemies;
-    public GameObject[] characters;
+    public List<GameObject> enemies;
+    public List<GameObject> characters;
 
 	void Start () {
         tiles = GameObject.FindGameObjectsWithTag("Tile");
         tileInfo = new Dictionary<Vector3, float>();
 
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemies.Add(enemy);
+        }
+
         enenmyInfo = new Dictionary<Vector3, float>();
 
-        characters = GameObject.FindGameObjectsWithTag("Character");
+        foreach(GameObject friend in GameObject.FindGameObjectsWithTag("Character"))
+        {
+            characters.Add(friend);
+        }
+
         characterInfo = new Dictionary<Vector3, float>();
 
         // Enemy

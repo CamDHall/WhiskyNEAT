@@ -7,7 +7,7 @@ public enum Phase { Idle, Moving, Attacking };
 public class PhaseManager : MonoBehaviour {
 
     public static Phase characterPhase;
-    int numEnemies, numFriendlies;
+    public static int numEnemies, numFriendlies;
 
     // Track how many have moved and attacked for this phase
     public static int numMoved, numAttacked;
