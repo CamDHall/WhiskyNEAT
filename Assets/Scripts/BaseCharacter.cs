@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour {
 
-    public float health = 3;
-
     MapData mapData;
     public GameObject map;
 
+    CharacterData characterData;
+
     void Start () {
         mapData = map.GetComponent<MapData>();
+        characterData = GetComponent<CharacterData>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(health <= 0)
+        if(characterData.health <= 0)
         {
             if (gameObject.tag == "Enemy")
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Turns { Enemy, Friendly, Idle};
+public enum Turns { Enemies, Allies, Idle};
 
 public class RoundManager : MonoBehaviour {
 
@@ -10,18 +10,18 @@ public class RoundManager : MonoBehaviour {
     MapData mapData;
     public GameObject map;
 
-    void Start () {
-        whosTurn = Turns.Friendly;
+    void Awake () {
+        whosTurn = Turns.Allies;
         mapData = map.GetComponent<MapData>();
 	}
 	
 	void Update () {
 		switch(whosTurn)
         {
-            case Turns.Enemy:
+            case Turns.Enemies:
                 SetupEnemies();
                 break;
-            case Turns.Friendly:
+            case Turns.Allies:
                 SetupFriends();
                 break;
         }

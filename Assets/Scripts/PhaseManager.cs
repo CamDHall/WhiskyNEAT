@@ -11,7 +11,7 @@ public class PhaseManager : MonoBehaviour {
 
     // Track how many have moved and attacked for this phase
     public static int numMoved, numAttacked;
-    void Start () {
+    void Awake () {
         numMoved = 0;
         numAttacked = 0;
         characterPhase = Phase.Moving;
@@ -22,7 +22,7 @@ public class PhaseManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(RoundManager.whosTurn == Turns.Friendly)
+		if(RoundManager.whosTurn == Turns.Allies)
         {
             if(numMoved == numFriendlies)
             {
@@ -32,13 +32,13 @@ public class PhaseManager : MonoBehaviour {
             if(numAttacked == numFriendlies)
             {
                 characterPhase = Phase.Moving;
-                RoundManager.whosTurn = Turns.Enemy;
+                RoundManager.whosTurn = Turns.Enemies;
                 numMoved = 0;
                 numAttacked = 0;
             }
         }
 
-        if(RoundManager.whosTurn == Turns.Enemy)
+        if(RoundManager.whosTurn == Turns.Enemies)
         {
             if(numMoved == numEnemies)
             {
@@ -48,9 +48,10 @@ public class PhaseManager : MonoBehaviour {
             if(numAttacked == numEnemies)
             {
                 characterPhase = Phase.Moving;
-                RoundManager.whosTurn = Turns.Friendly;
+                RoundManager.whosTurn = Turns.Allies;
                 numMoved = 0;
                 numAttacked = 0;
+                GameManager.turns++;
             }
         }
 	}

@@ -135,14 +135,14 @@ public class Attacking : MonoBehaviour
 
         if (gameObject.tag == "Character")
         {
-            currentEnemy.GetComponent<BaseCharacter>().health -= attackStrength;
+            currentEnemy.GetComponent<CharacterData>().health -= attackStrength;
             foreach(GameObject enemy in _enemiesInRange)
             {
                 Destroy(enemy.transform.GetChild(0).gameObject);
             }
         } else
         {
-            currentCharacter.GetComponent<BaseCharacter>().health -= attackStrength;
+            currentCharacter.GetComponent<CharacterData>().health -= attackStrength;
             foreach(GameObject character in _charactersInRange)
             {
                 Destroy(character.transform.GetChild(0).gameObject);

@@ -11,8 +11,9 @@ public class Movement : MonoBehaviour {
     public GameObject Map;
 
     public List<GameObject> reachableTiles, inRange;
-    public int moves;
-    public int startingMoves, range = 1;
+    public float moves;
+    public float startingMoves;
+    public int range = 1;
 
     public bool moveAdded = false;
 
@@ -22,6 +23,8 @@ public class Movement : MonoBehaviour {
         mapData = Map.GetComponent<MapData>();
         reachableTiles = new List<GameObject>();
         inRange = new List<GameObject>();
+
+        moves = GetComponent<CharacterData>().moves;
         startingMoves = moves;
 	}
 	
