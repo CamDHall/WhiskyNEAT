@@ -58,6 +58,7 @@ public class Movement : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+        // Select character
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.transform.position == transform.position)
@@ -83,16 +84,20 @@ public class Movement : MonoBehaviour {
             {
                 foreach (GameObject tile in reachableTiles)
                 {
-                    if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
+                    if (tile.transform.childCount <= 0)
                     {
-                        moves -= (int)mapData.tileInfo[hit.transform.position];
-                        transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
-                        // Reset tile colors
-                        foreach (GameObject oldTile in reachableTiles)
+                        if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
                         {
-                            oldTile.GetComponent<Renderer>().material.color = Color.white;
+                            transform.parent = hit.transform;
+                            moves -= (int)mapData.tileInfo[hit.transform.position];
+                            transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+                            // Reset tile colors
+                            foreach (GameObject oldTile in reachableTiles)
+                            {
+                                oldTile.GetComponent<Renderer>().material.color = Color.white;
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
