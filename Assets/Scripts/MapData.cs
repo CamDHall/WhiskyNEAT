@@ -23,7 +23,7 @@ public class MapData : MonoBehaviour {
 
         enenmyInfo = new Dictionary<Vector3, float>();
 
-        foreach(GameObject friend in GameObject.FindGameObjectsWithTag("Character"))
+        foreach(GameObject friend in GameObject.FindGameObjectsWithTag("Friend"))
         {
             characters.Add(friend);
         }

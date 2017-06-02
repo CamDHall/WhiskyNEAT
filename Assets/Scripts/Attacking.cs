@@ -65,7 +65,7 @@ public class Attacking : MonoBehaviour
                 DetermineTargets();
             }
             // Check if anything is in range
-            if (gameObject.tag == "Character")
+            if (gameObject.tag == "Friend")
             {
                 if (_enemiesInRange.Count == 0)
                 {
@@ -133,7 +133,7 @@ public class Attacking : MonoBehaviour
     {
         characterSelected = false;
 
-        if (gameObject.tag == "Character")
+        if (gameObject.tag == "Friend")
         {
             currentEnemy.GetComponent<CharacterData>().health -= attackStrength;
             foreach(GameObject enemy in _enemiesInRange)
@@ -161,7 +161,7 @@ public class Attacking : MonoBehaviour
         _enemiesInRange.Clear();
 
         // Check if this is a character or enemy
-        if (gameObject.tag == "Character")
+        if (gameObject.tag == "Friend")
         {
             foreach (GameObject enemy in mapData.enemies)
             {
@@ -198,7 +198,7 @@ public class Attacking : MonoBehaviour
 
     void SelectTarget()
     {
-        if(gameObject.tag == "Character")
+        if(gameObject.tag == "Friend")
         {
             foreach(GameObject target in _enemiesInRange)
             {

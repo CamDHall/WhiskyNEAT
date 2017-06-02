@@ -18,7 +18,7 @@ public class PhaseManager : MonoBehaviour {
 
         // How many enenmies and friends are in this level
         numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        numFriendlies = GameObject.FindGameObjectsWithTag("Character").Length;
+        numFriendlies = GameObject.FindGameObjectsWithTag("Friend").Length;
 	}
 	
 	void Update () {
