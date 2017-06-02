@@ -32,15 +32,18 @@ public class GameManager : MonoBehaviour {
                 {
                     selectedCharacter = hit.transform.gameObject;
                     data = selectedCharacter.GetComponent<CharacterData>();
-
-                    characterHealth.text = "Health: " + data.health.ToString();
-                    characterMoves.text = "Moves: " + data.moves.ToString();
-                    characterMeleeSTR.text = "Melee Strength: " + data.meleeStrength.ToString();
-                    characterRangedSTR.text = "Ranged Strength: " + data.rangedStrength.ToString();
-                    characterCourage.text = "Courage: " + data.courage.ToString();
-                    characterName.text = data.name.ToString();
                 }
             }
+        }
+
+        if (data != null)
+        {
+            characterHealth.text = "Health: " + data.health.ToString();
+            characterMoves.text = "Moves: " + data.moves.ToString();
+            characterMeleeSTR.text = "Melee Strength: " + data.meleeStrength.ToString();
+            characterRangedSTR.text = "Ranged Strength: " + data.rangedStrength.ToString();
+            characterCourage.text = "Courage: " + data.courage.ToString();
+            characterName.text = data.name.ToString();
         }
     }
 }
