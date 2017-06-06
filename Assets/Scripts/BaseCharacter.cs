@@ -7,14 +7,13 @@ public class BaseCharacter : MonoBehaviour {
 
     MapData mapData;
     public GameObject map;
+    public GameObject canvas;
+    bool selected;
 
     CharacterData characterData;
 
-    public GameObject rangedButton, meleeButton;
-
     void Start () {
-        rangedButton.SetActive(false);
-        meleeButton.SetActive(false);
+        canvas.SetActive(false);
         mapData = map.GetComponent<MapData>();
         characterData = GetComponent<CharacterData>();
 	}
@@ -46,8 +45,20 @@ public class BaseCharacter : MonoBehaviour {
                 if(hit.transform.position == transform.position)
                 {
                     GameManager.selectedCharacterData = GetComponent<CharacterData>();
+                    selected = true;
+                } else
+                {
+                    selected = false;
                 }
             }
+        }
+
+        if(selected && PhaseManager.characterPhase == Phase.Attacking)
+        {
+            canvas.SetActive(true);
+        } else
+        {
+            canvas.SetActive(false);
         }
 	}
 }
