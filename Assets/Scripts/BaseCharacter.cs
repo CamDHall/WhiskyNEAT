@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseCharacter : MonoBehaviour {
 
@@ -9,7 +10,11 @@ public class BaseCharacter : MonoBehaviour {
 
     CharacterData characterData;
 
+    public GameObject rangedButton, meleeButton;
+
     void Start () {
+        rangedButton.SetActive(false);
+        meleeButton.SetActive(false);
         mapData = map.GetComponent<MapData>();
         characterData = GetComponent<CharacterData>();
 	}
@@ -28,6 +33,20 @@ public class BaseCharacter : MonoBehaviour {
                 mapData.characters.Remove(gameObject);
                 PhaseManager.numFriendlies--;
                 Destroy(gameObject);
+            }
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(hit.transform.position == transform.position)
+                {
+                    GameManager.selectedCharacterData = GetComponent<CharacterData>();
+                }
             }
         }
 	}

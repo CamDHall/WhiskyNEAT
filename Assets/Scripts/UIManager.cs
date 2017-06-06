@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 
     public Text turn, whosText, phaseText;
-    public GameObject startAttacking;
+    public GameObject startAttacking, rangedButton, meleeButton;
 
     // Character info
     GameObject selectedCharacter;
@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour {
         phaseText.text = PhaseManager.characterPhase.ToString();
         selectedCharacter = null;
         startAttacking.SetActive(false);
+        rangedButton.SetActive(false);
+        meleeButton.SetActive(false);
     }
 	
 	void Update () {
@@ -49,6 +51,23 @@ public class UIManager : MonoBehaviour {
                     data = selectedCharacter.GetComponent<CharacterData>();
                 }
             }
+        }
+
+        if(GameManager.selectedCharacterData != null && PhaseManager.characterPhase == Phase.Attacking)
+        {
+            if (GameManager.selectedCharacterData.rangedStrength > 0)
+            {
+                rangedButton.SetActive(true);
+            }
+
+            if (GameManager.selectedCharacterData.meleeStrength > 0)
+            {
+                meleeButton.SetActive(true);
+            }
+        } else
+        {
+            rangedButton.SetActive(false);
+            meleeButton.SetActive(false);
         }
 
         if (data != null)
