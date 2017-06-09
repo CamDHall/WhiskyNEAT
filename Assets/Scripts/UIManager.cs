@@ -8,8 +8,10 @@ public class UIManager : MonoBehaviour {
     public Text turn, whosText, phaseText;
     public GameObject startAttacking;
 
+    public GameObject rangedButton, meleeButton;
+
     // Character info
-    GameObject selectedCharacter;
+    public static GameObject selectedCharacter;
     CharacterData data;
 
     public Text characterHealth, characterMoves, characterMeleeSTR, characterRangedSTR, characterCourage, characterName;
@@ -17,8 +19,10 @@ public class UIManager : MonoBehaviour {
     void Start () {
         whosText.text = RoundManager.whosTurn.ToString() + " Turn";
         phaseText.text = PhaseManager.characterPhase.ToString();
-        selectedCharacter = null;
         startAttacking.SetActive(false);
+
+        rangedButton.SetActive(false);
+        meleeButton.SetActive(false);
     }
 	
 	void Update () {
@@ -59,6 +63,32 @@ public class UIManager : MonoBehaviour {
             characterRangedSTR.text = "Ranged Strength: " + data.rangedStrength.ToString();
             characterCourage.text = "Courage: " + data.courage.ToString();
             characterName.text = data.name.ToString();
+
+            if (PhaseManager.characterPhase == Phase.Attacking && 
+                (selectedCharacter.GetComponent<Attacking>()._enemiesInRange.Count > 0 || selectedCharacter.GetComponent<Attacking>()._charactersInRange.Count > 0))
+            {
+                if (data.rangedStrength > 0)
+                {
+                    rangedButton.SetActive(true);
+                }
+                else
+                {
+                    rangedButton.SetActive(false);
+                }
+
+                if (data.meleeStrength > 0)
+                {
+                    meleeButton.SetActive(true);
+                }
+                else
+                {
+                    meleeButton.SetActive(false);
+                }
+            } else
+            {
+                meleeButton.SetActive(false);
+                rangedButton.SetActive(false);
+            }
         }
     }
 

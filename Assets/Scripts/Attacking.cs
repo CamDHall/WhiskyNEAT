@@ -19,7 +19,7 @@ public class Attacking : MonoBehaviour
 
     public int startingNumAttacks;
 
-    [SerializeField] List<GameObject> _enemiesInRange, _charactersInRange;
+    public List<GameObject> _enemiesInRange, _charactersInRange;
 
     GameObject currentEnemy, currentCharacter;
 
