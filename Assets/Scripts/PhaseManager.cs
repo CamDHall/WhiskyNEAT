@@ -22,6 +22,8 @@ public class PhaseManager : MonoBehaviour {
 	}
 	
 	void Update () {
+        // Debug.Log(RoundManager.whosTurn + ": " + characterPhase);
+
 		if(RoundManager.whosTurn == Turns.Allies)
         {
             if(numMoved == numFriendlies)

@@ -6,7 +6,7 @@ public class MapData : MonoBehaviour {
 
     public Dictionary<Vector3, float> tileInfo;
     public Dictionary<Vector3, float> enenmyInfo;
-    public Dictionary<Vector3, float> characterInfo;
+    public Dictionary<Vector3, float> friendsInfo;
 
     public GameObject[] tiles;
     public List<GameObject> enemies;
@@ -28,7 +28,7 @@ public class MapData : MonoBehaviour {
             characters.Add(friend);
         }
 
-        characterInfo = new Dictionary<Vector3, float>();
+        friendsInfo = new Dictionary<Vector3, float>();
 
         // Enemy
         foreach (GameObject enemy in enemies)
@@ -39,7 +39,7 @@ public class MapData : MonoBehaviour {
         // Character
         foreach(GameObject character in characters)
         {
-            characterInfo.Add(character.transform.position, character.transform.position.y);
+            friendsInfo.Add(character.transform.position, character.transform.position.y);
         }
 
         // Tiles

@@ -5,21 +5,21 @@ using UnityEngine;
 public class Attacking : MonoBehaviour
 {
     MapData mapData;
-    int range = 1;
+    int meleeRange, rangedRange;
     public bool targetsListed; // Only call determine once
-    bool characterSelected; // Must select characte before attacking
+    public bool characterSelected;
+    public string typeOfAttack; // Ranged, melee, or spell
 
     public bool attackAdded = false;
 
     Movement movement;
 
     // Set with character stats
-    float attackStrength = 1;
+    float meleeStrength, rangedStrength;
     public int numOfAttacks = 1;
-
     public int startingNumAttacks;
 
-    public List<GameObject> _enemiesInRange, _charactersInRange;
+    public List<GameObject> _enemiesInRange, _friendsInRange, _enemiesInMeleeRange, _friendsInMeleeRange;
 
     GameObject currentEnemy, currentCharacter;
 
@@ -27,8 +27,22 @@ public class Attacking : MonoBehaviour
     public GameObject indicator;
     public GameObject map;
 
+    // Info
+    CharacterData characterData;
+
+    private void Awake()
+    {
+        characterData = GetComponent<CharacterData>();
+    }
+
     void Start()
     {
+        meleeRange = characterData.meleeRange;
+        rangedRange = characterData.rangedRange;
+
+        meleeStrength = characterData.meleeStrength;
+        rangedStrength = characterData.rangedStrength;
+
         startingNumAttacks = numOfAttacks;
         movement = GetComponent<Movement>();
 
@@ -37,7 +51,9 @@ public class Attacking : MonoBehaviour
         mapData = map.GetComponent<MapData>();
 
         _enemiesInRange = new List<GameObject>();
-        _charactersInRange = new List<GameObject>();
+        _friendsInRange = new List<GameObject>();
+        _enemiesInMeleeRange = new List<GameObject>();
+        _friendsInMeleeRange = new List<GameObject>();
     }
 
     void Update()
@@ -67,7 +83,7 @@ public class Attacking : MonoBehaviour
             // Check if anything is in range
             if (gameObject.tag == "Friend")
             {
-                if (_enemiesInRange.Count == 0)
+                if (_enemiesInRange.Count == 0 && _enemiesInMeleeRange.Count == 0)
                 {
                     numOfAttacks = 0;
                 }
@@ -75,53 +91,75 @@ public class Attacking : MonoBehaviour
 
             if (gameObject.tag == "Enemy")
             {
-                if (_charactersInRange.Count == 0)
+                if (_friendsInRange.Count == 0 && _friendsInMeleeRange.Count == 0)
                     numOfAttacks = 0;
             }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.transform.position == transform.position)
-                    {
-                        characterSelected = true;
-                        SelectTarget();
-                    }
-                }
-            }
         }
-
-        if (PhaseManager.characterPhase == Phase.Attacking && numOfAttacks > 0)
+    
+        if (PhaseManager.characterPhase == Phase.Attacking && numOfAttacks > 0 && (typeOfAttack == "Melee" || typeOfAttack == "Ranged"))
         {
+            // Debug.Log(characterSelected);
             // Selecting target to be attacked
             if (characterSelected && Input.GetMouseButtonDown(0))
             {
+                // Debug.Log(typeOfAttack);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit))
                 {
+                    Debug.Log(typeOfAttack);
                     // Enemy
-                    foreach (GameObject enemy in _enemiesInRange)
+                    if (typeOfAttack == "Ranged")
                     {
-                        if (hit.transform.position == enemy.transform.position)
+                        if (gameObject.tag == "Friend")
                         {
-                            currentEnemy = hit.transform.gameObject;
-                            Damage();
+                            Debug.Log(gameObject.name);
+                            foreach (GameObject enemy in _enemiesInRange)
+                            {
+                                if (hit.transform.position == enemy.transform.position)
+                                {
+                                    currentEnemy = hit.transform.gameObject;
+                                    Damage();
+                                }
+                            }
                         }
-                    }
 
-                    // Character
-                    foreach (GameObject character in _charactersInRange)
-                    {
-                        if (hit.transform.position == character.transform.position)
+                        if (gameObject.tag == "Enemy")
                         {
-                            currentCharacter = hit.transform.gameObject;
-                            Damage();
+                            foreach (GameObject character in _friendsInRange)
+                            {
+                                if (hit.transform.position == character.transform.position)
+                                {
+                                    currentCharacter = hit.transform.gameObject;
+                                    Damage();
+                                }
+                            }
+                        }
+                    } else if(typeOfAttack == "Melee")
+                    {
+                        if (gameObject.tag == "Friend")
+                        {
+                            foreach (GameObject enemy in _enemiesInMeleeRange)
+                            {
+                                if (hit.transform.position == enemy.transform.position)
+                                {
+                                    currentEnemy = hit.transform.gameObject;
+                                    Damage();
+                                }
+                            }
+                        }
+
+                        if(gameObject.tag == "Enemy")
+                        {
+                            foreach (GameObject enemy in _friendsInMeleeRange)
+                            {
+                                if (hit.transform.position == enemy.transform.position)
+                                {
+                                    currentEnemy = hit.transform.gameObject;
+                                    Damage();
+                                }
+                            }
                         }
                     }
                 }
@@ -132,20 +170,42 @@ public class Attacking : MonoBehaviour
     void Damage()
     {
         characterSelected = false;
+        Debug.Log(gameObject.name);
 
         if (gameObject.tag == "Friend")
         {
-            currentEnemy.GetComponent<CharacterData>().health -= attackStrength;
-            foreach(GameObject enemy in _enemiesInRange)
+            if (typeOfAttack == "Melee")
             {
-                Destroy(enemy.transform.GetChild(0).gameObject);
+                //Debug.Log(gameObject.name);
+                currentEnemy.GetComponent<CharacterData>().health -= meleeStrength;
+                foreach (GameObject enemy in _enemiesInMeleeRange)
+                {
+                    Destroy(enemy.transform.GetChild(0).gameObject);
+                }
+            } else if(typeOfAttack == "Ranged")
+            {
+                currentEnemy.GetComponent<CharacterData>().health -= rangedStrength;
+                foreach (GameObject enemy in _enemiesInRange)
+                {
+                    Destroy(enemy.transform.GetChild(0).gameObject);
+                }
             }
-        } else
+        } else if(gameObject.tag == "Enemy")
         {
-            currentCharacter.GetComponent<CharacterData>().health -= attackStrength;
-            foreach(GameObject character in _charactersInRange)
+            if (typeOfAttack == "Melee")
             {
-                Destroy(character.transform.GetChild(0).gameObject);
+                currentCharacter.GetComponent<CharacterData>().health -= meleeStrength;
+                foreach (GameObject character in _friendsInMeleeRange)
+                {
+                    Destroy(character.transform.GetChild(0).gameObject);
+                }
+            } else if(typeOfAttack == "Ranged")
+            {
+                currentCharacter.GetComponent<CharacterData>().health -= meleeStrength;
+                foreach (GameObject character in _friendsInRange)
+                {
+                    Destroy(character.transform.GetChild(0).gameObject);
+                }
             }
         }
 
@@ -156,9 +216,10 @@ public class Attacking : MonoBehaviour
     {
         targetsListed = true;
 
-
-        _charactersInRange.Clear();
+        _friendsInRange.Clear();
         _enemiesInRange.Clear();
+        _friendsInMeleeRange.Clear();
+        _enemiesInMeleeRange.Clear();
 
         // Check if this is a character or enemy
         if (gameObject.tag == "Friend")
@@ -172,31 +233,41 @@ public class Attacking : MonoBehaviour
                 else if (enemy.transform.position.y == 1.5f)
                     mapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - transform.position.x) + Mathf.Abs(enemy.transform.position.z - transform.position.z) + 0.5f;
 
-                if (mapData.enenmyInfo[enemy.transform.position] <= range)
+                if (mapData.enenmyInfo[enemy.transform.position] <= meleeRange)
+                {
+                    _enemiesInMeleeRange.Add(enemy);
+                }
+
+                if (mapData.enenmyInfo[enemy.transform.position] <= rangedRange)
                 {
                     _enemiesInRange.Add(enemy);
                 }
             }
         } else
         {
-            foreach(GameObject character in mapData.characters)
+            foreach(GameObject friend in mapData.characters)
             {
-                if (character.transform.position.y == 1.0f)
-                    mapData.characterInfo[character.transform.position] = Mathf.Abs(character.transform.position.x - transform.position.x) + Mathf.Abs(character.transform.position.z - transform.position.z);
-                else if (character.transform.position.y == 1.25f)
-                    mapData.characterInfo[character.transform.position] = Mathf.Abs(character.transform.position.x - transform.position.x) + Mathf.Abs(character.transform.position.z - transform.position.z) + 0.25f;
-                else if (character.transform.position.y == 1.5f)
-                    mapData.characterInfo[character.transform.position] = Mathf.Abs(character.transform.position.x - transform.position.x) + Mathf.Abs(character.transform.position.z - transform.position.z) + 0.5f;
+                if (friend.transform.position.y == 1.0f)
+                    mapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - transform.position.x) + Mathf.Abs(friend.transform.position.z - transform.position.z);
+                else if (friend.transform.position.y == 1.25f)
+                    mapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - transform.position.x) + Mathf.Abs(friend.transform.position.z - transform.position.z) + 0.25f;
+                else if (friend.transform.position.y == 1.5f)
+                    mapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - transform.position.x) + Mathf.Abs(friend.transform.position.z - transform.position.z) + 0.5f;
 
-                if(mapData.characterInfo[character.transform.position] <= range)
+                if(mapData.friendsInfo[friend.transform.position] <= meleeRange)
                 {
-                    _charactersInRange.Add(character);
+                    _friendsInMeleeRange.Add(friend);
+                }
+
+                if(mapData.friendsInfo[friend.transform.position] <= rangedRange)
+                {
+                    _friendsInRange.Add(friend);
                 }
             }
         }
     }
 
-    void SelectTarget()
+    public void SelectTarget()
     {
         if(gameObject.tag == "Friend")
         {
@@ -205,11 +276,23 @@ public class Attacking : MonoBehaviour
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
                 Instantiate(indicator, Pos, Quaternion.identity, target.transform);
             }
+
+            foreach(GameObject target in _enemiesInMeleeRange)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
+                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
+            }
         }
 
         if (gameObject.tag == "Enemy")
         {
-            foreach (GameObject target in _charactersInRange)
+            foreach (GameObject target in _friendsInRange)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
+                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
+            }
+
+            foreach (GameObject target in _friendsInMeleeRange)
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
                 Instantiate(indicator, Pos, Quaternion.identity, target.transform);

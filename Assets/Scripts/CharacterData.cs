@@ -7,6 +7,7 @@ public class CharacterData : MonoBehaviour {
     public float health, _meleeDefense, _rangedDefense, _spellDefense;
     public float moves;
     public int numAttacks, meleeStrength, rangedStrength;
+    public int meleeRange, rangedRange;
     public float courage;
 
 	void Start () {

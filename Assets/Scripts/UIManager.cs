@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour {
     // Character info
     public static GameObject selectedCharacter;
     CharacterData data;
+    Attacking selectedToAttack;
 
     public Text characterHealth, characterMoves, characterMeleeSTR, characterRangedSTR, characterCourage, characterName;
 
@@ -51,6 +52,7 @@ public class UIManager : MonoBehaviour {
                 {
                     selectedCharacter = hit.transform.gameObject;
                     data = selectedCharacter.GetComponent<CharacterData>();
+                    selectedToAttack = selectedCharacter.GetComponent<Attacking>();
                 }
             }
         }
@@ -65,9 +67,12 @@ public class UIManager : MonoBehaviour {
             characterName.text = data.name.ToString();
 
             if (PhaseManager.characterPhase == Phase.Attacking && 
-                (selectedCharacter.GetComponent<Attacking>()._enemiesInRange.Count > 0 || selectedCharacter.GetComponent<Attacking>()._charactersInRange.Count > 0))
+                (selectedCharacter.GetComponent<Attacking>()._enemiesInRange.Count > 0 
+                || selectedCharacter.GetComponent<Attacking>()._friendsInRange.Count > 0
+                || selectedCharacter.GetComponent<Attacking>()._enemiesInMeleeRange.Count > 0
+                || selectedCharacter.GetComponent<Attacking>()._friendsInMeleeRange.Count > 0))
             {
-                if (data.rangedStrength > 0)
+                if (selectedToAttack._enemiesInRange.Count > 0 || selectedToAttack._friendsInRange.Count > 0)
                 {
                     rangedButton.SetActive(true);
                 }
@@ -76,7 +81,7 @@ public class UIManager : MonoBehaviour {
                     rangedButton.SetActive(false);
                 }
 
-                if (data.meleeStrength > 0)
+                if (selectedToAttack._enemiesInMeleeRange.Count > 0 || selectedToAttack._friendsInMeleeRange.Count > 0)
                 {
                     meleeButton.SetActive(true);
                 }
@@ -95,5 +100,19 @@ public class UIManager : MonoBehaviour {
     public void StartAttackingButton()
     {
         PhaseManager.characterPhase = Phase.Attacking;
+    }
+
+    public void MeleeButton()
+    {
+        selectedToAttack.SelectTarget();
+        selectedToAttack.typeOfAttack = "Melee";
+        selectedToAttack.characterSelected = true;
+    }
+
+    public void RangedButton()
+    {
+        selectedToAttack.SelectTarget();
+        selectedToAttack.typeOfAttack = "Ranged";
+        selectedToAttack.characterSelected = true;
     }
 }
