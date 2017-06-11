@@ -176,8 +176,15 @@ public class Attacking : MonoBehaviour
         {
             if (typeOfAttack == "Melee")
             {
-                //Debug.Log(gameObject.name);
                 currentEnemy.GetComponent<CharacterData>().health -= meleeStrength;
+
+                if (currentEnemy.GetComponent<Attacking>().meleeStrength % 2 == 0)
+                {
+                    GetComponent<CharacterData>().health -= (currentEnemy.GetComponent<Attacking>().meleeStrength / 2);
+                } else
+                {
+                    GetComponent<CharacterData>().health -= ((currentEnemy.GetComponent<Attacking>().meleeStrength - 1)/ 2);
+                }
                 foreach (GameObject enemy in _enemiesInMeleeRange)
                 {
                     Destroy(enemy.transform.GetChild(0).gameObject);
