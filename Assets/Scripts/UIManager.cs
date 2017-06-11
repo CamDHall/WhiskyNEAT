@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour {
     public Text turn, whosText, phaseText;
     public GameObject startAttacking;
 
-    public GameObject rangedButton, meleeButton;
+    public GameObject rangedButton, meleeButton, abilityBar;
 
     // Character info
     public static GameObject selectedCharacter;
@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour {
 
         rangedButton.SetActive(false);
         meleeButton.SetActive(false);
+        abilityBar.SetActive(false);
     }
 	
 	void Update () {
@@ -72,6 +73,7 @@ public class UIManager : MonoBehaviour {
                 || selectedCharacter.GetComponent<Attacking>()._enemiesInMeleeRange.Count > 0
                 || selectedCharacter.GetComponent<Attacking>()._friendsInMeleeRange.Count > 0))
             {
+                abilityBar.SetActive(true);
                 if (selectedToAttack._enemiesInRange.Count > 0 || selectedToAttack._friendsInRange.Count > 0)
                 {
                     rangedButton.SetActive(true);
@@ -93,6 +95,7 @@ public class UIManager : MonoBehaviour {
             {
                 meleeButton.SetActive(false);
                 rangedButton.SetActive(false);
+                abilityBar.SetActive(false);
             }
         }
     }
@@ -102,17 +105,36 @@ public class UIManager : MonoBehaviour {
         PhaseManager.characterPhase = Phase.Attacking;
     }
 
-    public void MeleeButton()
+    void DefaultActions(string type)
     {
         selectedToAttack.SelectTarget();
-        selectedToAttack.typeOfAttack = "Melee";
         selectedToAttack.characterSelected = true;
+        selectedToAttack.typeOfAttack = type;
+    }
+
+    public void MeleeButton()
+    {
+        DefaultActions("Melee");
     }
 
     public void RangedButton()
     {
-        selectedToAttack.SelectTarget();
-        selectedToAttack.typeOfAttack = "Ranged";
-        selectedToAttack.characterSelected = true;
+        DefaultActions("Ranged");
     }
+
+    public void AbilityOne()
+    {
+        DefaultActions("AbilityOne");
+    }
+
+    public void AbilityTwo()
+    {
+        DefaultActions("AbilityTwo");
+    }
+
+    public void AbilityThree()
+    {
+        DefaultActions("AbilityThree");
+    }
+
 }
