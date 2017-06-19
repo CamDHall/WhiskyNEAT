@@ -5,7 +5,7 @@ using UnityEngine;
 public class Attacking : MonoBehaviour
 {
     MapData mapData;
-    public Overlay overlay;
+    UIManager overlay;
     int meleeRange, rangedRange;
     public bool targetsListed; // Only call determine once
     public bool characterSelected;
@@ -55,6 +55,9 @@ public class Attacking : MonoBehaviour
         _friendsInRange = new List<GameObject>();
         _enemiesInMeleeRange = new List<GameObject>();
         _friendsInMeleeRange = new List<GameObject>();
+
+        // Overlay 
+        overlay = GameObject.FindGameObjectWithTag("Overlay").GetComponent<UIManager>();
     }
 
     void Update()
@@ -99,7 +102,6 @@ public class Attacking : MonoBehaviour
     
         if (PhaseManager.characterPhase == Phase.Attacking && numOfAttacks > 0 && (typeOfAttack == "Melee" || typeOfAttack == "Ranged"))
         {
-            // Debug.Log(characterSelected);
             // Selecting target to be attacked
             if (characterSelected && Input.GetMouseButtonDown(0))
             {
@@ -109,7 +111,6 @@ public class Attacking : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Debug.Log(typeOfAttack);
                     // Enemy
                     if (typeOfAttack == "Ranged")
                     {
@@ -171,7 +172,6 @@ public class Attacking : MonoBehaviour
     void Damage()
     {
         characterSelected = false;
-        Debug.Log(gameObject.name);
 
         if (gameObject.tag == "Friend")
         {
@@ -201,8 +201,8 @@ public class Attacking : MonoBehaviour
             }
         }
 
-        numOfAttacks--;
         overlay.OverlayOff();
+        numOfAttacks--;
     }
 
     void DetermineTargets()
@@ -257,19 +257,6 @@ public class Attacking : MonoBehaviour
                     _friendsInRange.Add(friend);
                 }
             }
-        }
-    }
-
-    public void SelectTarget()
-    {
-        if(gameObject.tag == "Friend")
-        {
-            overlay.OverlayOn(_enemiesInMeleeRange, _enemiesInRange);
-        }
-
-        if (gameObject.tag == "Enemy")
-        {
-            overlay.OverlayOn(_friendsInMeleeRange, _friendsInRange);
         }
     }
 

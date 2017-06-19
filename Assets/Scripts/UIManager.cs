@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+    // Overlay
+    public Image indicator;
+    public Canvas worldCanvas;
+
+    bool showingOverlay = false;
+    List<Image> container;
+
+    //
     public Text turn, whosText, phaseText;
     public GameObject startAttacking;
 
@@ -12,12 +20,15 @@ public class UIManager : MonoBehaviour {
 
     // Character info
     public static GameObject selectedCharacter;
+    public GameObject infoPane;
     CharacterData data;
     Attacking selectedToAttack;
 
     public Text characterHealth, characterMoves, characterMeleeSTR, characterRangedSTR, characterCourage, characterName;
 
     void Start () {
+        container = new List<Image>(); // Overlay
+
         whosText.text = RoundManager.whosTurn.ToString() + " Turn";
         phaseText.text = PhaseManager.characterPhase.ToString();
         startAttacking.SetActive(false);
@@ -27,8 +38,25 @@ public class UIManager : MonoBehaviour {
         abilityBar.SetActive(false);
     }
 	
-	void Update () {
-        Debug.Log(selectedCharacter);
+	void Update () {    
+        if(selectedCharacter == null)
+        {
+            OverlayOff();
+            characterHealth.enabled = false;
+            characterMoves.enabled = false;
+            characterCourage.enabled = false;
+            characterMeleeSTR.enabled = false;
+            characterRangedSTR.enabled = false;
+            characterName.enabled = false;
+        } else
+        {
+            characterHealth.enabled = true;
+            characterMoves.enabled = true;
+            characterCourage.enabled = true;
+            characterMeleeSTR.enabled = true;
+            characterRangedSTR.enabled = true;
+            characterName.enabled = true;
+        }
 
         turn.text = "Turn: " + GameManager.turns.ToString();
 
@@ -56,11 +84,14 @@ public class UIManager : MonoBehaviour {
                     selectedCharacter = hit.transform.gameObject;
                     data = selectedCharacter.GetComponent<CharacterData>();
                     selectedToAttack = selectedCharacter.GetComponent<Attacking>();
+                } else
+                {
+                    selectedCharacter = null;
                 }
             }
         }
 
-        if (data != null)
+        if (data != null && selectedCharacter != null)
         {
             characterHealth.text = "Health: " + data.health.ToString();
             characterMoves.text = "Moves: " + data.moves.ToString();
@@ -109,9 +140,13 @@ public class UIManager : MonoBehaviour {
 
     void DefaultActions(string type)
     {
-        if(type == "Melee" || type == "Ranged")
-            selectedToAttack.SelectTarget();
-        else 
+        if (type == "Melee" || type == "Ranged")
+        {
+            if (selectedToAttack.gameObject.tag == "Friend")
+                OverlayOn(selectedToAttack._enemiesInMeleeRange, selectedToAttack._enemiesInRange);
+            else
+                OverlayOn(selectedToAttack._friendsInMeleeRange, selectedToAttack._friendsInRange);
+        } else
             selectedCharacter.GetComponent<AbilitiesBase>().SetInfo(type);
 
         selectedToAttack.characterSelected = true;
@@ -143,4 +178,54 @@ public class UIManager : MonoBehaviour {
         DefaultActions("AbilityThree");
     }
 
+    void OverlayOn(List<GameObject> meleeTargets, List<GameObject> rangedTargets)
+    {
+        if (meleeTargets != null)
+        {
+            foreach (GameObject target in meleeTargets)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
+                img.transform.SetParent(worldCanvas.transform);
+                container.Add(img);
+            }
+
+            foreach (GameObject target in rangedTargets)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
+                img.transform.SetParent(worldCanvas.transform);
+                container.Add(img);
+            }
+        }
+
+        if (rangedTargets != null)
+        {
+            foreach (GameObject target in meleeTargets)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
+                img.transform.SetParent(worldCanvas.transform);
+                container.Add(img);
+            }
+
+            foreach (GameObject target in rangedTargets)
+            {
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
+                img.transform.SetParent(worldCanvas.transform);
+                container.Add(img);
+            }
+        }
+    }
+
+    public void OverlayOff()
+    {
+        foreach (Image img in container)
+        {
+            Destroy(img);
+        }
+
+        container.Clear();
+    }
 }
