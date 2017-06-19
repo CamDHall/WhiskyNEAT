@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attacking : MonoBehaviour
 {
     MapData mapData;
+    public Overlay overlay;
     int meleeRange, rangedRange;
     public bool targetsListed; // Only call determine once
     public bool characterSelected;
@@ -278,7 +279,8 @@ public class Attacking : MonoBehaviour
     {
         if(gameObject.tag == "Friend")
         {
-            foreach(GameObject target in _enemiesInRange)
+            overlay.OverlayOn(_enemiesInMeleeRange, _enemiesInRange);
+            /* foreach (GameObject target in _enemiesInRange)
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
                 Instantiate(indicator, Pos, Quaternion.identity, target.transform);
@@ -288,12 +290,13 @@ public class Attacking : MonoBehaviour
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
                 Instantiate(indicator, Pos, Quaternion.identity, target.transform);
-            }
+            } */
         }
 
         if (gameObject.tag == "Enemy")
         {
-            foreach (GameObject target in _friendsInRange)
+            overlay.OverlayOn(_friendsInMeleeRange, _friendsInRange);
+            /* foreach (GameObject target in _friendsInRange)
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
                 Instantiate(indicator, Pos, Quaternion.identity, target.transform);
@@ -303,7 +306,7 @@ public class Attacking : MonoBehaviour
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
                 Instantiate(indicator, Pos, Quaternion.identity, target.transform);
-            }
+            } */
         }
     }
 

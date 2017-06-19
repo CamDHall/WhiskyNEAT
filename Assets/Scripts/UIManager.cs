@@ -107,7 +107,11 @@ public class UIManager : MonoBehaviour {
 
     void DefaultActions(string type)
     {
-        selectedToAttack.SelectTarget();
+        if(type == "Melee" || type == "Ranged")
+            selectedToAttack.SelectTarget();
+        else 
+            selectedCharacter.GetComponent<AbilitiesBase>().SetInfo(type);
+
         selectedToAttack.characterSelected = true;
         selectedToAttack.typeOfAttack = type;
     }
