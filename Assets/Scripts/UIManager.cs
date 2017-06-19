@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour {
             characterName.enabled = false;
         } else
         {
+            // selectedCharacter.GetComponent<Renderer>().material.color = Color.blue;
             characterHealth.enabled = true;
             characterMoves.enabled = true;
             characterCourage.enabled = true;

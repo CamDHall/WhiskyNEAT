@@ -94,7 +94,7 @@ public class Movement : MonoBehaviour {
                             // Reset tile colors
                             foreach (GameObject oldTile in reachableTiles)
                             {
-                                oldTile.GetComponent<Renderer>().material.color = Color.white;
+                                oldTile.GetComponent<Renderer>().material.color = oldTile.GetComponent<SampleColors>().oldColor;
                             }
                             break;
                         }
