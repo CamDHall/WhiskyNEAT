@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour {
     }
 	
 	void Update () {
+        Debug.Log(selectedCharacter);
+
         turn.text = "Turn: " + GameManager.turns.ToString();
 
         // Attack button

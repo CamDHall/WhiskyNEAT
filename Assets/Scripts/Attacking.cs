@@ -186,38 +186,23 @@ public class Attacking : MonoBehaviour
                 {
                     GetComponent<CharacterData>().health -= ((currentEnemy.GetComponent<Attacking>().meleeStrength - 1)/ 2);
                 }
-                foreach (GameObject enemy in _enemiesInMeleeRange)
-                {
-                    Destroy(enemy.transform.GetChild(0).gameObject);
-                }
             } else if(typeOfAttack == "Ranged")
             {
                 currentEnemy.GetComponent<CharacterData>().health -= rangedStrength;
-                foreach (GameObject enemy in _enemiesInRange)
-                {
-                    Destroy(enemy.transform.GetChild(0).gameObject);
-                }
             }
         } else if(gameObject.tag == "Enemy")
         {
             if (typeOfAttack == "Melee")
             {
                 currentCharacter.GetComponent<CharacterData>().health -= meleeStrength;
-                foreach (GameObject character in _friendsInMeleeRange)
-                {
-                    Destroy(character.transform.GetChild(0).gameObject);
-                }
             } else if(typeOfAttack == "Ranged")
             {
                 currentCharacter.GetComponent<CharacterData>().health -= meleeStrength;
-                foreach (GameObject character in _friendsInRange)
-                {
-                    Destroy(character.transform.GetChild(0).gameObject);
-                }
             }
         }
 
         numOfAttacks--;
+        overlay.OverlayOff();
     }
 
     void DetermineTargets()
@@ -280,33 +265,11 @@ public class Attacking : MonoBehaviour
         if(gameObject.tag == "Friend")
         {
             overlay.OverlayOn(_enemiesInMeleeRange, _enemiesInRange);
-            /* foreach (GameObject target in _enemiesInRange)
-            {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
-            }
-
-            foreach(GameObject target in _enemiesInMeleeRange)
-            {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
-            } */
         }
 
         if (gameObject.tag == "Enemy")
         {
             overlay.OverlayOn(_friendsInMeleeRange, _friendsInRange);
-            /* foreach (GameObject target in _friendsInRange)
-            {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
-            }
-
-            foreach (GameObject target in _friendsInMeleeRange)
-            {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1, target.transform.position.z);
-                Instantiate(indicator, Pos, Quaternion.identity, target.transform);
-            } */
         }
     }
 
