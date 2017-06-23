@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attacking : MonoBehaviour
 {
-    MapData mapData;
+    public MapData mapData;
     UIManager overlay;
     int meleeRange, rangedRange;
     public bool targetsListed; // Only call determine once
@@ -13,7 +13,7 @@ public class Attacking : MonoBehaviour
 
     public bool attackAdded = false;
 
-    Movement movement;
+    public Movement movement;
 
     // Set with character stats
     float meleeStrength, rangedStrength;
@@ -26,30 +26,23 @@ public class Attacking : MonoBehaviour
 
     // Inspector
     public GameObject indicator;
-    public GameObject map;
 
     // Info
-    CharacterData characterData;
-
-    private void Awake()
-    {
-        characterData = GetComponent<CharacterData>();
-    }
+    public BaseCharacter baseCharacter;
 
     void Start()
     {
-        meleeRange = characterData.meleeRange;
-        rangedRange = characterData.rangedRange;
+        meleeRange = baseCharacter.meleeRange;
+        rangedRange = baseCharacter.rangedRange;
 
-        meleeStrength = characterData.meleeStrength;
-        rangedStrength = characterData.rangedStrength;
+        meleeStrength = baseCharacter.meleeStrength;
+        rangedStrength = baseCharacter.rangedStrength;
 
         startingNumAttacks = numOfAttacks;
         movement = GetComponent<Movement>();
 
         targetsListed = false;
         characterSelected = false;
-        mapData = map.GetComponent<MapData>();
 
         _enemiesInRange = new List<GameObject>();
         _friendsInRange = new List<GameObject>();
@@ -177,27 +170,27 @@ public class Attacking : MonoBehaviour
         {
             if (typeOfAttack == "Melee")
             {
-                currentEnemy.GetComponent<CharacterData>().health -= meleeStrength;
+                currentEnemy.GetComponent<BaseCharacter>().health -= meleeStrength;
 
                 if (currentEnemy.GetComponent<Attacking>().meleeStrength % 2 == 0)
                 {
-                    GetComponent<CharacterData>().health -= (currentEnemy.GetComponent<Attacking>().meleeStrength / 2);
+                    GetComponent<BaseCharacter>().health -= (currentEnemy.GetComponent<Attacking>().meleeStrength / 2);
                 } else
                 {
-                    GetComponent<CharacterData>().health -= ((currentEnemy.GetComponent<Attacking>().meleeStrength - 1)/ 2);
+                    GetComponent<BaseCharacter>().health -= ((currentEnemy.GetComponent<Attacking>().meleeStrength - 1)/ 2);
                 }
             } else if(typeOfAttack == "Ranged")
             {
-                currentEnemy.GetComponent<CharacterData>().health -= rangedStrength;
+                currentEnemy.GetComponent<BaseCharacter>().health -= rangedStrength;
             }
         } else if(gameObject.tag == "Enemy")
         {
             if (typeOfAttack == "Melee")
             {
-                currentCharacter.GetComponent<CharacterData>().health -= meleeStrength;
+                currentCharacter.GetComponent<BaseCharacter>().health -= meleeStrength;
             } else if(typeOfAttack == "Ranged")
             {
-                currentCharacter.GetComponent<CharacterData>().health -= meleeStrength;
+                currentCharacter.GetComponent<BaseCharacter>().health -= meleeStrength;
             }
         }
 

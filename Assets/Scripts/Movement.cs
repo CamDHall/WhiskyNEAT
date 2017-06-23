@@ -6,9 +6,9 @@ public class Movement : MonoBehaviour {
 
 
     // Objects
-    Attacking attacking;
-    MapData mapData;
-    public GameObject Map;
+    public Attacking attacking;
+    public MapData mapData;
+    public BaseCharacter baseCharacter;
 
     public List<GameObject> reachableTiles, inRange;
     public float moves;
@@ -18,13 +18,11 @@ public class Movement : MonoBehaviour {
     public bool moveAdded = false;
 
 	void Start () {
-        attacking = GetComponent<Attacking>();
         PhaseManager.characterPhase = Phase.Moving;
-        mapData = Map.GetComponent<MapData>();
         reachableTiles = new List<GameObject>();
         inRange = new List<GameObject>();
 
-        moves = GetComponent<CharacterData>().moves;
+        moves = baseCharacter.moves;
         startingMoves = moves;
 	}
 	

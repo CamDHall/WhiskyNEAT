@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public static int turns;
-    public static CharacterData selectedCharacterData;
+    public static BaseCharacter selectedBaseCharacter;
 
 	void Start () {
-        selectedCharacterData = null;
+        selectedBaseCharacter = null;
         turns = 0;
 	}
 

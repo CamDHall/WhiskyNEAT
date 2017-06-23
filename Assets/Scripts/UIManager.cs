@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour {
     // Character info
     public static GameObject selectedCharacter;
     public GameObject infoPane;
-    CharacterData data;
+    BaseCharacter data;
     Attacking selectedToAttack;
 
     public Text characterHealth, characterMoves, characterMeleeSTR, characterRangedSTR, characterCourage, characterName;
@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour {
                 if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend")
                 {
                     selectedCharacter = hit.transform.gameObject;
-                    data = selectedCharacter.GetComponent<CharacterData>();
+                    data = selectedCharacter.GetComponent<BaseCharacter>();
                     selectedToAttack = selectedCharacter.GetComponent<Attacking>();
                 } else
                 {

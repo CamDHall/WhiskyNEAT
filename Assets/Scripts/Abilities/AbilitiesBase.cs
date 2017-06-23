@@ -6,6 +6,11 @@ public class AbilitiesBase : MonoBehaviour {
 
     public string _abilityNumber;
 
+    public void ManaManager(int cost)
+    {
+        GetComponent<BaseCharacter>().mana -= cost;
+    }
+
 	public void SetInfo(string number)
     {
         _abilityNumber = number;

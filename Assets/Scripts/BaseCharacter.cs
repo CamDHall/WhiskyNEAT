@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour {
 
-    MapData mapData;
-    public GameObject map;
+    public MapData mapData;
 
-    CharacterData characterData;
+    public float health, _meleeDefense, _rangedDefense, _spellDefense;
+    public float moves;
+    public int numAttacks, meleeStrength, rangedStrength;
+    public int meleeRange, rangedRange;
+    public float courage;
+    public int mana;
 
-    void Start () {
-        mapData = map.GetComponent<MapData>();
-        characterData = GetComponent<CharacterData>();
-	}
-	
-	void Update () {
-        if(characterData.health <= 0)
+    void Update () {
+        if(health <= 0)
         {
             if (gameObject.tag == "Enemy")
             {
