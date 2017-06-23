@@ -48,8 +48,4 @@ public class MapData : MonoBehaviour {
             tileInfo.Add(tile.transform.position, 1 + tile.transform.position.y);
         }
     }
-	
-	void Update () {
-		
-	}
 }

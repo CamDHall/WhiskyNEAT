@@ -109,7 +109,6 @@ public class Attacking : MonoBehaviour
                     {
                         if (gameObject.tag == "Friend")
                         {
-                            Debug.Log(gameObject.name);
                             foreach (GameObject enemy in _enemiesInRange)
                             {
                                 if (hit.transform.position == enemy.transform.position)

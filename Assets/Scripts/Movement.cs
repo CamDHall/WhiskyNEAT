@@ -64,7 +64,9 @@ public class Movement : MonoBehaviour {
                 foreach (GameObject tile in mapData.tiles)
                 {
                     if (tile.transform.position.y == 0)
+                    {
                         mapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - transform.position.x) + Mathf.Abs(tile.transform.position.z - transform.position.z);
+                    }
                     else if (tile.transform.position.y == 0.25f)
                         mapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - transform.position.x) + Mathf.Abs(tile.transform.position.z - transform.position.z) + 0.25f;
                     else if (tile.transform.position.y == 0.5f)

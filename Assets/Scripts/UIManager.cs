@@ -213,6 +213,7 @@ public class UIManager : MonoBehaviour {
             foreach (GameObject target in rangedTargets)
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Debug.Log(target.transform.position);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
                 container.Add(img);

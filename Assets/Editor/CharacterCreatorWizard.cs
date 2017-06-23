@@ -20,12 +20,10 @@ public class CharacterCreatorWizard : ScriptableWizard {
     public string tag;
     public MapData mapData;
 
-    public GameObject indicator;
-
     [MenuItem ("Character Tools/Create Character...")]
     static void CreateWizard()
     {
-        ScriptableWizard.DisplayWizard<CharacterCreatorWizard>("Create Character", "Create", "Update");
+        ScriptableWizard.DisplayWizard<CharacterCreatorWizard>("Create Character", "Create");
     }
 
     void OnWizardCreate()
@@ -68,6 +66,12 @@ public class CharacterCreatorWizard : ScriptableWizard {
 
         movement.mapData = mapData;
         attacking.mapData = mapData;
-        attacking.indicator = indicator;
+
+        if(Selection.activeTransform != null && Selection.activeTransform.gameObject.tag == "Tile")
+        {
+            characterGO.transform.parent = Selection.activeTransform;
+        }
+
+        characterGO.transform.localPosition = new Vector3(0, 1, 0);
     }
 }
