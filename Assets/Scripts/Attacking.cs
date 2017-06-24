@@ -150,7 +150,7 @@ public class Attacking : MonoBehaviour
                             {
                                 if (hit.transform.position == enemy.transform.position)
                                 {
-                                    currentEnemy = hit.transform.gameObject;
+                                    currentCharacter = hit.transform.gameObject;
                                     Damage();
                                 }
                             }
@@ -186,6 +186,10 @@ public class Attacking : MonoBehaviour
         {
             if (typeOfAttack == "Melee")
             {
+                if(currentCharacter == null)
+                {
+                    Debug.Log("HERE");
+                }
                 currentCharacter.GetComponent<BaseCharacter>().health -= meleeStrength;
             } else if(typeOfAttack == "Ranged")
             {

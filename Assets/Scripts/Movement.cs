@@ -92,11 +92,7 @@ public class Movement : MonoBehaviour {
                             moves -= (int)mapData.tileInfo[hit.transform.position];
                             transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                             // Reset tile colors
-                            foreach (GameObject oldTile in reachableTiles)
-                            {
-                                oldTile.GetComponent<Renderer>().material.color = oldTile.GetComponent<SampleColors>().oldColor;
-                            }
-                            break;
+                            ResetTiles();
                         }
                     }
                 }
@@ -108,5 +104,13 @@ public class Movement : MonoBehaviour {
     {
         moveAdded = true;
         PhaseManager.numMoved++;
+    }
+
+    public void ResetTiles()
+    {
+        foreach (GameObject oldTile in reachableTiles)
+        {
+            oldTile.GetComponent<Renderer>().material.color = oldTile.GetComponent<SampleColors>().oldColor;
+        }
     }
 }

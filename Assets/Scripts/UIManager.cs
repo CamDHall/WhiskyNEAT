@@ -136,6 +136,7 @@ public class UIManager : MonoBehaviour {
 
     public void StartAttackingButton()
     {
+        selectedCharacter.GetComponent<Movement>().ResetTiles();
         PhaseManager.characterPhase = Phase.Attacking;
     }
 
