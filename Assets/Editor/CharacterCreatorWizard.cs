@@ -23,7 +23,7 @@ public class CharacterCreatorWizard : ScriptableWizard {
     [MenuItem ("Character Tools/Create Character...")]
     static void CreateWizard()
     {
-        ScriptableWizard.DisplayWizard<CharacterCreatorWizard>("Create Character", "Create");
+        ScriptableWizard.DisplayWizard<CharacterCreatorWizard>("Create Character", "Create", "Update/Save");
     }
 
     void OnWizardCreate()
@@ -73,5 +73,20 @@ public class CharacterCreatorWizard : ScriptableWizard {
         }
 
         characterGO.transform.localPosition = new Vector3(0, 1, 0);
+    }
+
+    void OnWizardOtherButton()
+    {
+        foreach (GameObject current in Selection.gameObjects)
+        {
+            current.GetComponent<Attacking>().mapData = mapData;
+            current.GetComponent<Movement>().mapData = mapData;
+            current.GetComponent<BaseCharacter>().mapData = mapData;
+
+            if (mapData != null)
+            {
+                PrefabUtility.CreatePrefab("Assets/Assets/Prefabs/Characters/" + Selection.activeTransform.gameObject.name + ".prefab", current, ReplacePrefabOptions.Default);
+            }
+        }
     }
 }
