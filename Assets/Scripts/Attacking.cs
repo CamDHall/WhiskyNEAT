@@ -69,6 +69,15 @@ public class Attacking : MonoBehaviour
             movement.moveAdded = false;
         }
 
+        // Reset Tiles
+        if(PhaseManager.characterPhase == Phase.Attacking)
+        {
+            if(GetComponent<Movement>().reachableTiles != null)
+            {
+                GetComponent<Movement>().ResetTiles();
+            }
+        }
+
 
         // Selecting character to perform attack
         if (PhaseManager.characterPhase == Phase.Attacking && !characterSelected)

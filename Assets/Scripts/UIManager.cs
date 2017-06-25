@@ -134,11 +134,6 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void HighlightTiles()
-    {
-
-    }
-
     public void StartAttackingButton()
     {
         if (selectedCharacter != null)
@@ -190,11 +185,25 @@ public class UIManager : MonoBehaviour {
 
     void OverlayOn(List<GameObject> meleeTargets, List<GameObject> rangedTargets)
     {
-        Debug.Log("OVERLAY");
+        List<GameObject> allTargets = new List<GameObject>();
         if (meleeTargets != null)
         {
-            foreach (GameObject target in meleeTargets)
+            foreach(GameObject mTarget in meleeTargets)
             {
+                allTargets.Add(mTarget);
+            }
+
+            foreach(GameObject rTarget in rangedTargets)
+            {
+                if(!allTargets.Contains(rTarget))
+                {
+                    allTargets.Add(rTarget);
+                }
+            }
+
+            /*foreach (GameObject target in meleeTargets)
+            {
+                Debug.Log("Melee Targets");
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
@@ -203,27 +212,27 @@ public class UIManager : MonoBehaviour {
 
             foreach (GameObject target in rangedTargets)
             {
+                Debug.Log("Ranged Targets");
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
                 container.Add(img);
-            }
+            } */
         }
 
         if (rangedTargets != null)
         {
-            foreach (GameObject target in meleeTargets)
+            foreach(GameObject rTarget in rangedTargets)
             {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
-                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
-                img.transform.SetParent(worldCanvas.transform);
-                container.Add(img);
+                if(!allTargets.Contains(rTarget))
+                {
+                    allTargets.Add(rTarget);
+                }
             }
 
-            foreach (GameObject target in rangedTargets)
+            foreach(GameObject target in allTargets)
             {
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
-                Debug.Log(target.transform.position);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
                 container.Add(img);
