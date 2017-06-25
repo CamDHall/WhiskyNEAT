@@ -134,9 +134,17 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    public void HighlightTiles()
+    {
+
+    }
+
     public void StartAttackingButton()
     {
-        selectedCharacter.GetComponent<Movement>().ResetTiles();
+        if (selectedCharacter != null)
+        {
+            selectedCharacter.GetComponent<Movement>().ResetTiles();
+        }
         PhaseManager.characterPhase = Phase.Attacking;
     }
 
@@ -182,6 +190,7 @@ public class UIManager : MonoBehaviour {
 
     void OverlayOn(List<GameObject> meleeTargets, List<GameObject> rangedTargets)
     {
+        Debug.Log("OVERLAY");
         if (meleeTargets != null)
         {
             foreach (GameObject target in meleeTargets)
