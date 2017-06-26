@@ -79,10 +79,6 @@ public class CharacterCreatorWizard : ScriptableWizard {
     {
         foreach (GameObject current in Selection.gameObjects)
         {
-            current.GetComponent<Attacking>().mapData = mapData;
-            current.GetComponent<Movement>().mapData = mapData;
-            current.GetComponent<BaseCharacter>().mapData = mapData;
-
             if (mapData != null)
             {
                 PrefabUtility.CreatePrefab("Assets/Assets/Prefabs/Characters/" + Selection.activeTransform.gameObject.name + ".prefab", current, ReplacePrefabOptions.Default);

@@ -50,7 +50,6 @@ public class UIManager : MonoBehaviour {
             characterName.enabled = false;
         } else
         {
-            // selectedCharacter.GetComponent<Renderer>().material.color = Color.blue;
             characterHealth.enabled = true;
             characterMoves.enabled = true;
             characterCourage.enabled = true;
@@ -190,6 +189,7 @@ public class UIManager : MonoBehaviour {
         {
             foreach(GameObject mTarget in meleeTargets)
             {
+                Debug.Log(mTarget.name);
                 allTargets.Add(mTarget);
             }
 
@@ -200,24 +200,6 @@ public class UIManager : MonoBehaviour {
                     allTargets.Add(rTarget);
                 }
             }
-
-            /*foreach (GameObject target in meleeTargets)
-            {
-                Debug.Log("Melee Targets");
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
-                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
-                img.transform.SetParent(worldCanvas.transform);
-                container.Add(img);
-            }
-
-            foreach (GameObject target in rangedTargets)
-            {
-                Debug.Log("Ranged Targets");
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
-                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
-                img.transform.SetParent(worldCanvas.transform);
-                container.Add(img);
-            } */
         }
 
         if (rangedTargets != null)

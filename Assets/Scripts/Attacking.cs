@@ -233,6 +233,7 @@ public class Attacking : MonoBehaviour
 
                 if (mapData.enenmyInfo[enemy.transform.position] <= meleeRange)
                 {
+                    Debug.Log(enemy.name);
                     _enemiesInMeleeRange.Add(enemy);
                 }
 

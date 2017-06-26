@@ -24,7 +24,7 @@ public class PhaseManager : MonoBehaviour {
 	void Update () {
         // Debug.Log(RoundManager.whosTurn + ": " + characterPhase);
 
-		if(RoundManager.whosTurn == Turns.Allies)
+		if(RoundManager.whosTurn == Turns.Friend)
         {
             if(numMoved == numFriendlies)
             {
@@ -34,13 +34,13 @@ public class PhaseManager : MonoBehaviour {
             if(numAttacked == numFriendlies)
             {
                 characterPhase = Phase.Moving;
-                RoundManager.whosTurn = Turns.Enemies;
+                RoundManager.whosTurn = Turns.Enemy;
                 numMoved = 0;
                 numAttacked = 0;
             }
         }
 
-        if(RoundManager.whosTurn == Turns.Enemies)
+        if(RoundManager.whosTurn == Turns.Enemy)
         {
             if(numMoved == numEnemies)
             {
@@ -50,7 +50,7 @@ public class PhaseManager : MonoBehaviour {
             if(numAttacked == numEnemies)
             {
                 characterPhase = Phase.Moving;
-                RoundManager.whosTurn = Turns.Allies;
+                RoundManager.whosTurn = Turns.Friend;
                 numMoved = 0;
                 numAttacked = 0;
                 GameManager.turns++;
