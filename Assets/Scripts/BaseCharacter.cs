@@ -23,7 +23,7 @@ public class BaseCharacter : MonoBehaviour {
                 Destroy(gameObject);
             } else
             {
-                mapData.characters.Remove(gameObject);
+                mapData.friends.Remove(gameObject);
                 PhaseManager.numFriendlies--;
                 Destroy(gameObject);
             }

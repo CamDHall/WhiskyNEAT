@@ -10,7 +10,7 @@ public class RoundManager : MonoBehaviour {
     MapData mapData;
     public GameObject map;
 
-    void Awake () {
+    void Start () {
         whosTurn = Turns.Friend;
         mapData = map.GetComponent<MapData>();
 	}
@@ -29,13 +29,14 @@ public class RoundManager : MonoBehaviour {
 
     void SetupEnemies()
     {
-        foreach(GameObject friend in mapData.characters)
+        Debug.Log(mapData.enemies.Count);
+        foreach (GameObject friend in GameObject.FindGameObjectsWithTag("Friend"))
         {
             friend.GetComponent<Movement>().enabled = false;
             friend.GetComponent<Attacking>().enabled = false;
         }
 
-        foreach(GameObject enemy in mapData.enemies)
+        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemy.GetComponent<Movement>().enabled = true;
             enemy.GetComponent<Attacking>().enabled = true;
@@ -44,13 +45,13 @@ public class RoundManager : MonoBehaviour {
 
     void SetupFriends()
     {
-        foreach (GameObject friend in mapData.characters)
+        foreach (GameObject friend in GameObject.FindGameObjectsWithTag("Friend"))
         {
             friend.GetComponent<Movement>().enabled = true;
             friend.GetComponent<Attacking>().enabled = true;
         }
 
-        foreach(GameObject enemy in mapData.enemies)
+        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemy.GetComponent<Movement>().enabled = false;
             enemy.GetComponent<Attacking>().enabled = false;

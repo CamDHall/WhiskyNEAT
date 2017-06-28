@@ -59,7 +59,7 @@ public class Movement : MonoBehaviour {
         // Select character
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.position == transform.position && hit.transform.gameObject.tag == RoundManager.whosTurn.ToString())
+            if (hit.transform.position == transform.position)
             {
                 foreach (GameObject tile in mapData.tiles)
                 {
@@ -78,6 +78,9 @@ public class Movement : MonoBehaviour {
                         tile.GetComponent<Renderer>().material.color = Color.black;
                     }
                 }
+            } else
+            {
+                ResetTiles();
             }
 
             if (Physics.Raycast(ray, out hit))

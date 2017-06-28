@@ -79,7 +79,7 @@ public class UIManager : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend")
+                if (hit.transform.gameObject.tag == "Friend" || hit.transform.gameObject.tag == "Enemy")
                 {
                     selectedCharacter = hit.transform.gameObject;
                     data = selectedCharacter.GetComponent<BaseCharacter>();
@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour {
             characterCourage.text = "Courage: " + data.courage.ToString();
             characterName.text = data.name.ToString();
 
-            if (PhaseManager.characterPhase == Phase.Attacking && 
+            if (PhaseManager.characterPhase == Phase.Attacking && selectedToAttack.numOfAttacks > 0 && 
                 (selectedCharacter.GetComponent<Attacking>()._enemiesInRange.Count > 0 
                 || selectedCharacter.GetComponent<Attacking>()._friendsInRange.Count > 0
                 || selectedCharacter.GetComponent<Attacking>()._enemiesInMeleeRange.Count > 0
@@ -189,7 +189,6 @@ public class UIManager : MonoBehaviour {
         {
             foreach(GameObject mTarget in meleeTargets)
             {
-                Debug.Log(mTarget.name);
                 allTargets.Add(mTarget);
             }
 

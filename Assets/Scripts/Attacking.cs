@@ -233,7 +233,6 @@ public class Attacking : MonoBehaviour
 
                 if (mapData.enenmyInfo[enemy.transform.position] <= meleeRange)
                 {
-                    Debug.Log(enemy.name);
                     _enemiesInMeleeRange.Add(enemy);
                 }
 
@@ -244,7 +243,7 @@ public class Attacking : MonoBehaviour
             }
         } else
         {
-            foreach(GameObject friend in mapData.characters)
+            foreach(GameObject friend in mapData.friends)
             {
                 if (friend.transform.position.y == 1.0f)
                     mapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - transform.position.x) + Mathf.Abs(friend.transform.position.z - transform.position.z);

@@ -10,7 +10,7 @@ public class MapData : MonoBehaviour {
 
     public GameObject[] tiles;
     public List<GameObject> enemies;
-    public List<GameObject> characters;
+    public List<GameObject> friends;
 
 	void Start () {
         tiles = GameObject.FindGameObjectsWithTag("Tile");
@@ -25,7 +25,7 @@ public class MapData : MonoBehaviour {
 
         foreach(GameObject friend in GameObject.FindGameObjectsWithTag("Friend"))
         {
-            characters.Add(friend);
+            friends.Add(friend);
         }
 
         friendsInfo = new Dictionary<Vector3, float>();
@@ -37,7 +37,7 @@ public class MapData : MonoBehaviour {
         }
 
         // Character
-        foreach(GameObject character in characters)
+        foreach(GameObject character in friends)
         {
             friendsInfo.Add(character.transform.position, character.transform.position.y);
         }
