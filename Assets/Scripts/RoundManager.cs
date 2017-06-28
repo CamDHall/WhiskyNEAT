@@ -29,7 +29,6 @@ public class RoundManager : MonoBehaviour {
 
     void SetupEnemies()
     {
-        Debug.Log(mapData.enemies.Count);
         foreach (GameObject friend in GameObject.FindGameObjectsWithTag("Friend"))
         {
             friend.GetComponent<Movement>().enabled = false;

@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour {
             characterCourage.text = "Courage: " + data.courage.ToString();
             characterName.text = data.name.ToString();
 
-            if (PhaseManager.characterPhase == Phase.Attacking && selectedToAttack.numOfAttacks > 0 && 
+            if (PhaseManager.characterPhase == Phase.Attacking && selectedCharacter.tag == RoundManager.whosTurn.ToString() &&
                 (selectedCharacter.GetComponent<Attacking>()._enemiesInRange.Count > 0 
                 || selectedCharacter.GetComponent<Attacking>()._friendsInRange.Count > 0
                 || selectedCharacter.GetComponent<Attacking>()._enemiesInMeleeRange.Count > 0
@@ -147,9 +147,9 @@ public class UIManager : MonoBehaviour {
         if (type == "Melee" || type == "Ranged")
         {
             if (selectedToAttack.gameObject.tag == "Friend")
-                OverlayOn(selectedToAttack._enemiesInMeleeRange, selectedToAttack._enemiesInRange);
+                OverlayOn(selectedToAttack._enemiesInMeleeRange, selectedToAttack._enemiesInRange, type);
             else
-                OverlayOn(selectedToAttack._friendsInMeleeRange, selectedToAttack._friendsInRange);
+                OverlayOn(selectedToAttack._friendsInMeleeRange, selectedToAttack._friendsInRange, type);
         } else
             selectedCharacter.GetComponent<AbilitiesBase>().SetInfo(type);
 
@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour {
         DefaultActions("AbilityThree");
     }
 
-    void OverlayOn(List<GameObject> meleeTargets, List<GameObject> rangedTargets)
+    void OverlayOn(List<GameObject> meleeTargets, List<GameObject> rangedTargets, string type)
     {
         List<GameObject> allTargets = new List<GameObject>();
         if (meleeTargets != null)
@@ -192,6 +192,17 @@ public class UIManager : MonoBehaviour {
                 allTargets.Add(mTarget);
             }
 
+            /*foreach(GameObject rTarget in rangedTargets)
+            {
+                if(!allTargets.Contains(rTarget))
+                {
+                    allTargets.Add(rTarget);
+                }
+            } */
+        }
+
+        if (rangedTargets != null && type == "Ranged")
+        {
             foreach(GameObject rTarget in rangedTargets)
             {
                 if(!allTargets.Contains(rTarget))
@@ -201,23 +212,12 @@ public class UIManager : MonoBehaviour {
             }
         }
 
-        if (rangedTargets != null)
+        foreach (GameObject target in allTargets)
         {
-            foreach(GameObject rTarget in rangedTargets)
-            {
-                if(!allTargets.Contains(rTarget))
-                {
-                    allTargets.Add(rTarget);
-                }
-            }
-
-            foreach(GameObject target in allTargets)
-            {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
-                Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
-                img.transform.SetParent(worldCanvas.transform);
-                container.Add(img);
-            }
+            Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+            Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
+            img.transform.SetParent(worldCanvas.transform);
+            container.Add(img);
         }
     }
 
