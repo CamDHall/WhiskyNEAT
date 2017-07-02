@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WolfgangAbilities : AbilitiesBase {
+public class WolfgangAbilities : MonoBehaviour {
 
 	public void AbilityOne()
     {
-        Reset();
+       // Reset();
     }
 
     public void AbilityTwo()
     {
-        Reset();
+        // Reset();
     }
 
     public void AbilityThree()
     {
-        Reset();
+        // Reset();
     }
 }

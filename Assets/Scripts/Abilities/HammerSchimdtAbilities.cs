@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class HammerSchimdtAbilities : AbilitiesBase {
 
-    void Update()
+    BaseCharacter data;
+
+    void Start()
     {
-        
+        data = GetComponent<BaseCharacter>();
     }
 
-    void AbilityOne()
+    public void AbilityOne()
     {
-        Reset();
+        Mana(5);
+        data.health += 5;
+        data.ability1_used = true;
+
     }
 
-    void AbilityTwo()
+    public void AbilityTwo()
     {
-        Reset();
+        //Reset();
     }
 
-    void AbilityThree()
+    public void AbilityThree()
     {
-        Reset();
+        //Reset();
     }
 }

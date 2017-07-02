@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour {
     bool showingOverlay = false;
     List<Image> container;
 
+    public GameObject aButtonOne, aButtonTwo, aButtonThree;
+
     //
     public Text turn, whosText, phaseText;
     public GameObject startAttacking;
@@ -22,7 +24,7 @@ public class UIManager : MonoBehaviour {
     public static GameObject selectedCharacter;
     public GameObject infoPane;
     BaseCharacter data;
-    Attacking selectedToAttack;
+    GameObject selectedToAttack;
 
     public Text characterHealth, characterMoves, characterMeleeSTR, characterRangedSTR, characterCourage, characterName;
 
@@ -38,8 +40,9 @@ public class UIManager : MonoBehaviour {
         abilityBar.SetActive(false);
     }
 	
-	void Update () {    
-        if(selectedCharacter == null)
+	void Update () {
+
+        if (selectedCharacter == null)
         {
             OverlayOff();
             characterHealth.enabled = false;
@@ -83,7 +86,7 @@ public class UIManager : MonoBehaviour {
                 {
                     selectedCharacter = hit.transform.gameObject;
                     data = selectedCharacter.GetComponent<BaseCharacter>();
-                    selectedToAttack = selectedCharacter.GetComponent<Attacking>();
+                    selectedToAttack = selectedCharacter;
                 } else
                 {
                     selectedCharacter = null;
@@ -107,7 +110,8 @@ public class UIManager : MonoBehaviour {
                 || selectedCharacter.GetComponent<Attacking>()._friendsInMeleeRange.Count > 0))
             {
                 abilityBar.SetActive(true);
-                if (selectedToAttack._enemiesInRange.Count > 0 || selectedToAttack._friendsInRange.Count > 0)
+
+                if (selectedToAttack.GetComponent<Attacking>()._enemiesInRange.Count > 0 || selectedToAttack.GetComponent<Attacking>()._friendsInRange.Count > 0)
                 {
                     rangedButton.SetActive(true);
                 }
@@ -116,7 +120,7 @@ public class UIManager : MonoBehaviour {
                     rangedButton.SetActive(false);
                 }
 
-                if (selectedToAttack._enemiesInMeleeRange.Count > 0 || selectedToAttack._friendsInMeleeRange.Count > 0)
+                if (selectedToAttack.GetComponent<Attacking>()._enemiesInMeleeRange.Count > 0 || selectedToAttack.GetComponent<Attacking>()._friendsInMeleeRange.Count > 0)
                 {
                     meleeButton.SetActive(true);
                 }
@@ -147,14 +151,13 @@ public class UIManager : MonoBehaviour {
         if (type == "Melee" || type == "Ranged")
         {
             if (selectedToAttack.gameObject.tag == "Friend")
-                OverlayOn(selectedToAttack._enemiesInMeleeRange, selectedToAttack._enemiesInRange, type);
+                OverlayOn(selectedToAttack.GetComponent<Attacking>()._enemiesInMeleeRange, selectedToAttack.GetComponent<Attacking>()._enemiesInRange, type);
             else
-                OverlayOn(selectedToAttack._friendsInMeleeRange, selectedToAttack._friendsInRange, type);
-        } else
-            selectedCharacter.GetComponent<AbilitiesBase>().SetInfo(type);
+                OverlayOn(selectedToAttack.GetComponent<Attacking>()._friendsInMeleeRange, selectedToAttack.GetComponent<Attacking>()._friendsInRange, type);
+        }
 
-        selectedToAttack.characterSelected = true;
-        selectedToAttack.typeOfAttack = type;
+        selectedToAttack.GetComponent<Attacking>().characterSelected = true;
+        selectedToAttack.GetComponent<Attacking>().typeOfAttack = type;
     }
 
     public void MeleeButton()
@@ -169,17 +172,65 @@ public class UIManager : MonoBehaviour {
 
     public void AbilityOne()
     {
-        DefaultActions("AbilityOne");
+        string abilityName = selectedToAttack.gameObject.name;
+
+        if(abilityName == "George Hammerschmidt")
+        {
+            selectedToAttack.GetComponent<HammerSchimdtAbilities>().AbilityOne();
+        } else if(abilityName == "Demitri Wolfgang")
+        {
+            selectedToAttack.GetComponent<WolfgangAbilities>().AbilityOne();
+        } else if(abilityName == "Chang")
+        {
+            selectedToAttack.GetComponent<ChangAbilities>().AbilityOne();
+        } else if(abilityName == "Garry Nation")
+        {
+            selectedToAttack.GetComponent<NationAbilities>().AbilityOne();
+        }
     }
 
     public void AbilityTwo()
     {
-        DefaultActions("AbilityTwo");
+        string abilityName = selectedToAttack.gameObject.name;
+
+        if (abilityName == "George Hammerschmidt")
+        {
+            selectedToAttack.GetComponent<HammerSchimdtAbilities>().AbilityTwo();
+        }
+        else if (abilityName == "Demitri Wolfgang")
+        {
+            selectedToAttack.GetComponent<WolfgangAbilities>().AbilityTwo();
+        }
+        else if (abilityName == "Chang")
+        {
+            selectedToAttack.GetComponent<ChangAbilities>().AbilityTwo();
+        }
+        else if (abilityName == "Garry Nation")
+        {
+            selectedToAttack.GetComponent<NationAbilities>().AbilityTwo();
+        }
     }
 
     public void AbilityThree()
     {
-        DefaultActions("AbilityThree");
+        string abilityName = selectedToAttack.gameObject.name;
+
+        if (abilityName == "George Hammerschmidt")
+        {
+            selectedToAttack.GetComponent<HammerSchimdtAbilities>().AbilityThree();
+        }
+        else if (abilityName == "Demitri Wolfgang")
+        {
+            selectedToAttack.GetComponent<WolfgangAbilities>().AbilityThree();
+        }
+        else if (abilityName == "Chang")
+        {
+            selectedToAttack.GetComponent<ChangAbilities>().AbilityThree();
+        }
+        else if (abilityName == "Garry Nation")
+        {
+            selectedToAttack.GetComponent<NationAbilities>().AbilityOne();
+        }
     }
 
     void OverlayOn(List<GameObject> meleeTargets, List<GameObject> rangedTargets, string type)

@@ -4,25 +4,8 @@ using UnityEngine;
 
 public class AbilitiesBase : MonoBehaviour {
 
-    public string _abilityNumber;
-
-    public void ManaManager(int cost)
+    public void Mana(int mana)
     {
-        GetComponent<BaseCharacter>().mana -= cost;
-    }
-
-	public void SetInfo(string number)
-    {
-        _abilityNumber = number;
-    }
-
-    public void Reset()
-    {
-        _abilityNumber = "empty";
-    }
-
-    void Update()
-    {
-        // Debug.Log(_abilityNumber);
+        GetComponent<BaseCharacter>().mana -= mana;
     }
 }

@@ -6,6 +6,9 @@ public class BaseCharacter : MonoBehaviour {
 
     public MapData mapData;
 
+    // Abilites
+    public bool ability1_used = false, ability2_used = false, ability3_used = false;
+
     public float health, _meleeDefense, _rangedDefense, _spellDefense;
     public float moves;
     public int numAttacks, meleeStrength, rangedStrength;
