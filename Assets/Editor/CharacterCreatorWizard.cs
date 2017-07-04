@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class CharacterCreatorWizard : ScriptableWizard {
     
-    // Replace with models later
+    /*// Replace with models later
     public Mesh _mesh;
     public Material _mat;
 
@@ -84,5 +84,5 @@ public class CharacterCreatorWizard : ScriptableWizard {
                 PrefabUtility.CreatePrefab("Assets/Assets/Prefabs/Characters/" + Selection.activeTransform.gameObject.name + ".prefab", current, ReplacePrefabOptions.Default);
             }
         }
-    }
+    }*/
 }

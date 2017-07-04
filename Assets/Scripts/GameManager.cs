@@ -3,18 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CharacterTeam { Friend, Enemy }
+public enum Phase { Moving, Attacking }
 public class GameManager : MonoBehaviour {
 
-    public static int turns;
+    // What team's turn it is and what phase they're on
+    public static CharacterTeam characterTeam;
+    public static Phase currentPhase;
+    public static int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
+
+    // Selected info
+    public static GameObject selectedCharacter;
+    public static CharacterData selectedCharacterInfo;
     public static BaseCharacter selectedBaseCharacter;
 
-	void Start () {
-        selectedBaseCharacter = null;
-        turns = 0;
-	}
+    // Targeting
+    public GameObject selectedTarget;
 
-    void Update()
+    void Awake()
     {
+        characterTeam = CharacterTeam.Friend;
+        currentPhase = Phase.Moving;
+    }
+
+    void Start()
+    {
+        haveGone = 0;
+
+        selectedCharacter = null;
+        selectedCharacterInfo = null;
+        selectedBaseCharacter = null;
+    }
+
+    public static void ChangeTeams()
+    {
+        if (characterTeam == CharacterTeam.Friend)
+            characterTeam = CharacterTeam.Enemy;
+        else
+            characterTeam = CharacterTeam.Friend;
 
     }
 }

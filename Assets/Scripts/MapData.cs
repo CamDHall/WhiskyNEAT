@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MapData : MonoBehaviour {
 
-    public Dictionary<Vector3, float> tileInfo;
+    public static Dictionary<Vector3, float> tileInfo;
     public Dictionary<Vector3, float> enenmyInfo;
     public Dictionary<Vector3, float> friendsInfo;
 
-    public GameObject[] tiles;
+    public static GameObject[] tiles;
     public List<GameObject> enemies;
     public List<GameObject> friends;
 

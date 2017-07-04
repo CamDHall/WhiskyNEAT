@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attacking : MonoBehaviour {
+public class CharacterStates : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
