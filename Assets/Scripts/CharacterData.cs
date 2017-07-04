@@ -8,9 +8,11 @@ public class CharacterData : MonoBehaviour {
     public int moves;
     public int numberOfAttacks;
 
+    public int rangedDistance, meleeDistance;
+    public int rangedStrength, meleeStrength;
+
     void Update()
     {
-        if(gameObject.name == "George Hammerschmidt")
-            Debug.Log(moves);
+
     }
 }

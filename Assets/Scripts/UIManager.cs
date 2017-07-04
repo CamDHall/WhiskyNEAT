@@ -20,10 +20,10 @@ public class UIManager : MonoBehaviour {
                 if(hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend")
                 {
                     CharacterSelected(hit.transform.gameObject.tag.ToString(), hit.transform.gameObject.GetComponent<CharacterData>(), hit.transform.gameObject);
-                } else if(!Targeting.reachableTiles.Contains(hit.transform.gameObject))
+                } else if(!Paths.reachableTiles.Contains(hit.transform.gameObject))
                 {
                     NothingSelected();
-                    Targeting.ResetTiles();
+                    Paths.ResetTiles();
                 }
             }
         }

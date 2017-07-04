@@ -5,14 +5,20 @@ using UnityEngine;
 public class MapData : MonoBehaviour {
 
     public static Dictionary<Vector3, float> tileInfo;
-    public Dictionary<Vector3, float> enenmyInfo;
-    public Dictionary<Vector3, float> friendsInfo;
+    public static Dictionary<Vector3, float> enenmyInfo;
+    public static Dictionary<Vector3, float> friendsInfo;
 
     public static GameObject[] tiles;
-    public List<GameObject> enemies;
-    public List<GameObject> friends;
+    public static List<GameObject> enemies;
+    public static List<GameObject> friends;
 
 	void Start () {
+        // Declare and clear statics
+        enemies = new List<GameObject>();
+        friends = new List<GameObject>();
+
+        enenmyInfo = new Dictionary<Vector3, float>();
+        friendsInfo = new Dictionary<Vector3, float>();
         tiles = GameObject.FindGameObjectsWithTag("Tile");
         tileInfo = new Dictionary<Vector3, float>();
 

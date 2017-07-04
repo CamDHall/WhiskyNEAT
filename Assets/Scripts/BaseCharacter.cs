@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum State { Moving, Attacking, Idle }
 [RequireComponent(typeof(Attacking), typeof(Movement))]
 public abstract class BaseCharacter : MonoBehaviour {
 
@@ -16,18 +17,13 @@ public abstract class BaseCharacter : MonoBehaviour {
         characterData = GetComponent<CharacterData>();
     }
 
-    public enum State
-    {
-        Moving, Attacking, Idle
-    }
-
     public State currentState = State.Idle;
 
     public void EnterState(State state)
     {
         // Only exit moving and attacking when their aren't any moves or attacks left
         if (!(currentState == State.Moving && characterData.moves != 0) || (currentState == State.Attacking && characterData.numberOfAttacks != 0))
-        ExitState(currentState);
+            ExitState(currentState);
 
         currentState = state;
 
@@ -78,7 +74,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
 
     // Attacking
-    protected abstract void EnterAttacking();
+    void EnterAttacking() { }
     protected abstract void HandleAttacking();
     protected virtual void ExitAttacking()
     {
@@ -88,11 +84,16 @@ public abstract class BaseCharacter : MonoBehaviour {
     // Moving
     protected virtual void EnterMoving()
     {
-        Targeting.ChangeTiles();
+        Paths.ChangeTiles();
         HandleState(State.Moving);
     }
     protected virtual void HandleMoving()
     {
+        if(characterData.moves == 0)
+        {
+            movement.isMoving = false;
+            EnterState(State.Attacking);
+        }
         movement.isMoving = true;
     }
     protected virtual void ExitMoving()
@@ -108,7 +109,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         if (GameManager.currentPhase == Phase.Moving)
         {
             ExitState(State.Idle);
-            if (mapData.friends.Count == GameManager.haveGone)
+            if (MapData.friends.Count == GameManager.haveGone)
             {
                 Debug.Log("HERE");
                 EnterState(State.Attacking);
@@ -121,7 +122,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
         if (GameManager.currentPhase == Phase.Attacking)
         {
-            if (mapData.friends.Count == GameManager.haveGone)
+            if (MapData.friends.Count == GameManager.haveGone)
             {
                 EnterState(State.Moving);
                 GameManager.currentPhase = Phase.Moving;

@@ -4,38 +4,61 @@ using UnityEngine;
 
 public class Targeting {
 
-    public static List<GameObject> reachableTiles = new List<GameObject>();
-
-    public static void ChangeTiles()
+    public static void DetermineTargets(string team, int rangedRange, int meleeRange, GameObject current)
     {
-        reachableTiles.Clear();
-        Transform currentTransform = GameManager.selectedCharacter.transform; // For transform.position
-
-        foreach (GameObject tile in MapData.tiles)
+        Attacking attacking = current.GetComponent<Attacking>();
+        // Check if this is a character or enemy
+        if (team == "Friend")
         {
-            if (tile.transform.position.y == 0)
+            foreach (GameObject enemy in MapData.enemies)
             {
-                MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z);
-            }
-            else if (tile.transform.position.y == 0.25f)
-                MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.25f;
-            else if (tile.transform.position.y == 0.5f)
-                MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.5f;
+                if (enemy.transform.position.y == 1)
+                    MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - 
+                        current.transform.position.x) + Mathf.Abs(enemy.transform.position.z - current.transform.position.z);
+                else if (enemy.transform.position.y == 1.25f)
+                    MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - current.transform.position.x) + 
+                        Mathf.Abs(enemy.transform.position.z - current.transform.position.z) + 0.25f;
+                else if (enemy.transform.position.y == 1.5f)
+                    MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - current.transform.position.x) + 
+                        Mathf.Abs(enemy.transform.position.z - current.transform.position.z) + 0.5f;
 
-            if (MapData.tileInfo[tile.transform.position] <= GameManager.selectedCharacterInfo.moves && !(tile.transform.position == GameManager.selectedCharacter.transform.parent.transform.position))
-            {
-                reachableTiles.Add(tile);
-                tile.GetComponent<Renderer>().material.color = Color.black;
+                if (MapData.enenmyInfo[enemy.transform.position] <= rangedRange)
+                {
+                    attacking._enemiesInMeleeRange.Add(enemy);
+                }
+
+                if (MapData.enenmyInfo[enemy.transform.position] <= meleeRange)
+                {
+                    attacking._enemiesInRangedRange.Add(enemy);
+                }
             }
         }
-    }
-
-    public static void ResetTiles()
-    {
-        foreach (GameObject oldTile in reachableTiles)
+        else
         {
-            oldTile.GetComponent<Renderer>().material.color = oldTile.GetComponent<SampleColors>().oldColor;
-        }
-    }
+            foreach (GameObject friend in MapData.friends)
+            {
+                if (friend.transform.position.y == 1.0f)
+                    MapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - current.transform.position.x) + 
+                        Mathf.Abs(friend.transform.position.z - current.transform.position.z);
+                else if (friend.transform.position.y == 1.25f)
+                    MapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - current.transform.position.x) + 
+                        Mathf.Abs(friend.transform.position.z - current.transform.position.z) + 0.25f;
+                else if (friend.transform.position.y == 1.5f)
+                    MapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - current.transform.position.x) + 
+                        Mathf.Abs(friend.transform.position.z - current.transform.position.z) + 0.5f;
 
+                if (MapData.friendsInfo[friend.transform.position] <= meleeRange)
+                {
+                    attacking._friendsInMeleeRange.Add(friend);
+                }
+
+                if (MapData.friendsInfo[friend.transform.position] <= rangedRange)
+                {
+                   attacking._friendsInRangedRange.Add(friend);
+                }
+            }
+        }
+
+        Debug.Log(attacking._enemiesInRangedRange.Count);
+    }
 }

@@ -7,11 +7,7 @@ public class Chang : BaseCharacter {
 
     void Update()
     {
-    }
 
-    protected override void EnterAttacking()
-    {
-        throw new NotImplementedException();
     }
 
     protected override void ExitAttacking()

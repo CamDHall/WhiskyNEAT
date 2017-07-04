@@ -12,14 +12,14 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter != null)
+        if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter == this.gameObject)
         {   
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                foreach (GameObject tile in Targeting.reachableTiles)
+                foreach (GameObject tile in Paths.reachableTiles)
                 {
                     if (tile.transform.childCount <= 0)
                     {
@@ -29,11 +29,11 @@ public class Movement : MonoBehaviour {
                             GameManager.selectedCharacterInfo.moves -= (int)MapData.tileInfo[hit.transform.position];
                             transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                             // Reset tile colors
-                            Targeting.ResetTiles();
+                            Paths.ResetTiles();
                         }
                     } else if(hit.transform.position != GameManager.selectedCharacter.transform.position)
                     {
-                        Targeting.ResetTiles();
+                        Paths.ResetTiles();
                     }
                 }
             }
