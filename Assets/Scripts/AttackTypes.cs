@@ -14,9 +14,8 @@ public class AttackTypes {
         {
             target.GetComponent<CharacterData>().health -= attacker.GetComponent<CharacterData>().rangedStrength;
         }
-
-        attacker.GetComponent<CharacterData>().numberOfAttacks--;
-
+        attacker.GetComponent<CharacterData>().currentNumberofAttacks--;
         attacker.GetComponent<CharacterMenu>().OverlayOff();
+        attacker.GetComponent<CharacterMenu>().DisplayOff();
     }
 }

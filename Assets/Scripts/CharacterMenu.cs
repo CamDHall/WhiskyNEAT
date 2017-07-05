@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterMenu : BaseCharacter {
 
-    public GameObject menu;
-    BaseCharacter baseCharacter;
+    public GameObject menu, meleeButton, rangedButton;
 
     public Image indicator;
     List<Image> imgs;
@@ -14,14 +13,41 @@ public class CharacterMenu : BaseCharacter {
 
     void Awake()
     {
-        baseCharacter = GetComponent<BaseCharacter>();
+        characterData = GetComponent<CharacterData>();
         menu.SetActive(false);
         imgs = new List<Image>();
+        if (characterData.rangedDistance == 0)
+            rangedButton = null;
     }
 
     public void DisplayActionBar()
     {
         menu.SetActive(true);
+        if(gameObject.tag == "Friend")
+        {
+            // Turn melee on and off
+            if (attacking._enemiesInMeleeRange.Count == 0)
+                meleeButton.SetActive(false);
+            else
+                meleeButton.SetActive(true);
+
+            // Turn ranged on and off
+            if (attacking._enemiesInRangedRange.Count == 0 && characterData.rangedDistance != 0)
+                rangedButton.SetActive(false);
+            else if(characterData.rangedDistance != 0)
+                rangedButton.SetActive(true);
+        } else
+        {
+            if (attacking._friendsInMeleeRange.Count == 0)
+                meleeButton.SetActive(false);
+            else
+                meleeButton.SetActive(true);
+
+            if (attacking._friendsInRangedRange.Count == 0 && characterData.rangedDistance != 0)
+                rangedButton.SetActive(false);
+            else if(characterData.rangedDistance != 0)
+                rangedButton.SetActive(true);
+        }
     }
 
     public void DisplayOff()

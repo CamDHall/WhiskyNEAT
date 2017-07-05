@@ -9,7 +9,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     MapData mapData;
     Movement movement;
-    CharacterData characterData;
+    public CharacterData characterData;
     public Attacking attacking;
 
     void Start()
@@ -25,7 +25,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     public void EnterState(State state)
     {
         // Only exit moving and attacking when their aren't any moves or attacks left
-        if (!(currentState == State.Moving && characterData.moves != 0) || (currentState == State.Attacking && characterData.numberOfAttacks != 0))
+        if (!(currentState == State.Moving && characterData.moves != 0) || (currentState == State.Attacking && characterData.currentNumberofAttacks != 0))
             ExitState(currentState);
 
         currentState = state;
@@ -61,7 +61,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
     }
 
-    protected virtual void ExitState(State state)
+    public void ExitState(State state)
     {
         switch(state)
         {
@@ -80,8 +80,15 @@ public abstract class BaseCharacter : MonoBehaviour {
     // Attacking
     protected virtual void EnterAttacking()
     {
-        Targeting.DetermineTargets(gameObject.tag.ToString(), characterData.rangedDistance, characterData.meleeDistance, this.gameObject);
-        GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayActionBar();
+        if (characterData.currentNumberofAttacks <= 0)
+        {
+            ExitState(State.Attacking);
+        }
+        else
+        {
+            Targeting.DetermineTargets(gameObject.tag.ToString(), characterData.rangedDistance, characterData.meleeDistance, this.gameObject);
+            GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayActionBar();
+        }
     }
     protected virtual void HandleAttacking()
     {
@@ -109,7 +116,8 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
     protected virtual void ExitMoving()
     {
-
+        // Reset number of current attacks
+        characterData.currentNumberofAttacks = characterData.numberofAttacks;
     }
 
     // Idle

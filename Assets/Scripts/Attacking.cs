@@ -24,10 +24,11 @@ public class Attacking : MonoBehaviour {
     {
         characterData = GetComponent<CharacterData>();
         baseCharacter = GetComponent<BaseCharacter>();
+        characterData.currentNumberofAttacks = characterData.numberofAttacks;
     }
 
     void Update () {
-		if(baseCharacter.currentState == State.Attacking && isAttacking)
+		if(baseCharacter.currentState == State.Attacking && isAttacking && characterData.currentNumberofAttacks > 0)
         {
             if(Input.GetMouseButtonDown(0))
             {
@@ -66,6 +67,11 @@ public class Attacking : MonoBehaviour {
                     }
                 }
             }
+        }
+
+        if(characterData.currentNumberofAttacks <= 0 && baseCharacter.currentState == State.Attacking)
+        {
+            baseCharacter.ExitState(State.Attacking);
         }
 	}
 }
