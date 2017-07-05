@@ -10,9 +10,9 @@ public abstract class BaseCharacter : MonoBehaviour {
     MapData mapData;
     Movement movement;
     CharacterData characterData;
-    Attacking attacking;
+    public Attacking attacking;
 
-    void Awake()
+    void Start()
     {
         mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
         movement = GetComponent<Movement>();
@@ -83,10 +83,13 @@ public abstract class BaseCharacter : MonoBehaviour {
         Targeting.DetermineTargets(gameObject.tag.ToString(), characterData.rangedDistance, characterData.meleeDistance, this.gameObject);
         GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayActionBar();
     }
-    protected abstract void HandleAttacking();
+    protected virtual void HandleAttacking()
+    {
+        attacking.isAttacking = true;
+    }
     protected virtual void ExitAttacking()
     {
-
+        attacking.isAttacking = false;
     }
 
     // Moving
@@ -142,7 +145,7 @@ public abstract class BaseCharacter : MonoBehaviour {
             }
         }
     }
-    protected abstract void HandleIdle();
+    protected virtual void HandleIdle() {}
     protected virtual void ExitIdle() {}
 
     //

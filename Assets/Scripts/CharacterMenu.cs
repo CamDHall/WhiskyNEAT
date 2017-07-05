@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterMenu : MonoBehaviour {
+public class CharacterMenu : BaseCharacter {
 
     public GameObject menu;
-    Attacking attacking;
+    BaseCharacter baseCharacter;
 
     public Image indicator;
     List<Image> imgs;
@@ -14,7 +14,7 @@ public class CharacterMenu : MonoBehaviour {
 
     void Awake()
     {
-        attacking = GetComponent<Attacking>();
+        baseCharacter = GetComponent<BaseCharacter>();
         menu.SetActive(false);
         imgs = new List<Image>();
     }
@@ -35,7 +35,6 @@ public class CharacterMenu : MonoBehaviour {
         {
             foreach(GameObject target in attacking._enemiesInMeleeRange)
             {
-                Debug.Log("MELEE");
                 Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
@@ -51,6 +50,9 @@ public class CharacterMenu : MonoBehaviour {
                 imgs.Add(img);
             }
         }
+
+        HandleState(State.Attacking);
+        attacking.type = "Melee";
     }
 
     public void RangedButton()
@@ -75,5 +77,18 @@ public class CharacterMenu : MonoBehaviour {
                 imgs.Add(img);
             }
         }
+
+        HandleState(State.Attacking);
+        attacking.type = "Ranged";
+    }
+
+    public void OverlayOff()
+    {
+        foreach(Image img in imgs)
+        {
+            Destroy(img);
+        }
+
+        imgs.Clear();
     }
 }
