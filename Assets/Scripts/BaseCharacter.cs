@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ public abstract class BaseCharacter : MonoBehaviour {
     MapData mapData;
     Movement movement;
     CharacterData characterData;
+    Attacking attacking;
 
     void Awake()
     {
         mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
         movement = GetComponent<Movement>();
         characterData = GetComponent<CharacterData>();
+        attacking = GetComponent<Attacking>();
     }
 
     public State currentState = State.Idle;
@@ -33,6 +36,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 EnterAttacking();
                 break;
             case State.Moving:
+
                 EnterMoving();
                 break;
             case State.Idle:
@@ -74,7 +78,11 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
 
     // Attacking
-    void EnterAttacking() { }
+    protected virtual void EnterAttacking()
+    {
+        Targeting.DetermineTargets(gameObject.tag.ToString(), characterData.rangedDistance, characterData.meleeDistance, this.gameObject);
+        GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayActionBar();
+    }
     protected abstract void HandleAttacking();
     protected virtual void ExitAttacking()
     {

@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour {
                         if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
                         {
                             transform.parent = hit.transform;
-                            GameManager.selectedCharacterInfo.moves -= (int)MapData.tileInfo[hit.transform.position];
+                            GameManager.selectedCharacterData.moves -= (int)MapData.tileInfo[hit.transform.position];
                             transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                             // Reset tile colors
                             Paths.ResetTiles();

@@ -22,7 +22,8 @@ public class Paths : MonoBehaviour {
             else if (tile.transform.position.y == 0.5f)
                 MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.5f;
 
-            if (MapData.tileInfo[tile.transform.position] <= GameManager.selectedCharacterInfo.moves && !(tile.transform.position == GameManager.selectedCharacter.transform.parent.transform.position))
+            if (MapData.tileInfo[tile.transform.position] <= GameManager.selectedCharacterData.moves && 
+                !(tile.transform.childCount > 0))
             {
                 reachableTiles.Add(tile);
                 tile.GetComponent<Renderer>().material.color = Color.black;

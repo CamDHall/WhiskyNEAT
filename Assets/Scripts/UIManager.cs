@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour {
             }
         }
 
-        if(GameManager.selectedCharacterInfo != null)
+        if(GameManager.selectedCharacterData != null)
         {
             // Debug.Log(GameManager.selectedCharacterInfo.health);
         }
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour {
     void NothingSelected()
     {
         GameManager.selectedCharacter = null;
-        GameManager.selectedCharacterInfo = null;
+        GameManager.selectedCharacterData = null;
     }
 
     void CharacterSelected(string team, CharacterData info, GameObject hit)
@@ -45,13 +45,13 @@ public class UIManager : MonoBehaviour {
         if(team == GameManager.characterTeam.ToString())
         {
             GameManager.selectedCharacter = hit;
-            GameManager.selectedCharacterInfo = hit.transform.gameObject.GetComponent<CharacterData>();
+            GameManager.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();
             GameManager.selectedBaseCharacter = GameManager.selectedCharacter.GetComponent<BaseCharacter>();
             BaseCharacter baseCharacter = GameManager.selectedBaseCharacter;
 
             baseCharacter.EnterState(baseCharacter.currentState);
         }
 
-        GameManager.selectedCharacterInfo = info;
+        GameManager.selectedCharacterData = info;
     }
 }

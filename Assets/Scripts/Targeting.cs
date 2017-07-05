@@ -24,12 +24,12 @@ public class Targeting {
 
                 if (MapData.enenmyInfo[enemy.transform.position] <= rangedRange)
                 {
-                    attacking._enemiesInMeleeRange.Add(enemy);
+                    attacking._enemiesInRangedRange.Add(enemy);
                 }
 
                 if (MapData.enenmyInfo[enemy.transform.position] <= meleeRange)
                 {
-                    attacking._enemiesInRangedRange.Add(enemy);
+                    attacking._enemiesInMeleeRange.Add(enemy);
                 }
             }
         }
@@ -58,7 +58,5 @@ public class Targeting {
                 }
             }
         }
-
-        Debug.Log(attacking._enemiesInRangedRange.Count);
     }
 }

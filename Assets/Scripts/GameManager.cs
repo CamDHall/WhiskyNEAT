@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 
     // Selected info
     public static GameObject selectedCharacter;
-    public static CharacterData selectedCharacterInfo;
+    public static CharacterData selectedCharacterData;
     public static BaseCharacter selectedBaseCharacter;
 
     // Targeting
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
         haveGone = 0;
 
         selectedCharacter = null;
-        selectedCharacterInfo = null;
+        selectedCharacterData = null;
         selectedBaseCharacter = null;
     }
 

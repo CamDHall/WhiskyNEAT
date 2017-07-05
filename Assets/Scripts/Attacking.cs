@@ -8,6 +8,8 @@ public class Attacking : MonoBehaviour {
     public List<GameObject> _friendsInMeleeRange = new List<GameObject>();
     public List<GameObject> _enemiesInMeleeRange = new List<GameObject>();
 
+    bool determined = false;
+
     // List of targets in Ranged Range
     public List<GameObject> _friendsInRangedRange = new List<GameObject>();
     public List<GameObject> _enemiesInRangedRange = new List<GameObject>();
@@ -22,10 +24,9 @@ public class Attacking : MonoBehaviour {
     }
 
     void Update () {
-		if(baseCharacter.currentState == State.Attacking && GameManager.selectedCharacter == gameObject)
+		if(baseCharacter.currentState == State.Attacking)
         {
-            Targeting.DetermineTargets(gameObject.tag.ToString(), characterData.rangedDistance, characterData.meleeDistance, this.gameObject);
-            Debug.Log(_enemiesInRangedRange.Count);
+            //Debug.Log(_enemiesInMeleeRange.Count);
         }
 	}
 }
