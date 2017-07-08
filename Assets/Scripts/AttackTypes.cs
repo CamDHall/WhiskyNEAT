@@ -17,5 +17,7 @@ public class AttackTypes {
         attacker.GetComponent<CharacterData>().currentNumberofAttacks--;
         attacker.GetComponent<CharacterMenu>().OverlayOff();
         attacker.GetComponent<CharacterMenu>().DisplayOff();
+
+        GameManager.selectedCharacter = null;
     }
 }

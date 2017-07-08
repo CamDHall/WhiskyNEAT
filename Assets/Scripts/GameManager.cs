@@ -35,6 +35,15 @@ public class GameManager : MonoBehaviour {
         selectedBaseCharacter = null;
     }
 
+    void Update()
+    {
+       if(haveGone == MapData.enemies.Count)
+        {
+            ChangeTeams();
+            haveGone = 0;
+        }
+    }
+
     public static void ChangeTeams()
     {
         if (characterTeam == CharacterTeam.Friend)
