@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour {
 
     public static void ChangeTeams()
     {
-        Debug.Log("CHANGED");
         haveGone = 0;
         if (characterTeam == CharacterTeam.Friend)
         {

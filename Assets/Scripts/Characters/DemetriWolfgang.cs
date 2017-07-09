@@ -10,17 +10,17 @@ public class DemetriWolfgang : BaseCharacter {
 
     }
 
-    protected override void ExitAttacking()
-    {
-        base.ExitAttacking();
-    }
-
-    protected override void HandleAttacking()
+    public override void AbilityOne()
     {
         throw new NotImplementedException();
     }
 
-    protected override void HandleIdle()
+    public override void AbilityThree()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void AbilityTwo()
     {
         throw new NotImplementedException();
     }

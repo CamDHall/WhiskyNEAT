@@ -45,7 +45,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
     }
 
-    protected virtual void HandleState(State state)
+    public virtual void HandleState(State state)
     {
         switch (state)
         {
@@ -132,5 +132,19 @@ public abstract class BaseCharacter : MonoBehaviour {
     void EnterDone()
     {
         characterData.currentNumberofMoves = characterData.moves;
+    }
+
+    // Define functions for abilities
+    public virtual void AbilityOne()
+    {
+        characterData.currentNumberofAttacks--;
+    }
+    public virtual void AbilityTwo()
+    {
+        characterData.currentNumberofAttacks--;
+    }
+    public virtual void AbilityThree()
+    {
+        characterData.currentNumberofAttacks--;
     }
 }
