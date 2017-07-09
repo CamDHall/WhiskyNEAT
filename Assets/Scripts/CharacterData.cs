@@ -5,11 +5,16 @@ using UnityEngine;
 public class CharacterData : MonoBehaviour {
 
     public int health;
-    public int moves;
+    public int currentNumberofMoves, moves;
     public int currentNumberofAttacks, numberofAttacks;
 
     public int rangedDistance, meleeDistance;
     public int rangedStrength, meleeStrength;
+
+    void Awake()
+    {
+        currentNumberofMoves = moves;
+    }
 
     void Update()
     {

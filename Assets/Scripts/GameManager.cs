@@ -4,12 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum CharacterTeam { Friend, Enemy }
-public enum Phase { Moving, Attacking }
 public class GameManager : MonoBehaviour {
 
     // What team's turn it is and what phase they're on
     public static CharacterTeam characterTeam;
-    public static Phase currentPhase;
     public static int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
 
     // Selected info
@@ -23,7 +21,6 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         characterTeam = CharacterTeam.Friend;
-        currentPhase = Phase.Moving;
     }
 
     void Start()
@@ -46,10 +43,23 @@ public class GameManager : MonoBehaviour {
 
     public static void ChangeTeams()
     {
+        Debug.Log("CHANGED");
+        haveGone = 0;
         if (characterTeam == CharacterTeam.Friend)
+        {
             characterTeam = CharacterTeam.Enemy;
+            foreach (GameObject enemy in MapData.enemies)
+            {
+                enemy.GetComponent<BaseCharacter>().EnterState(State.Idle);
+            }
+        }
         else
+        {
             characterTeam = CharacterTeam.Friend;
-
+            foreach(GameObject friend in MapData.friends)
+            {
+                friend.GetComponent<BaseCharacter>().EnterState(State.Idle);
+            }
+        }
     }
 }

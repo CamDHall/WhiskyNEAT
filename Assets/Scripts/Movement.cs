@@ -14,10 +14,11 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (characterData.moves == 0 && GetComponent<BaseCharacter>().currentState == State.Moving)
+
+        if (characterData.currentNumberofMoves == 0 && GetComponent<BaseCharacter>().currentState == State.Moving)
         {
             isMoving = false;
-            GetComponent<BaseCharacter>().EnterState(State.Attacking);
+            GetComponent<BaseCharacter>().ExitState(State.Moving);
         }
         if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter == this.gameObject)
         {   
@@ -33,7 +34,7 @@ public class Movement : MonoBehaviour {
                         if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
                         {
                             transform.parent = hit.transform;
-                            GameManager.selectedCharacterData.moves -= (int)MapData.tileInfo[hit.transform.position];
+                            GameManager.selectedCharacterData.currentNumberofMoves -= (int)MapData.tileInfo[hit.transform.position];
                             transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                             // Reset tile colors
                             Paths.ResetTiles();

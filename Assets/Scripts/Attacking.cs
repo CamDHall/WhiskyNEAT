@@ -91,7 +91,6 @@ public class Attacking : MonoBehaviour {
 
         if (characterData.currentNumberofAttacks <= 0 && baseCharacter.currentState == State.Attacking)
         {
-            Debug.Log(baseCharacter.currentState + " " + gameObject.name);
             baseCharacter.ExitState(State.Attacking);
         }
 	}

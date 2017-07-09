@@ -8,25 +8,28 @@ public class Paths : MonoBehaviour {
 
     public static void ChangeTiles()
     {
-        reachableTiles.Clear();
-        Transform currentTransform = GameManager.selectedCharacter.transform; // For transform.position
-
-        foreach (GameObject tile in MapData.tiles)
+        if (GameManager.selectedCharacter != null && GameManager.selectedCharacterData.currentNumberofMoves > 0)
         {
-            if (tile.transform.position.y == 0)
-            {
-                MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z);
-            }
-            else if (tile.transform.position.y == 0.25f)
-                MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.25f;
-            else if (tile.transform.position.y == 0.5f)
-                MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.5f;
+            reachableTiles.Clear();
+            Transform currentTransform = GameManager.selectedCharacter.transform; // For transform.position
 
-            if (MapData.tileInfo[tile.transform.position] <= GameManager.selectedCharacterData.moves && 
-                !(tile.transform.childCount > 0))
+            foreach (GameObject tile in MapData.tiles)
             {
-                reachableTiles.Add(tile);
-                tile.GetComponent<Renderer>().material.color = Color.black;
+                if (tile.transform.position.y == 0)
+                {
+                    MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z);
+                }
+                else if (tile.transform.position.y == 0.25f)
+                    MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.25f;
+                else if (tile.transform.position.y == 0.5f)
+                    MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.5f;
+
+                if (MapData.tileInfo[tile.transform.position] <= GameManager.selectedCharacterData.currentNumberofMoves &&
+                    !(tile.transform.childCount > 0))
+                {
+                    reachableTiles.Add(tile);
+                    tile.GetComponent<Renderer>().material.color = Color.black;
+                }
             }
         }
     }

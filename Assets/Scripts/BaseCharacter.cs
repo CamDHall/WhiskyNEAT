@@ -39,6 +39,9 @@ public abstract class BaseCharacter : MonoBehaviour {
             case State.Idle:
                 EnterIdle();
                 break;
+            case State.Done:
+                EnterDone();
+                break;
         }
     }
 
@@ -86,7 +89,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected virtual void ExitAttacking()
     {
         attacking.isAttacking = false;
-        currentState = State.Done;
+        EnterState(State.Done);
         GameManager.haveGone++;
     }
 
@@ -104,6 +107,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     {
         // Reset number of current attacks
         characterData.currentNumberofAttacks = characterData.numberofAttacks;
+        EnterState(State.Attacking);
     }
 
     // Idle
@@ -111,48 +115,22 @@ public abstract class BaseCharacter : MonoBehaviour {
     {
         // Debug.Log("ENETERED IDLE");
         // if the amount of characters that have moved equals the size of a team, change states
-        if (GameManager.currentPhase == Phase.Moving)
+        ExitState(State.Idle);
+        if (MapData.friends.Count == GameManager.haveGone)
         {
-            ExitState(State.Idle);
-            if (MapData.friends.Count == GameManager.haveGone)
-            {
-                EnterState(State.Attacking);
-            }
-            else
-            {
-                EnterState(State.Moving);
-            }
+            EnterState(State.Attacking);
         }
-
-        if (GameManager.currentPhase == Phase.Attacking)
+        else
         {
-            if (MapData.friends.Count == GameManager.haveGone)
-            {
-
-                EnterState(State.Moving);
-                GameManager.currentPhase = Phase.Moving;
-                GameManager.ChangeTeams();
-            }
-            else
-            {
-                EnterAttacking();
-            }
+            EnterState(State.Moving);
         }
     }
     protected virtual void HandleIdle() {}
     protected virtual void ExitIdle() {}
 
-    //
-    // General Functions 
-    //
-
-    void Melee(int meleeStrength, CharacterData targetData)
+    // Done
+    void EnterDone()
     {
-        targetData.health -= meleeStrength;
-    }
-
-    void Ranged(int rangedStrength, CharacterData targetData)
-    {
-        targetData.health -= rangedStrength;
+        characterData.currentNumberofMoves = characterData.moves;
     }
 }
