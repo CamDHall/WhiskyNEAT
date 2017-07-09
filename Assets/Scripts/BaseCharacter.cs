@@ -77,8 +77,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     // Attacking
     protected virtual void EnterAttacking()
     {
-            Targeting.DetermineTargets(gameObject.tag.ToString(), characterData.rangedDistance, characterData.meleeDistance, this.gameObject);
-            GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayActionBar();
+        Targeting.DetermineTargets(GameManager.characterTeam.ToString(), characterData.rangedDistance, characterData.meleeDistance, gameObject);
     }
     protected virtual void HandleAttacking()
     {
@@ -99,11 +98,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
     protected virtual void HandleMoving()
     {
-        if(characterData.moves == 0)
-        {
-            movement.isMoving = false;
-            EnterState(State.Attacking);
-        }
         movement.isMoving = true;
     }
     protected virtual void ExitMoving()

@@ -6,12 +6,19 @@ public class Movement : MonoBehaviour {
 
     public bool isMoving = false;
     MapData mapData;
+    CharacterData characterData;
 
 	void Start () {
         mapData = GameObject.FindGameObjectWithTag("Map").GetComponent<MapData>();
+        characterData = GetComponent<CharacterData>();
 	}
 	
 	void Update () {
+        if (characterData.moves == 0 && GetComponent<BaseCharacter>().currentState == State.Moving)
+        {
+            isMoving = false;
+            GetComponent<BaseCharacter>().EnterState(State.Attacking);
+        }
         if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter == this.gameObject)
         {   
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -28,6 +28,26 @@ public class Attacking : MonoBehaviour {
     }
 
     void Update () {
+        if(baseCharacter.currentState == State.Attacking &&
+            _enemiesInMeleeRange.Count == 0 && _enemiesInRangedRange.Count == 0 && _friendsInMeleeRange.Count == 0 && _friendsInRangedRange.Count == 0)
+        {
+            characterData.currentNumberofAttacks = 0;
+        }
+
+        if(baseCharacter.currentState == State.Attacking && Input.GetMouseButtonDown(0) && characterData.currentNumberofAttacks > 0)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(hit.transform.position == gameObject.transform.position)
+                {
+                    GetComponent<CharacterMenu>().DisplayActionBar();
+                }
+            }
+        }
+
 		if(baseCharacter.currentState == State.Attacking && isAttacking && characterData.currentNumberofAttacks > 0)
         {
             if(Input.GetMouseButtonDown(0))
@@ -69,8 +89,9 @@ public class Attacking : MonoBehaviour {
             }
         }
 
-        if(characterData.currentNumberofAttacks <= 0 && baseCharacter.currentState == State.Attacking)
+        if (characterData.currentNumberofAttacks <= 0 && baseCharacter.currentState == State.Attacking)
         {
+            Debug.Log(baseCharacter.currentState + " " + gameObject.name);
             baseCharacter.ExitState(State.Attacking);
         }
 	}
