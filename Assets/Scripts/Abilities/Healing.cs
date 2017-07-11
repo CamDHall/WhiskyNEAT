@@ -9,4 +9,14 @@ public class Healing {
         characterData.health += 10;
     }
 
+    public static void SlowHeal()
+    {
+
+    }
+
+    public static void AOEHeal()
+    {
+
+    }
+
 }

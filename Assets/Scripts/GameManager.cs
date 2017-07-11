@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public enum CharacterTeam { Friend, Enemy }
 public class GameManager : MonoBehaviour {
 
+    // General info
+    public static int turns;
+    public static string currentTeam;
+
     // What team's turn it is and what phase they're on
     public static CharacterTeam characterTeam;
     public static int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour {
     {
         haveGone = 0;
 
+        turns = 0;
+        currentTeam = "Friends";
         selectedCharacter = null;
         selectedCharacterData = null;
         selectedBaseCharacter = null;
@@ -59,6 +65,8 @@ public class GameManager : MonoBehaviour {
             {
                 friend.GetComponent<BaseCharacter>().EnterState(State.Idle);
             }
+
+            turns++;
         }
     }
 }

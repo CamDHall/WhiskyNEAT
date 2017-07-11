@@ -1,14 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-	void Start () {
-		
-	}
+    public Text turns, currentTeam;
+    public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, name;
 	
 	void Update () {
+        if (GameManager.selectedCharacterData != null)
+        {
+            turns.text = "Turn: " + GameManager.turns.ToString();
+            currentTeam.text = GameManager.currentTeam.ToString() + "'s Turn";
+            health.text = "Health: " + GameManager.selectedCharacterData.health.ToString();
+            movement.text = "Movement: " + GameManager.selectedCharacterData.moves.ToString();
+            courage.text = "Courage: " + GameManager.selectedCharacterData.courage.ToString();
+            meleeSTR.text = "Melee Strength: " + GameManager.selectedCharacterData.meleeStrength.ToString();
+            rangedSTR.text = "Ranged Strength: " + GameManager.selectedCharacterData.ToString();
+            rangedDistance.text = "Ranged Distance: " + GameManager.selectedCharacterData.rangedDistance.ToString();
+            name.text = "Name: " + GameManager.selectedCharacterData.name.ToString();
+        }
 
 		if(Input.GetMouseButtonDown(0))
         {
