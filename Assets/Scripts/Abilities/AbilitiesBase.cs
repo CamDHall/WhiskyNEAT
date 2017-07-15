@@ -9,7 +9,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
 
     AbilityState currentAbilityState = AbilityState.Start;
     int timesCalled = 0;
-    string abilityUsed;
+    string abilityInProgress;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
     public void EnterState(AbilityState state, string nameOfAbility)
     {
         currentAbilityState = state;
-        abilityUsed = nameOfAbility;
+        abilityInProgress = nameOfAbility;
 
         switch (state)
         {
@@ -44,18 +44,39 @@ public abstract class AbilitiesBase : MonoBehaviour {
     void StartAbility()
     {
         timesCalled = 0;
-        EnterState(AbilityState.Handle, abilityUsed);
+        EnterState(AbilityState.Handle, abilityInProgress);
 
     }
 
-    void HandleAbility(string ability)
-    { 
+    // Run sinle turn abilities
+    public virtual void HandleAbility(string ability)
+    {
+        Debug.Log("Not Overloaded");
         switch (ability)
+        {
+            case "SlowHeal":
+                if(timesCalled < 3) { 
+                Healing.SlowHeal(characterData);
+                timesCalled++;
+                    }
+                break;
+            case "BasicHeal":
+                Healing.BasicHeal(characterData);
+                ExitAbility();
+                break;
+        }
+    }
+
+    // Override to handle in progress abilities
+    public virtual void HandleAbility()
+    {
+        Debug.Log("Overloaded");
+        switch (abilityInProgress)
         {
             case "SlowHeal":
                 if (timesCalled < 3)
                 {
-                    Healing.SlowHeal();
+                    Healing.SlowHeal(characterData);
                     timesCalled++;
                 }
                 break;

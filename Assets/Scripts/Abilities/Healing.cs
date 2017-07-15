@@ -9,9 +9,9 @@ public class Healing : AbilitiesBase {
         data.health += 10;
     }
 
-    public static void SlowHeal()
+    public static void SlowHeal(CharacterData data)
     {
-
+        data.health += 4;
     }
 
     public static void AOEHeal()

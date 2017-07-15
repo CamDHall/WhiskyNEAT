@@ -130,17 +130,20 @@ public class CharacterMenu : MonoBehaviour {
     {
         baseCharacter.AbilityOne();
         ability1.interactable = false;
+        GameManager.selectedCharacterData.currentNumberofAttacks--;
     }
 
     public void SecondAbility()
     {
         baseCharacter.AbilityTwo();
         ability2.interactable = false;
+        GetComponent<CharacterData>().currentNumberofAttacks--;
     }
 
     public void ThirdAbility()
     {
         baseCharacter.AbilityThree();
         ability3.interactable = false;
+        GameManager.selectedCharacterData.currentNumberofAttacks--;
     }
 }
