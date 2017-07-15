@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Healing {
+public class Healing : AbilitiesBase {
 
-	public static void BasicHeal(CharacterData characterData)
+	public static void BasicHeal(CharacterData data)
     {
-        characterData.health += 10;
+        data.health += 10;
     }
 
     public static void SlowHeal()

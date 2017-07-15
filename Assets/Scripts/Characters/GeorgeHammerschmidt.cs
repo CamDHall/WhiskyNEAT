@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class GeorgeHammerschmidt : BaseCharacter {
 
-	void Update () {
-	}
+    int timesAbilityCalled = 0;
 
     public override void AbilityOne()
     {
-        Healing.BasicHeal(characterData);
-    }
-
-    public override void AbilityThree()
-    {
-        Debug.Log("TWO");
+        EnterState(AbilityState.Start, "BasicHeal");
+        //Healing.BasicHeal(characterData);
     }
 
     public override void AbilityTwo()
     {
-        Debug.Log("THREE");
+        EnterState(AbilityState.Start, "SlowHeal");
+        //abilitiesBase.SlowHealManager();
+    }
+
+    public override void AbilityThree()
+    {
+       
     }
 }

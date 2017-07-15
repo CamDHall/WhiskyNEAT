@@ -5,11 +5,10 @@ using UnityEngine;
 
 public enum State { Moving, Attacking, Idle, Done }
 [RequireComponent(typeof(Attacking), typeof(Movement))]
-public abstract class BaseCharacter : MonoBehaviour {
+public abstract class BaseCharacter : AbilitiesBase {
 
     MapData mapData;
     Movement movement;
-    public CharacterData characterData;
     public Attacking attacking;
 
     void Start()
