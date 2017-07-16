@@ -90,6 +90,7 @@ public abstract class BaseCharacter : AbilitiesBase {
         attacking.isAttacking = false;
         EnterState(State.Done);
         GameManager.haveGone++;
+        Debug.Log(gameObject.name);
     }
 
     // Moving
@@ -134,17 +135,9 @@ public abstract class BaseCharacter : AbilitiesBase {
         characterData.currentNumberofMoves = characterData.moves;
     }
 
-    // Define functions for abilities
-    public virtual void AbilityOne()
+    public void Death(GameObject attacker)
     {
-        characterData.currentNumberofAttacks--;
-    }
-    public virtual void AbilityTwo()
-    {
-        characterData.currentNumberofAttacks--;
-    }
-    public virtual void AbilityThree()
-    {
-        characterData.currentNumberofAttacks--;
+        RemoveDead.Remove(gameObject, attacker);
+        Destroy(gameObject);
     }
 }

@@ -19,5 +19,9 @@ public class AttackTypes {
         attacker.GetComponent<CharacterMenu>().DisplayOff();
 
         GameManager.selectedCharacter = null;
+        if(target.GetComponent<CharacterData>().health <= 0)
+        {
+            target.GetComponent<BaseCharacter>().Death(attacker);
+        }
     }
 }

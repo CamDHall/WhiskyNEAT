@@ -51,7 +51,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
     // Run sinle turn abilities
     public virtual void HandleAbility(string ability)
     {
-        Debug.Log("Not Overloaded");
         switch (ability)
         {
             case "SlowHeal":
@@ -84,5 +83,19 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 ExitAbility();
                 break;
         }
+    }
+
+    // Define functions for abilities
+    public virtual void AbilityOne()
+    {
+        characterData.currentNumberofAttacks--;
+    }
+    public virtual void AbilityTwo()
+    {
+        characterData.currentNumberofAttacks--;
+    }
+    public virtual void AbilityThree()
+    {
+        characterData.currentNumberofAttacks--;
     }
 }

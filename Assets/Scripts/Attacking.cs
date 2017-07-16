@@ -28,7 +28,13 @@ public class Attacking : MonoBehaviour {
     }
 
     void Update () {
-        if(baseCharacter.currentState == State.Attacking &&
+        // Check if out of attacks
+        if (characterData.currentNumberofAttacks <= 0 && baseCharacter.currentState == State.Attacking)
+        {
+            baseCharacter.ExitState(State.Attacking);
+        }
+
+        if (baseCharacter.currentState == State.Attacking &&
             _enemiesInMeleeRange.Count == 0 && _enemiesInRangedRange.Count == 0 && _friendsInMeleeRange.Count == 0 && _friendsInRangedRange.Count == 0)
         {
             characterData.currentNumberofAttacks = 0;
@@ -87,11 +93,6 @@ public class Attacking : MonoBehaviour {
                     }
                 }
             }
-        }
-
-        if (characterData.currentNumberofAttacks <= 0 && baseCharacter.currentState == State.Attacking)
-        {
-            baseCharacter.ExitState(State.Attacking);
         }
 	}
 }

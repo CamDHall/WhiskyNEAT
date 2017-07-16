@@ -40,11 +40,15 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-       if(haveGone == MapData.enemies.Count)
+        if(characterTeam == CharacterTeam.Friend && haveGone == MapData.friends.Count)
         {
             ChangeTeams();
-            haveGone = 0;
+        } else if(characterTeam == CharacterTeam.Enemy && haveGone == MapData.enemies.Count)
+        {
+            ChangeTeams();
         }
+
+
     }
 
     public static void ChangeTeams()
