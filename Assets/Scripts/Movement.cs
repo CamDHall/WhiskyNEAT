@@ -20,6 +20,26 @@ public class Movement : MonoBehaviour {
             isMoving = false;
             GetComponent<BaseCharacter>().ExitState(State.Moving);
         }
+
+        // Check if state is moving but Handle state hasn't been called yet, then check for raycast to set path and handle movement
+        if(GetComponent<BaseCharacter>().currentState == State.Moving && !isMoving)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if(Physics.Raycast(ray, out hit))
+                {
+                    if(hit.transform.position == transform.position)
+                    {
+                        Paths.ChangeTiles();
+                        GetComponent<BaseCharacter>().HandleState(State.Moving);
+                    }
+                }
+            }
+        }
+
         if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter == this.gameObject)
         {   
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

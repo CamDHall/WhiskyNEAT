@@ -7,7 +7,7 @@ public class DemetriWolfgang : BaseCharacter {
 
     void Update()
     {
-
+        Debug.Log(currentState);
     }
 
     public override void AbilityOne()

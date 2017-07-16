@@ -70,7 +70,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
     // Override to handle in progress abilities
     public virtual void HandleAbility()
     {
-        Debug.Log("Overloaded");
         switch (abilityInProgress)
         {
             case "SlowHeal":

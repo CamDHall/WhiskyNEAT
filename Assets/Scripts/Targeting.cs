@@ -10,6 +10,8 @@ public class Targeting {
         // Check if this is a character or enemy
         if (team == "Friend")
         {
+            attacking._enemiesInMeleeRange.Clear();
+            attacking._enemiesInRangedRange.Clear();
             foreach (GameObject enemy in MapData.enemies)
             {
                 if (enemy.transform.position.y == 1)
@@ -35,6 +37,8 @@ public class Targeting {
         }
         else
         {
+            attacking._friendsInMeleeRange.Clear();
+            attacking._friendsInRangedRange.Clear();
             foreach (GameObject friend in MapData.friends)
             {
                 if (friend.transform.position.y == 1.0f)

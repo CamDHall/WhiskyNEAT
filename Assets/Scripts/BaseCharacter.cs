@@ -95,8 +95,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     // Moving
     protected virtual void EnterMoving()
     {
-        Paths.ChangeTiles();
-        HandleState(State.Moving);
+        movement.isMoving = false;
     }
     protected virtual void HandleMoving()
     {
@@ -114,6 +113,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     {
         // Debug.Log("ENETERED IDLE");
         // if the amount of characters that have moved equals the size of a team, change states
+
         ExitState(State.Idle);
         if (MapData.friends.Count == GameManager.haveGone)
         {
@@ -121,7 +121,8 @@ public abstract class BaseCharacter : AbilitiesBase {
         }
         else
         {
-            EnterState(State.Moving);
+            if(characterData.currentNumberofMoves != 0)
+                EnterState(State.Moving);
         }
     }
     protected virtual void HandleIdle() {}

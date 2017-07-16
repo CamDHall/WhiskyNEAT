@@ -8,6 +8,7 @@ public class Paths : MonoBehaviour {
 
     public static void ChangeTiles()
     {
+
         if (GameManager.selectedCharacter != null && GameManager.selectedCharacterData.currentNumberofMoves > 0)
         {
             reachableTiles.Clear();
