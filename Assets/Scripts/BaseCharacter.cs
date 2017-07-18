@@ -90,7 +90,6 @@ public abstract class BaseCharacter : AbilitiesBase {
         attacking.isAttacking = false;
         EnterState(State.Done);
         GameManager.haveGone++;
-        Debug.Log(gameObject.name);
     }
 
     // Moving
@@ -139,5 +138,10 @@ public abstract class BaseCharacter : AbilitiesBase {
     {
         RemoveDead.Remove(gameObject, attacker);
         Destroy(gameObject);
+
+        if (attacker.tag == "Friend" && MapData.enemies.Count == 0)
+            EndGame.instance.End(CharacterTeam.Friend);
+        else if (attacker.tag == "Enemy" && MapData.friends.Count == 0)
+            EndGame.instance.End(CharacterTeam.Enemy);
     }
 }
