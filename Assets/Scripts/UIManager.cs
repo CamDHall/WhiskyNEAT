@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour {
             nextPhase.SetActive(false);
         }
 
+        // Display character info
         if (GameManager.selectedCharacterData != null)
         {
             turns.text = "Turn: " + GameManager.turns.ToString();
@@ -49,7 +50,8 @@ public class UIManager : MonoBehaviour {
 
             if(Physics.Raycast(ray, out hit))
             {
-                if(hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend")
+                Debug.Log(hit.transform);
+                if(hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend" || hit.transform.gameObject.layer == LayerMask.NameToLayer("UI"))
                 {
                     CharacterSelected(hit.transform.gameObject.tag.ToString(), hit.transform.gameObject.GetComponent<CharacterData>(), hit.transform.gameObject);
                 } else if(!Paths.reachableTiles.Contains(hit.transform.gameObject))

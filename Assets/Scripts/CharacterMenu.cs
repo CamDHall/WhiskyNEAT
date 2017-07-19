@@ -24,14 +24,6 @@ public class CharacterMenu : MonoBehaviour {
             rangedButton = null;
     }
 
-    void Update()
-    {
-        if(menu.activeSelf == true && GameManager.selectedCharacter != gameObject)
-        {
-            DisplayOff();
-        }
-    }
-
     public void DisplayActionBar()
     {
         menu.SetActive(true);
@@ -153,6 +145,5 @@ public class CharacterMenu : MonoBehaviour {
     {
         baseCharacter.AbilityThree();
         ability3.interactable = false;
-        GameManager.selectedCharacterData.currentNumberofAttacks--;
     }
 }

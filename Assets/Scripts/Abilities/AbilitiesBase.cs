@@ -11,6 +11,9 @@ public abstract class AbilitiesBase : MonoBehaviour {
     int timesCalled = 0;
     string abilityInProgress;
 
+    // Amount variables
+    int healingAmount;
+
     void Start()
     {
         characterData = GetComponent<CharacterData>();
@@ -30,9 +33,24 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 HandleAbility(nameOfAbility);
                 break;
         }
-
     }
 
+    // Override Enter state take take ability specefic variables
+    public void EnterState(AbilityState state, string nameOfAbility, int HealingAmount)
+    {
+        currentAbilityState = state;
+        abilityInProgress = nameOfAbility;
+        healingAmount = HealingAmount;
+        switch (state)
+        {
+            case AbilityState.Start:
+                StartAbility();
+                break;
+            case AbilityState.Handle:
+                HandleAbility(nameOfAbility);
+                break;
+        }
+    }
 
 
     public void ExitAbility()
@@ -55,12 +73,16 @@ public abstract class AbilitiesBase : MonoBehaviour {
         {
             case "SlowHeal":
                 if(timesCalled < 3) { 
-                Healing.SlowHeal(characterData);
+                Healing.SlowHealLV1(characterData);
                 timesCalled++;
                     }
                 break;
             case "BasicHeal":
-                Healing.BasicHeal(characterData);
+                Healing.BasicHeal(characterData, healingAmount);
+                ExitAbility();
+                break;
+            case "AOEHealLV1":
+                Healing.AOEHealLV1(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                 ExitAbility();
                 break;
         }
@@ -74,12 +96,12 @@ public abstract class AbilitiesBase : MonoBehaviour {
             case "SlowHeal":
                 if (timesCalled < 3)
                 {
-                    Healing.SlowHeal(characterData);
+                    Healing.SlowHealLV1(characterData);
                     timesCalled++;
                 }
                 break;
             case "BasicHeal":
-                Healing.BasicHeal(characterData);
+                Healing.BasicHeal(characterData, healingAmount);
                 ExitAbility();
                 break;
         }

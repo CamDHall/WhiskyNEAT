@@ -11,12 +11,20 @@ public abstract class BaseCharacter : AbilitiesBase {
     Movement movement;
     public Attacking attacking;
 
+    public CharacterTeam singleCharacterTeam;
+
     void Start()
     {
         mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
         movement = GetComponent<Movement>();
         characterData = GetComponent<CharacterData>();
         attacking = GetComponent<Attacking>();
+
+        // Set individual character team
+        if (gameObject.tag == "Friend")
+            singleCharacterTeam = CharacterTeam.Friend;
+        else
+            singleCharacterTeam = CharacterTeam.Enemy;
     }
 
     public State currentState = State.Idle;

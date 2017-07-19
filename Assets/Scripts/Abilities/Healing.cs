@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class Healing : AbilitiesBase {
 
-	public static void BasicHeal(CharacterData data)
+    // Always use this to heal, even for multi-turn healing
+	public static void BasicHeal(CharacterData data, int amount)
     {
-        data.health += 10;
+        data.health += amount;
     }
 
-    public static void SlowHeal(CharacterData data)
+    public static void SlowHealLV1(CharacterData data)
     {
-        data.health += 4;
+        BasicHeal(data, 4);
     }
 
-    public static void AOEHeal()
+    public static void AOEHealLV1(CharacterTeam team, GameObject user)
     {
-
+        if (team == CharacterTeam.Enemy)
+        {
+            foreach (GameObject character in MapData.enemies)
+            {
+                if(Vector3.Distance(user.transform.position, character.transform.position) <= 3)
+                {
+                    BasicHeal(character.GetComponent<CharacterData>(), 2);
+                }
+            }
+        } else
+        {
+            foreach(GameObject character in MapData.friends)
+            {
+                if(Vector3.Distance(user.transform.position, character.transform.position) <= 3)
+                {
+                    BasicHeal(character.GetComponent<CharacterData>(), 2);
+                }
+            }
+        }
     }
 
 }
