@@ -24,6 +24,14 @@ public class CharacterMenu : MonoBehaviour {
             rangedButton = null;
     }
 
+    void Update()
+    {
+        if(menu.activeSelf == true && GameManager.selectedCharacter != gameObject)
+        {
+            DisplayOff();
+        }
+    }
+
     public void DisplayActionBar()
     {
         menu.SetActive(true);

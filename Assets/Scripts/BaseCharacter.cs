@@ -104,8 +104,10 @@ public abstract class BaseCharacter : AbilitiesBase {
     protected virtual void ExitMoving()
     {
         // Reset number of current attacks
+        Paths.ResetTiles();
         characterData.currentNumberofAttacks = characterData.numberofAttacks;
         EnterState(State.Attacking);
+        movement.isMoving = false;
     }
 
     // Idle
@@ -132,6 +134,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     void EnterDone()
     {
         characterData.currentNumberofMoves = characterData.moves;
+        GetComponent<CharacterMenu>().DisplayOff();
     }
 
     public void Death(GameObject attacker)

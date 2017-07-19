@@ -5,10 +5,30 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+    public GameObject nextPhase;
     public Text turns, currentTeam;
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, name;
 	
 	void Update () {
+        // Turn change phase button on/off and change text
+        if (GameManager.selectedBaseCharacter != null)
+        {
+            nextPhase.SetActive(true);
+            if (GameManager.selectedBaseCharacter.currentState == State.Moving)
+            {
+                nextPhase.GetComponentInChildren<Text>().text = "Attack";
+            } else if(GameManager.selectedBaseCharacter.currentState == State.Attacking)
+            {
+                nextPhase.GetComponentInChildren<Text>().text = "End Turn";
+            } else if(GameManager.selectedBaseCharacter.currentState == State.Done)
+            {
+                nextPhase.SetActive(false);
+            }
+        } else
+        {
+            nextPhase.SetActive(false);
+        }
+
         if (GameManager.selectedCharacterData != null)
         {
             turns.text = "Turn: " + GameManager.turns.ToString();
@@ -39,17 +59,13 @@ public class UIManager : MonoBehaviour {
                 }
             }
         }
-
-        if(GameManager.selectedCharacterData != null)
-        {
-            // Debug.Log(GameManager.selectedCharacterInfo.health);
-        }
 	}
 
     void NothingSelected()
     {
         GameManager.selectedCharacter = null;
         GameManager.selectedCharacterData = null;
+        GameManager.selectedBaseCharacter = null;
     }
 
     void CharacterSelected(string team, CharacterData info, GameObject hit)
