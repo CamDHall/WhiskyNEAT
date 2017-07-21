@@ -9,6 +9,7 @@ public class GeorgeHammerschmidt : BaseCharacter {
 
     public override void AbilityOne()
     {
+        base.AbilityOne();
         EnterState(AbilityState.Start, "BasicHeal");
         //Healing.BasicHeal(characterData);
     }

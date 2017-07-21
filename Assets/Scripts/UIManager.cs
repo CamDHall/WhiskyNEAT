@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+    public Canvas screenCanvas;
+
     public GameObject nextPhase;
     public Text turns, currentTeam;
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, name;
@@ -45,19 +47,23 @@ public class UIManager : MonoBehaviour {
 
 		if(Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if(Physics.Raycast(ray, out hit))
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.Log(hit.transform);
-                if(hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend" || hit.transform.gameObject.layer == LayerMask.NameToLayer("UI"))
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    CharacterSelected(hit.transform.gameObject.tag.ToString(), hit.transform.gameObject.GetComponent<CharacterData>(), hit.transform.gameObject);
-                } else if(!Paths.reachableTiles.Contains(hit.transform.gameObject))
-                {
-                    NothingSelected();
-                    Paths.ResetTiles();
+                    if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend")
+                    {
+                        CharacterSelected(hit.transform.gameObject.tag.ToString(), hit.transform.gameObject.GetComponent<CharacterData>(), hit.transform.gameObject);
+                    }
+                    else if (!Paths.reachableTiles.Contains(hit.transform.gameObject))
+                    {
+                        Debug.Log(hit.transform.gameObject.tag);
+                        NothingSelected();
+                        Paths.ResetTiles();
+                    }
                 }
             }
         }
@@ -65,6 +71,7 @@ public class UIManager : MonoBehaviour {
 
     void NothingSelected()
     {
+        GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
         GameManager.selectedCharacter = null;
         GameManager.selectedCharacterData = null;
         GameManager.selectedBaseCharacter = null;

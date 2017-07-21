@@ -12,7 +12,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
     string abilityInProgress;
 
     // Amount variables
-    int healingAmount;
+    int healingAmount = 10;
 
     void Start()
     {
@@ -71,7 +71,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
     {
         switch (ability)
         {
-            case "SlowHeal":
+            case "SlowHeal":;
                 if(timesCalled < 3) { 
                 Healing.SlowHealLV1(characterData);
                 timesCalled++;

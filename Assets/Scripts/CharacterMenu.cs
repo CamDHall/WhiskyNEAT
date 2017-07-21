@@ -53,10 +53,11 @@ public class CharacterMenu : MonoBehaviour {
             else if(baseCharacter.characterData.rangedDistance != 0)
                 rangedButton.SetActive(true);
         }
+    }
 
-        ability1.interactable = true;
-        ability2.interactable = true;
-        ability3.interactable = true;
+    public void ResetButtons()
+    {
+
     }
 
     public void DisplayOff()
@@ -131,14 +132,12 @@ public class CharacterMenu : MonoBehaviour {
     {
         baseCharacter.AbilityOne();
         ability1.interactable = false;
-        GameManager.selectedCharacterData.currentNumberofAttacks--;
     }
 
     public void SecondAbility()
     {
         baseCharacter.AbilityTwo();
         ability2.interactable = false;
-        GetComponent<CharacterData>().currentNumberofAttacks--;
     }
 
     public void ThirdAbility()
