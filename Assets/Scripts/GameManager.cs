@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
                 // Reset every enemy to idle
                 enemy.GetComponent<BaseCharacter>().EnterState(State.Idle);
                 // Run in-progress abilties for every enemy
-                enemy.GetComponent<AbilitiesBase>().HandleAbility();
+                enemy.GetComponent<AbilitiesBase>().RunWIP();
             }
 
         }
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
                 // Reset every friend to idle
                 friend.GetComponent<BaseCharacter>().EnterState(State.Idle);
                 // Reset in-progress abilities for every friend
-                friend.GetComponent<AbilitiesBase>().HandleAbility();
+                friend.GetComponent<AbilitiesBase>().RunWIP();
             }
 
             turns++;

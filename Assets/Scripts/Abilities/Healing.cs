@@ -20,7 +20,6 @@ public class Healing : AbilitiesBase {
 
     public static void SlowHealLV1(CharacterData data)
     {
-        Debug.Log("HERE");
         BasicHeal(data, 4);
     }
 

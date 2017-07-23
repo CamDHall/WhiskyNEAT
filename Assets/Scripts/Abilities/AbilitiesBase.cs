@@ -67,11 +67,14 @@ public abstract class AbilitiesBase : MonoBehaviour {
         switch (abilityInProgress)
         {
             case "SlowHealLV1":
+                Debug.Log("HERE");
                 if(timesCalled < 3)
                 {
+                    timesCalled++;
                     Healing.SlowHealLV1(characterData);
+                    if(!wipAbilities.Contains("SlowHealLV1"))
+                        wipAbilities.Add("SlowHealLV1");
                 }
-                Healing.SlowHealLV1(characterData);
                 break;
             case "BasicHeal":
                 Healing.BasicHeal(characterData, healingAmount);
@@ -98,5 +101,15 @@ public abstract class AbilitiesBase : MonoBehaviour {
     public virtual void AbilityThree()
     {
         characterData.currentNumberofAttacks--;
+    }
+
+    public void RunWIP()
+    {
+        //Debug.Log("WIP");
+        foreach(string ability in wipAbilities)
+        {
+            abilityInProgress = ability;
+            HandleAbility();
+        }
     }
 }
