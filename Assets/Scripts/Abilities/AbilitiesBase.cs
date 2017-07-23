@@ -10,6 +10,8 @@ public abstract class AbilitiesBase : MonoBehaviour {
     AbilityState currentAbilityState = AbilityState.Start;
     int timesCalled = 0;
     string abilityInProgress;
+    List<string> wipAbilities = new List<string>();
+    int slowHealCalled;
 
     // Amount variables
     int healingAmount = 10;
@@ -30,7 +32,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 StartAbility();
                 break;
             case AbilityState.Handle:
-                HandleAbility(abilityInProgress);
+                HandleAbility();
                 break;
         }
     }
@@ -47,7 +49,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 StartAbility();
                 break;
             case AbilityState.Handle:
-                HandleAbility(abilityInProgress);
+                HandleAbility();
                 break;
         }
     }
@@ -65,10 +67,11 @@ public abstract class AbilitiesBase : MonoBehaviour {
         switch (abilityInProgress)
         {
             case "SlowHealLV1":
-                if(timesCalled < 3) { 
+                if(timesCalled < 3)
+                {
                     Healing.SlowHealLV1(characterData);
-                    timesCalled++;
                 }
+                Healing.SlowHealLV1(characterData);
                 break;
             case "BasicHeal":
                 Healing.BasicHeal(characterData, healingAmount);
@@ -80,7 +83,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 Healing.EnemyWeakerHEAL(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                 break;
         }
-
         currentAbilityState = AbilityState.Start;
     }
 
