@@ -5,23 +5,20 @@ using UnityEngine;
 
 public class DemetriWolfgang : BaseCharacter {
 
-    void Update()
-    {
-
-    }
-
     public override void AbilityOne()
     {
-        throw new NotImplementedException();
+        base.AbilityOne();
+        EnterState(AbilityState.Start, "EnemyWeakHEAL");
+        Debug.Log(GetComponent<CharacterData>().currentNumberofAttacks);
     }
 
     public override void AbilityThree()
     {
-        throw new NotImplementedException();
+        base.AbilityTwo();
     }
 
     public override void AbilityTwo()
     {
-        throw new NotImplementedException();
+        base.AbilityThree();
     }
 }

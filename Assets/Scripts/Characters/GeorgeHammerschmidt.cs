@@ -11,13 +11,12 @@ public class GeorgeHammerschmidt : BaseCharacter {
     {
         base.AbilityOne();
         EnterState(AbilityState.Start, "BasicHeal");
-        //Healing.BasicHeal(characterData);
     }
 
     public override void AbilityTwo()
     {
+        base.AbilityTwo();
         EnterState(AbilityState.Start, "SlowHealLV1");
-        //abilitiesBase.SlowHealManager();
     }
 
     public override void AbilityThree()

@@ -30,7 +30,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 StartAbility();
                 break;
             case AbilityState.Handle:
-                HandleAbility(nameOfAbility);
+                HandleAbility(abilityInProgress);
                 break;
         }
     }
@@ -47,16 +47,9 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 StartAbility();
                 break;
             case AbilityState.Handle:
-                HandleAbility(nameOfAbility);
+                HandleAbility(abilityInProgress);
                 break;
         }
-    }
-
-
-    public void ExitAbility()
-    {
-        currentAbilityState = AbilityState.Start;
-        timesCalled = 0;
     }
 
     void StartAbility()
@@ -67,44 +60,28 @@ public abstract class AbilitiesBase : MonoBehaviour {
     }
 
     // Run sinle turn abilities
-    public virtual void HandleAbility(string ability)
-    {
-        switch (ability)
-        {
-            case "SlowHeal":;
-                if(timesCalled < 3) { 
-                Healing.SlowHealLV1(characterData);
-                timesCalled++;
-                    }
-                break;
-            case "BasicHeal":
-                Healing.BasicHeal(characterData, healingAmount);
-                ExitAbility();
-                break;
-            case "AOEHealLV1":
-                Healing.AOEHealLV1(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
-                ExitAbility();
-                break;
-        }
-    }
-
-    // Override to handle in progress abilities
     public virtual void HandleAbility()
     {
         switch (abilityInProgress)
         {
-            case "SlowHeal":
-                if (timesCalled < 3)
-                {
+            case "SlowHealLV1":
+                if(timesCalled < 3) { 
                     Healing.SlowHealLV1(characterData);
                     timesCalled++;
                 }
                 break;
             case "BasicHeal":
                 Healing.BasicHeal(characterData, healingAmount);
-                ExitAbility();
+                break;
+            case "AOEHealLV1":
+                Healing.AOEHealLV1(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+                break;
+            case "EnemyWeakHEAL":
+                Healing.EnemyWeakerHEAL(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                 break;
         }
+
+        currentAbilityState = AbilityState.Start;
     }
 
     // Define functions for abilities

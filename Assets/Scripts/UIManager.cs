@@ -60,7 +60,6 @@ public class UIManager : MonoBehaviour {
                     }
                     else if (!Paths.reachableTiles.Contains(hit.transform.gameObject))
                     {
-                        Debug.Log(hit.transform.gameObject.tag);
                         NothingSelected();
                         Paths.ResetTiles();
                     }
