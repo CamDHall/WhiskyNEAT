@@ -63,8 +63,9 @@ public class GameManager : MonoBehaviour {
                 enemy.GetComponent<CharacterMenu>().ResetButtons();
                 // Reset every enemy to idle
                 enemy.GetComponent<BaseCharacter>().EnterState(State.Idle);
-                // Run in-progress abilties for every enemy
-                enemy.GetComponent<AbilitiesBase>().RunWIP();
+                // Run in-progress abilties for every enemy IF THERE ARE ANY
+                if (enemy.GetComponent<AbilitiesBase>().wipAbilities.Count > 0)
+                    enemy.GetComponent<AbilitiesBase>().RunWIP();
             }
 
         }
@@ -76,8 +77,11 @@ public class GameManager : MonoBehaviour {
                 friend.GetComponent<CharacterMenu>().ResetButtons();
                 // Reset every friend to idle
                 friend.GetComponent<BaseCharacter>().EnterState(State.Idle);
-                // Reset in-progress abilities for every friend
-                friend.GetComponent<AbilitiesBase>().RunWIP();
+                // Reset in-progress abilities for every friend IF THERE ARE ANY
+                if (friend.GetComponent<AbilitiesBase>().wipAbilities.Count > 0)
+                {
+                    friend.GetComponent<AbilitiesBase>().RunWIP();
+                }
             }
 
             turns++;

@@ -8,9 +8,9 @@ public abstract class AbilitiesBase : MonoBehaviour {
     public CharacterData characterData;
 
     AbilityState currentAbilityState = AbilityState.Start;
-    int timesCalled = 0;
+    int slowCount = 0;
     string abilityInProgress;
-    List<string> wipAbilities = new List<string>();
+    public List<string> wipAbilities = new List<string>();
     int slowHealCalled;
 
     // Amount variables
@@ -56,7 +56,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
 
     void StartAbility()
     {
-        timesCalled = 0;
         EnterState(AbilityState.Handle, abilityInProgress);
 
     }
@@ -67,13 +66,18 @@ public abstract class AbilitiesBase : MonoBehaviour {
         switch (abilityInProgress)
         {
             case "SlowHealLV1":
-                Debug.Log("HERE");
-                if(timesCalled < 3)
+                if(slowCount < 3)
                 {
-                    timesCalled++;
+                    slowCount++;
                     Healing.SlowHealLV1(characterData);
-                    if(!wipAbilities.Contains("SlowHealLV1"))
+                    if (!wipAbilities.Contains("SlowHealLV1"))
+                    {
                         wipAbilities.Add("SlowHealLV1");
+                    }
+                } else
+                {
+                    if (wipAbilities.Contains("SlowHealLV1"))
+                        wipAbilities.Remove("SlowHealLV1");
                 }
                 break;
             case "BasicHeal":
@@ -105,10 +109,9 @@ public abstract class AbilitiesBase : MonoBehaviour {
 
     public void RunWIP()
     {
-        //Debug.Log("WIP");
-        foreach(string ability in wipAbilities)
+        for(int i = 0; i < wipAbilities.Count; i++)
         {
-            abilityInProgress = ability;
+            abilityInProgress = wipAbilities[i];
             HandleAbility();
         }
     }
