@@ -9,15 +9,15 @@ public class DemetriWolfgang : BaseCharacter {
     {
         base.AbilityOne();
         EnterState(AbilityState.Start, "EnemyWeakHEAL");
-        Debug.Log(GetComponent<CharacterData>().currentNumberofAttacks);
-    }
-
-    public override void AbilityThree()
-    {
-        base.AbilityTwo();
     }
 
     public override void AbilityTwo()
+    {
+        base.AbilityTwo();
+        EnterState(AbilityState.Start, "ScaredAllyHeal");
+    }
+
+    public override void AbilityThree()
     {
         base.AbilityThree();
     }

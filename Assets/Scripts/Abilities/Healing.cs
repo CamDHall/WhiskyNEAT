@@ -99,4 +99,27 @@ public class Healing : AbilitiesBase {
         }
     }
 
+    public static void ScaredAllyHeal(CharacterTeam team, GameObject user)
+    {
+        if(team == CharacterTeam.Friend)
+        {
+            foreach(GameObject friend in MapData.friends)
+            {
+                if(friend.GetComponent<CharacterData>().courage <= 1)
+                {
+                    BasicHeal(MapData.friends, 2);
+                }
+            }
+        } else
+        {
+            foreach(GameObject enemy in MapData.enemies)
+            {
+                if(enemy.GetComponent<CharacterData>().courage <= 1)
+                {
+                    BasicHeal(MapData.enemies, 2);
+                }
+            }
+        }
+    }
+
 }

@@ -89,6 +89,10 @@ public abstract class AbilitiesBase : MonoBehaviour {
             case "EnemyWeakHEAL":
                 Healing.EnemyWeakerHEAL(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                 break;
+
+            case "ScaredAllyHeal":
+                Healing.ScaredAllyHeal(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+                break;
         }
         currentAbilityState = AbilityState.Start;
     }
