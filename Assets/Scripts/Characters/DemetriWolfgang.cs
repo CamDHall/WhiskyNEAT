@@ -19,6 +19,6 @@ public class DemetriWolfgang : BaseCharacter {
 
     public override void AbilityThree()
     {
-        base.AbilityThree();
+        EnterState(AbilityState.Start, "CourageBomb");
     }
 }

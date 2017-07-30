@@ -8,7 +8,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
     public CharacterData characterData;
 
     AbilityState currentAbilityState = AbilityState.Start;
-    int slowCount = 0;
+    int slowCount = 0, courageBombCount = 0;
     string abilityInProgress;
     public List<string> wipAbilities = new List<string>();
     int slowHealCalled;
@@ -76,6 +76,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
                     }
                 } else
                 {
+                    slowCount = 0;
                     if (wipAbilities.Contains("SlowHealLV1"))
                         wipAbilities.Remove("SlowHealLV1");
                 }
@@ -92,6 +93,25 @@ public abstract class AbilitiesBase : MonoBehaviour {
 
             case "ScaredAllyHeal":
                 Healing.ScaredAllyHeal(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+                break;
+            case "CourageBomb":
+                // Pass courage boost either enemies or friends
+                if (gameObject.tag == "Friend")
+                    CourageBoost.CourageBoostBasic(MapData.friends, 5);
+                else
+                    CourageBoost.CourageBoostBasic(MapData.enemies, 5);
+                if (courageBombCount == 0)
+                {
+                    Healing.CourageBomb(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+                    wipAbilities.Add("CourageBomb");
+                }
+                else if(courageBombCount >= 3)
+                {
+                    courageBombCount = 0;
+                    if (wipAbilities.Contains("CourageBomb"))
+                        wipAbilities.Remove("CourageBomb");
+                }
+                courageBombCount++;
                 break;
         }
         currentAbilityState = AbilityState.Start;

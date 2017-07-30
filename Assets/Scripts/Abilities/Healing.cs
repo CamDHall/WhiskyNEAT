@@ -122,4 +122,18 @@ public class Healing : AbilitiesBase {
         }
     }
 
+    // Heal everyteam mate, reduce courage of enemy to 5 for 3 turns
+    public static void CourageBomb(CharacterTeam team, GameObject user)
+    {
+        if(team == CharacterTeam.Friend)
+        {
+            BasicHeal(MapData.friends, 3);
+            CourageBoost.CourageBoostBasic(MapData.friends, 5);
+        } else
+        {
+            BasicHeal(MapData.enemies, 3);
+            CourageBoost.CourageBoostBasic(MapData.enemies, 5);
+        }
+    }
+
 }
