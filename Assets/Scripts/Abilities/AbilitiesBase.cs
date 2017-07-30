@@ -113,6 +113,9 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 }
                 courageBombCount++;
                 break;
+            case "CourageBoostBasic":
+                CourageBoost.CourageBoostBasic(characterData, 50);
+                break;
         }
         currentAbilityState = AbilityState.Start;
     }

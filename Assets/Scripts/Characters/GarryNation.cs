@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class GarryNation : BaseCharacter {
 
-    void Update()
-    {
-
-    }
-
     public override void AbilityOne()
     {
-        throw new NotImplementedException();
+        base.AbilityOne();
+        EnterState(AbilityState.Start, "CourageBoostBasic");
     }
 
     public override void AbilityThree()
