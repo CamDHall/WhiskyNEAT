@@ -11,12 +11,13 @@ public class GarryNation : BaseCharacter {
         EnterState(AbilityState.Start, "CourageBoostBasic");
     }
 
-    public override void AbilityThree()
+    public override void AbilityTwo()
     {
-        throw new NotImplementedException();
+        base.AbilityTwo();
+        EnterState(AbilityState.Start, "CourageForScaredEnemies");
     }
 
-    public override void AbilityTwo()
+    public override void AbilityThree()
     {
         throw new NotImplementedException();
     }
