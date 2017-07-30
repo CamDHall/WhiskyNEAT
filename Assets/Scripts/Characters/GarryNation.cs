@@ -19,6 +19,7 @@ public class GarryNation : BaseCharacter {
 
     public override void AbilityThree()
     {
-        throw new NotImplementedException();
+        base.AbilityThree();
+        EnterState(AbilityState.Start, "BasicCourageSubtract");
     }
 }

@@ -119,6 +119,15 @@ public abstract class AbilitiesBase : MonoBehaviour {
             case "CourageForScaredEnemies":
                 CourageBoost.CourageForScaredEnemies(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, 25);
                 break;
+            case "BasicCourageSubtract":
+                if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    CourageBoost.SubtractCourage(MapData.enemies, 10);
+                else
+                    CourageBoost.SubtractCourage(MapData.friends, 10);
+                break;
+            case "NobleFear":
+                CourageBoost.NobleFear(gameObject, 25);
+                break;
         }
         currentAbilityState = AbilityState.Start;
     }
