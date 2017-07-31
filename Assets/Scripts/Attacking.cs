@@ -34,12 +34,6 @@ public class Attacking : MonoBehaviour {
             baseCharacter.ExitState(State.Attacking);
         }
 
-        if (baseCharacter.currentState == State.Attacking &&
-            _enemiesInMeleeRange.Count == 0 && _enemiesInRangedRange.Count == 0 && _friendsInMeleeRange.Count == 0 && _friendsInRangedRange.Count == 0)
-        {
-            characterData.currentNumberofAttacks = 0;
-        }
-
         if(baseCharacter.currentState == State.Attacking && Input.GetMouseButtonDown(0) && characterData.currentNumberofAttacks > 0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
