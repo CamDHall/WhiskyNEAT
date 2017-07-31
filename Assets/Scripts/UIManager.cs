@@ -6,12 +6,28 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 
     public Canvas screenCanvas;
+    public HUD hud;
 
     public GameObject nextPhase;
     public Text turns, currentTeam;
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, name;
 	
 	void Update () {
+        // Hovering
+        Ray hoveringRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hoveringHit;
+
+        if(Physics.Raycast(hoveringRay, out hoveringHit)) {
+            if(hoveringHit.transform != null && (hoveringHit.transform.tag == "Enemy" || hoveringHit.transform.tag == "Friend") 
+                && hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.selectedBaseCharacter)
+            {
+                hud.DisplayTargetInfo(hoveringHit.transform.gameObject.GetComponent<CharacterData>());
+            } else
+            {
+                hud.OffTargetingInfo();
+            }
+        }
+
         // Turn change phase button on/off and change text
         if (GameManager.selectedBaseCharacter != null)
         {
