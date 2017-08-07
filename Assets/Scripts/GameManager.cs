@@ -51,6 +51,13 @@ public class GameManager : MonoBehaviour {
 
     }
 
+    static void CallReset(CharacterMenu menu, CharacterData characterData)
+    {
+        menu.ability1.GetComponent<AbilityButtonManager>().ResetButtons(characterData);
+        menu.ability2.GetComponent<AbilityButtonManager>().ResetButtons(characterData);
+        menu.ability3.GetComponent<AbilityButtonManager>().ResetButtons(characterData);
+    }
+
     public static void ChangeTeams()
     {
         haveGone = 0;
@@ -68,6 +75,11 @@ public class GameManager : MonoBehaviour {
                     enemy.GetComponent<AbilitiesBase>().RunWIP();
             }
 
+            // Reset Buttons
+            foreach(GameObject friend in MapData.friends)
+            {
+                CallReset(friend.GetComponent<CharacterMenu>(), friend.GetComponent<CharacterData>());
+            }
         }
         else
         {
@@ -82,6 +94,11 @@ public class GameManager : MonoBehaviour {
                 {
                     friend.GetComponent<AbilitiesBase>().RunWIP();
                 }
+            }
+
+            foreach(GameObject enemy in MapData.enemies)
+            {
+                CallReset(enemy.GetComponent<CharacterMenu>(), enemy.GetComponent<CharacterData>());
             }
 
             turns++;

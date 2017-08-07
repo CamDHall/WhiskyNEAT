@@ -12,6 +12,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     public Attacking attacking;
 
     public CharacterTeam singleCharacterTeam;
+    public CharacterMenu menu;
 
     void Start()
     {
@@ -19,6 +20,7 @@ public abstract class BaseCharacter : AbilitiesBase {
         movement = GetComponent<Movement>();
         characterData = GetComponent<CharacterData>();
         attacking = GetComponent<Attacking>();
+        menu = GetComponent<CharacterMenu>();
 
         // Set individual character team
         if (gameObject.tag == "Friend")

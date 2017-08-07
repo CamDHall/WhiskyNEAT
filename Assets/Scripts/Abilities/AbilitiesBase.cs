@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum AbilityState { Start, Handle}
 public abstract class AbilitiesBase : MonoBehaviour {
@@ -152,6 +153,11 @@ public abstract class AbilitiesBase : MonoBehaviour {
         {
             abilityInProgress = wipAbilities[i];
             HandleAbility();
+        }
+
+        foreach(Button button in characterData.buttonsIP)
+        {
+            button.GetComponent<AbilityButtonManager>().count++;
         }
     }
 }
