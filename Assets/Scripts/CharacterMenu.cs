@@ -13,15 +13,23 @@ public class CharacterMenu : MonoBehaviour {
     List<Image> imgs;
     public Canvas worldCanvas;
 
-    void Start()
+    private void Awake()
     {
         baseCharacter = GetComponent<BaseCharacter>();
+    }
 
+    void Start()
+    {
         menu.SetActive(false);
         imgs = new List<Image>();
 
         if (baseCharacter.characterData.rangedDistance == 0)
             rangedButton = null;
+
+        // Ability names
+        ability1.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility1;
+        ability2.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility2;
+        ability3.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility3;
     }
 
     public void DisplayActionBar()
@@ -29,7 +37,6 @@ public class CharacterMenu : MonoBehaviour {
         menu.SetActive(true);
         if(gameObject.tag == "Friend")
         {
-            //Debug.Log(baseCharacter.attacking._enemiesInMeleeRange.Count);
             // Turn melee on and off
             if (baseCharacter.attacking._enemiesInMeleeRange.Count == 0)
                 meleeButton.SetActive(false);

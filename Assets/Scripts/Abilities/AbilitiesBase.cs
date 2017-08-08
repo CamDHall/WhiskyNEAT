@@ -17,7 +17,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
     // Amount variables
     int healingAmount = 10;
 
-    void Start()
+    void Awake()
     {
         characterData = GetComponent<CharacterData>();
     }

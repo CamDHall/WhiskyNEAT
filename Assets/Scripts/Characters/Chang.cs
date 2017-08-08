@@ -9,6 +9,8 @@ public class Chang : BaseCharacter {
     {
         base.AbilityOne();
         EnterState(AbilityState.Start, "NobleFear");
+        menu.ability1.GetComponent<AbilityButtonManager>().count = 3;
+        menu.ability1.interactable = false;
     }
 
     public override void AbilityThree()
