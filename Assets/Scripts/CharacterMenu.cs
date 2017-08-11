@@ -62,11 +62,6 @@ public class CharacterMenu : MonoBehaviour {
         }
     }
 
-    public void ResetButtons()
-    {
-
-    }
-
     public void DisplayOff()
     {
         menu.SetActive(false);
@@ -74,6 +69,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void MeleeButton()
     {
+        GameManager.selectedBaseCharacter.attacking.damageAmount = GameManager.selectedCharacterData.meleeStrength;
         if(gameObject.tag == "Friend")
         {
             foreach(GameObject target in baseCharacter.attacking._enemiesInMeleeRange)
@@ -100,6 +96,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void RangedButton()
     {
+        GameManager.selectedBaseCharacter.attacking.damageAmount = GameManager.selectedCharacterData.rangedStrength;
         if (gameObject.tag == "Friend")
         {
             foreach (GameObject target in baseCharacter.attacking._enemiesInRangedRange)

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
 
-    public GameObject targetingInfo;
+    public GameObject targetingInfo, damagedInflicted;
     public Text _name, health, courage, moves, meleeSTR, rangedSTR, rangedDistance;
 
 	public void DisplayTargetInfo(CharacterData characterData)
@@ -23,5 +23,16 @@ public class HUD : MonoBehaviour {
     public void OffTargetingInfo()
     {
         targetingInfo.SetActive(false);
+    }
+
+    public void AttackInfo(string type, Attacking data)
+    {
+        damagedInflicted.SetActive(true);
+        damagedInflicted.GetComponentInChildren<Text>().text = "Damage Inflicted: " + data.damageAmount;
+    }
+
+    public void AttackInfoOfF()
+    {
+        damagedInflicted.SetActive(false);
     }
 }

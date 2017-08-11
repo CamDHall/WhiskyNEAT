@@ -19,6 +19,7 @@ public class Attacking : MonoBehaviour {
 
     public bool isAttacking = false;
     public string type;
+    public int damageAmount;
 
     void Awake()
     {
@@ -63,25 +64,25 @@ public class Attacking : MonoBehaviour {
                         {
                             if(_enemiesInMeleeRange.Contains(hit.transform.gameObject))
                             {
-                                AttackTypes.Damage("Melee", gameObject, hit.transform.gameObject);
+                                damageAmount = AttackTypes.Damage("Melee", gameObject, hit.transform.gameObject);
                             }
                         } else
                         {
                             if(_friendsInMeleeRange.Contains(hit.transform.gameObject))
                             {
-                                AttackTypes.Damage("Melee", gameObject, hit.transform.gameObject);
+                                damageAmount = AttackTypes.Damage("Melee", gameObject, hit.transform.gameObject);
                             }
                         }
                     } else
                     {
                         if(_enemiesInRangedRange.Contains(hit.transform.gameObject))
                         {
-                            AttackTypes.Damage("Ranged", gameObject, hit.transform.gameObject);
+                            damageAmount = AttackTypes.Damage("Ranged", gameObject, hit.transform.gameObject);
                         } else
                         {
                             if(_friendsInRangedRange.Contains(hit.transform.gameObject))
                             {
-                                AttackTypes.Damage("Ranged", gameObject, hit.transform.gameObject);
+                                damageAmount = AttackTypes.Damage("Ranged", gameObject, hit.transform.gameObject);
                             }
                         }
                     }

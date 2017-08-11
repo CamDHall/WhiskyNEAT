@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour {
         
             foreach (GameObject enemy in MapData.enemies)
             {
-                enemy.GetComponent<CharacterMenu>().ResetButtons();
                 // Reset every enemy to idle
                 enemy.GetComponent<BaseCharacter>().EnterState(State.Idle);
                 // Run in-progress abilties for every enemy IF THERE ARE ANY
@@ -86,7 +85,6 @@ public class GameManager : MonoBehaviour {
             characterTeam = CharacterTeam.Friend;
             foreach(GameObject friend in MapData.friends)
             {
-                friend.GetComponent<CharacterMenu>().ResetButtons();
                 // Reset every friend to idle
                 friend.GetComponent<BaseCharacter>().EnterState(State.Idle);
                 // Reset in-progress abilities for every friend IF THERE ARE ANY

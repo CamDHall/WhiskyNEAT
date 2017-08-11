@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class AttackTypes {
 
-	public static void Damage(string type, GameObject attacker, GameObject target)
+	public static int Damage(string type, GameObject attacker, GameObject target)
     {
+        int amount = 0;
         if (type == "Melee")
         {
-            target.GetComponent<CharacterData>().health -= attacker.GetComponent<CharacterData>().meleeStrength;
+            amount = attacker.GetComponent<CharacterData>().meleeStrength;
         }
         else
         {
-            target.GetComponent<CharacterData>().health -= attacker.GetComponent<CharacterData>().rangedStrength;
+            amount = attacker.GetComponent<CharacterData>().rangedStrength;
         }
+
+        target.GetComponent<CharacterData>().health -= amount;
         attacker.GetComponent<CharacterData>().currentNumberofAttacks--;
         attacker.GetComponent<CharacterMenu>().OverlayOff();
 
@@ -22,5 +25,7 @@ public class AttackTypes {
         {
             target.GetComponent<BaseCharacter>().Death(attacker);
         }
+
+        return amount;
     }
 }
