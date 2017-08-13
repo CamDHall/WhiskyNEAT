@@ -120,15 +120,16 @@ public class UIManager : MonoBehaviour {
 
     void CharacterSelected(string team, CharacterData info, GameObject hit)
     {
-        if (hit != GameManager.selectedCharacter)
+        if (hit != GameManager.selectedCharacter || 
+            (hit.GetComponent<CharacterData>().currentNumberofMoves < hit.GetComponent<CharacterData>().moves && hit.GetComponent<CharacterData>().currentNumberofMoves > 0))
         {
+            Debug.Log("HERE");
             if (team == GameManager.characterTeam.ToString())
             {
                 GameManager.selectedCharacter = hit;
                 GameManager.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();
                 GameManager.selectedBaseCharacter = GameManager.selectedCharacter.GetComponent<BaseCharacter>();
                 BaseCharacter baseCharacter = GameManager.selectedBaseCharacter;
-
                 baseCharacter.EnterState(baseCharacter.currentState);
             }
         }

@@ -14,7 +14,6 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-
         if (characterData.currentNumberofMoves == 0 && GetComponent<BaseCharacter>().currentState == State.Moving)
         {
             isMoving = false;

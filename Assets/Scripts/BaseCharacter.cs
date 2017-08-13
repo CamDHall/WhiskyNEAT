@@ -33,7 +33,6 @@ public abstract class BaseCharacter : AbilitiesBase {
 
     public void EnterState(State state)
     {
-
         currentState = state;
 
         switch (state)
