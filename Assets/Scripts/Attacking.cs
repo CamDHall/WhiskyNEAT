@@ -51,6 +51,11 @@ public class Attacking : MonoBehaviour {
 
 		if(baseCharacter.currentState == State.Attacking && isAttacking && characterData.currentNumberofAttacks > 0)
         {
+            ///
+            ///
+            ///
+            //// Here reference UI script
+            ///
             if(Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

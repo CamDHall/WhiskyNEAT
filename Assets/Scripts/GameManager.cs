@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour {
     public static int turns;
     public static string currentTeam;
 
+    public static bool awaitingConfirmation; // Confirmation window
+
     // What team's turn it is and what phase they're on
     public static CharacterTeam characterTeam;
     public static int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
@@ -25,11 +27,13 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         characterTeam = CharacterTeam.Friend;
+
     }
 
     void Start()
     {
         haveGone = 0;
+        awaitingConfirmation = false;
 
         turns = 0;
         currentTeam = "Friends";
