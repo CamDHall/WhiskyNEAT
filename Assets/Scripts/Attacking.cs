@@ -113,6 +113,8 @@ public class Attacking : MonoBehaviour {
         }
 
         // Reset everything
+        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
+        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
         targetObject = null;
         GameManager.confirmationState = Confirmation.Idle;
     }

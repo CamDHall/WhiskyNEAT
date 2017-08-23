@@ -13,4 +13,12 @@ public class ConfirmButton : MonoBehaviour {
         confirmWindow.SetActive(false);
         GameManager.currentAttackingObj.ExecuteAttack();
     }
+
+    public void CancelAttack()
+    {
+        GameManager.confirmationState = Confirmation.Idle;
+        confirmWindow.SetActive(false);
+        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
+        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
+    }
 }

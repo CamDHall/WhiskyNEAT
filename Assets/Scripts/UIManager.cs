@@ -100,10 +100,13 @@ public class UIManager : MonoBehaviour {
 
     void NothingSelected()
     {
-        GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
-        GameManager.selectedCharacter = null;
-        GameManager.selectedCharacterData = null;
-        GameManager.selectedBaseCharacter = null;
+        if (GameManager.selectedCharacter != null)
+        {
+            GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
+            GameManager.selectedCharacter = null;
+            GameManager.selectedCharacterData = null;
+            GameManager.selectedBaseCharacter = null;
+        }
     }
 
     void CharacterSelected(string team, CharacterData info, GameObject hit)
