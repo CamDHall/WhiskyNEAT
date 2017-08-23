@@ -83,7 +83,7 @@ public class CharacterMenu : MonoBehaviour {
         {
             foreach (GameObject target in baseCharacter.attacking._friendsInMeleeRange)
             {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1f, target.transform.position.z);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
                 imgs.Add(img);
@@ -101,7 +101,7 @@ public class CharacterMenu : MonoBehaviour {
         {
             foreach (GameObject target in baseCharacter.attacking._enemiesInRangedRange)
             {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.1f, target.transform.position.z);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
                 imgs.Add(img);
