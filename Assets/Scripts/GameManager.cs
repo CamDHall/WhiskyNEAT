@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum CharacterTeam { Friend, Enemy }
+public enum Confirmation { Idle, Awaiting, Ready }
 public class GameManager : MonoBehaviour {
 
     // General info
     public static int turns;
     public static string currentTeam;
 
-    public static bool awaitingConfirmation; // Confirmation window
+    public static Confirmation confirmationState;
 
     // What team's turn it is and what phase they're on
     public static CharacterTeam characterTeam;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour {
 
     // Targeting
     public GameObject selectedTarget;
+    public static Attacking currentAttackingObj;
 
     void Awake()
     {
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         haveGone = 0;
-        awaitingConfirmation = false;
+        confirmationState = Confirmation.Idle;
 
         turns = 0;
         currentTeam = "Friends";

@@ -134,19 +134,28 @@ public class CharacterMenu : MonoBehaviour {
 
     public void FirstAbility()
     {
-        baseCharacter.AbilityOne();
-        ability1.interactable = false;
+        if (GameManager.confirmationState == Confirmation.Idle)
+        {
+            baseCharacter.AbilityOne();
+            ability1.interactable = false;
+        }
     }
 
     public void SecondAbility()
     {
-        baseCharacter.AbilityTwo();
-        ability2.interactable = false;
+        if (GameManager.confirmationState == Confirmation.Idle)
+        {
+            baseCharacter.AbilityTwo();
+            ability2.interactable = false;
+        }
     }
 
     public void ThirdAbility()
     {
-        baseCharacter.AbilityThree();
-        ability3.interactable = false;
+        if (GameManager.confirmationState == Confirmation.Idle)
+        {
+            baseCharacter.AbilityThree();
+            ability3.interactable = false;
+        }
     }
 }

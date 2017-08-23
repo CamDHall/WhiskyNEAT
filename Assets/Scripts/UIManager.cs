@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour {
     public Canvas screenCanvas;
     public HUD hud;
 
+    // Confirm
     public GameObject confirmationWindow;
 
     private Vector3 confirmPos = new Vector3((Screen.width / 2) -50, (Screen.height / 2) + 75, 0);
@@ -17,7 +18,7 @@ public class UIManager : MonoBehaviour {
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, name;
 	
 	void Update () {
-        if (!GameManager.awaitingConfirmation)
+        if (GameManager.confirmationState == Confirmation.Idle)
         {
             // Hovering
             Ray hoveringRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -139,6 +140,11 @@ public class UIManager : MonoBehaviour {
         {
             if (team == GameManager.characterTeam.ToString())
             {
+                if (GameManager.selectedCharacter != null)
+                {
+                    GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
+                    Paths.ResetTiles();
+                }
                 GameManager.selectedCharacter = hit;
                 GameManager.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();
                 GameManager.selectedBaseCharacter = GameManager.selectedCharacter.GetComponent<BaseCharacter>();
@@ -150,11 +156,10 @@ public class UIManager : MonoBehaviour {
         GameManager.selectedCharacterData = info;
     }
 
-    // Confirmation Window
+    // Confirmation Window    
     public void ConfirmationWindow()
     {
-        GameManager.awaitingConfirmation = true;
-        Debug.Log("HERE");
-        Instantiate(confirmationWindow, confirmPos, confirmationWindow.transform.rotation, screenCanvas.transform);
+        GameManager.confirmationState = Confirmation.Awaiting;
+        confirmationWindow.SetActive(true);
     }
 }

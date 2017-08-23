@@ -34,6 +34,17 @@ public class Targeting {
                     attacking._enemiesInMeleeRange.Add(enemy);
                 }
             }
+
+            // Create totla list of targets
+            foreach(GameObject target in attacking._enemiesInMeleeRange)
+            {
+                attacking._allTargets.Add(target);
+            }
+
+            foreach(GameObject target in attacking._enemiesInRangedRange)
+            {
+                attacking._allTargets.Add(target);
+            }
         }
         else
         {
@@ -60,6 +71,16 @@ public class Targeting {
                 {
                    attacking._friendsInRangedRange.Add(friend);
                 }
+            }
+            // Create list of total targets
+            foreach(GameObject target in attacking._friendsInMeleeRange)
+            {
+                attacking._allTargets.Add(target);
+            }
+
+            foreach(GameObject target in attacking._friendsInRangedRange)
+            {
+                attacking._allTargets.Add(target);
             }
         }
     }
