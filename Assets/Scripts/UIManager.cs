@@ -26,42 +26,15 @@ public class UIManager : MonoBehaviour {
 
             if (Physics.Raycast(hoveringRay, out hoveringHit))
             {
-                if (hoveringHit.transform != null && (hoveringHit.transform.tag == "Enemy" || hoveringHit.transform.tag == "Friend")
-                    && hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.selectedBaseCharacter)
+                if ((hoveringHit.transform.tag == "Friend" || hoveringHit.transform.tag == "Enemy") && GameManager.selectedCharacter != null && 
+                    GameManager.selectedCharacter.tag != hoveringHit.transform.tag && 
+                    hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.selectedBaseCharacter)
                 {
                     hud.DisplayTargetInfo(hoveringHit.transform.gameObject.GetComponent<CharacterData>());
-                    if (GameManager.selectedBaseCharacter != null && GameManager.selectedBaseCharacter.attacking.isAttacking)
-                    {
-                        // Check if hovered target is reachable
-                        if (GameManager.selectedBaseCharacter.tag == "Friend")
-                        {
-                            if (GameManager.selectedBaseCharacter.attacking._enemiesInMeleeRange.Contains(hoveringHit.transform.gameObject) ||
-                                GameManager.selectedBaseCharacter.attacking._enemiesInRangedRange.Contains(hoveringHit.transform.gameObject))
-                            {
-                                hud.AttackInfo(GameManager.selectedBaseCharacter.attacking.type, GameManager.selectedBaseCharacter.attacking);
-                            }
-                        }
-                        else
-                        {
-                            if (GameManager.selectedBaseCharacter.attacking._friendsInMeleeRange.Contains(hoveringHit.transform.gameObject) ||
-                                GameManager.selectedBaseCharacter.attacking._friendsInRangedRange.Contains(hoveringHit.transform.gameObject))
-                            {
-                                hud.AttackInfo(GameManager.selectedBaseCharacter.attacking.type, GameManager.selectedBaseCharacter.attacking);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        hud.AttackInfoOfF();
-                    }
                 }
                 else
                 {
                     hud.OffTargetingInfo();
-                    if (hud.damagedInflicted.activeSelf)
-                    {
-                        hud.AttackInfoOfF();
-                    }
                 }
             }
 

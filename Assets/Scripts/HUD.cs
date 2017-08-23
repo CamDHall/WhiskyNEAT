@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
 
-    public GameObject targetingInfo, damagedInflicted;
-    public Text _name, health, courage, moves, meleeSTR, rangedSTR, rangedDistance;
+    public GameObject targetingInfo;
+    public Text _name, health, courage;
 
 	public void DisplayTargetInfo(CharacterData characterData)
     {
@@ -14,25 +14,10 @@ public class HUD : MonoBehaviour {
         _name.text = "Name: " + characterData.name.ToString();
         health.text = "Health: " + characterData.health.ToString();
         courage.text = "Courage: " + characterData.courage.ToString();
-        moves.text = "Moves: " + characterData.moves.ToString();
-        meleeSTR.text = "MeleeSTR: " + characterData.meleeStrength.ToString();
-        rangedSTR.text = "RangedSTR: " + characterData.rangedStrength.ToString();
-        rangedDistance.text = "Ranged Distance: " + characterData.rangedDistance.ToString();
     }
 
     public void OffTargetingInfo()
     {
         targetingInfo.SetActive(false);
-    }
-
-    public void AttackInfo(string type, Attacking data)
-    {
-        damagedInflicted.SetActive(true);
-        damagedInflicted.GetComponentInChildren<Text>().text = "Damage Inflicted: " + data.damageAmount;
-    }
-
-    public void AttackInfoOfF()
-    {
-        damagedInflicted.SetActive(false);
     }
 }

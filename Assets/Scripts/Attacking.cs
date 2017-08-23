@@ -69,7 +69,6 @@ public class Attacking : MonoBehaviour {
                 {
                     if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))
                     {
-                        Debug.Log(isAttacking);
                         uiManager.ConfirmationWindow();
                         targetObject = hit.transform.gameObject;
                         GameManager.currentAttackingObj = this;
