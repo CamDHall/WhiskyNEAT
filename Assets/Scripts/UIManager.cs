@@ -121,6 +121,7 @@ public class UIManager : MonoBehaviour {
                     GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
                     Paths.ResetTiles();
                 }
+                // Assignments
                 GameManager.selectedCharacter = hit;
                 GameManager.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();
                 GameManager.selectedBaseCharacter = GameManager.selectedCharacter.GetComponent<BaseCharacter>();
