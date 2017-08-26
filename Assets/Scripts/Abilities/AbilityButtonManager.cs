@@ -21,8 +21,6 @@ public class AbilityButtonManager : MonoBehaviour {
             GetComponent<Button>().interactable = true;
             count = 0;
 
-            Debug.Log(abilitiesBase);
-
             if(data.buttonsIP.Contains(GetComponent<Button>()))
             {
                 data.buttonsIP.Remove(GetComponent<Button>());

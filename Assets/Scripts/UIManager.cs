@@ -128,6 +128,8 @@ public class UIManager : MonoBehaviour {
                 GameManager.selectedBaseCharacter = GameManager.selectedCharacter.GetComponent<BaseCharacter>();
                 BaseCharacter baseCharacter = GameManager.selectedBaseCharacter;
                 baseCharacter.EnterState(baseCharacter.currentState);
+
+                GameManager.selectedCharacter.GetComponent<Movement>().CheckMovement();
             }
         }
 
