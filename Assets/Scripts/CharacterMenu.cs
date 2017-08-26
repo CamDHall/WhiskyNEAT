@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class CharacterMenu : MonoBehaviour {
 
-    public GameObject menu, meleeButton, rangedButton;
+    public GameObject meleeButton, rangedButton;
     public Button ability1, ability2, ability3;
     BaseCharacter baseCharacter;
 
     public Image indicator;
     List<Image> imgs;
-    Canvas worldCanvas;
+    Canvas worldCanvas, ScreenCanvas;
+    public RectTransform menuPrefab;
+    RectTransform menu;
 
     private void Awake()
     {
@@ -21,7 +23,11 @@ public class CharacterMenu : MonoBehaviour {
     void Start()
     {
         worldCanvas = GameObject.FindGameObjectWithTag("worldCanvas").GetComponent<Canvas>();
-        menu.SetActive(false);
+        ScreenCanvas = GameObject.FindGameObjectWithTag("ScreenCanvas").GetComponent<Canvas>();
+
+        menu = Instantiate(menuPrefab, Vector3.zero, Quaternion.identity, ScreenCanvas.transform);
+        menu.anchoredPosition = Vector3.zero;
+        menu.gameObject.SetActive(false);
         imgs = new List<Image>();
 
         if (baseCharacter.characterData.rangedDistance == 0)
@@ -51,7 +57,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void DisplayActionBar()
     {
-        menu.SetActive(true);
+        menu.gameObject.SetActive(true);
         if(gameObject.tag == "Friend")
         {
             // Turn melee on and off
@@ -81,7 +87,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void DisplayOff()
     {
-        menu.SetActive(false);
+        menu.gameObject.SetActive(false);
     }
 
     public void MeleeButton()
