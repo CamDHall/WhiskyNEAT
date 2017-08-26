@@ -2,8 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GarryNation : BaseCharacter {
+
+    public static UnityAction action1, action2, action3;
+
+    private void Awake()
+    {
+        // Button click actions for abilities
+        action1 = new UnityAction(AbilityOne);
+        action2 = new UnityAction(AbilityTwo);
+        action3 = new UnityAction(AbilityThree);
+    }
 
     public override void AbilityOne()
     {

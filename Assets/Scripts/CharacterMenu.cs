@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CharacterMenu : MonoBehaviour {
 
@@ -53,6 +54,31 @@ public class CharacterMenu : MonoBehaviour {
         ability1.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility1;
         ability2.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility2;
         ability3.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility3;
+
+
+        switch (gameObject.name)
+        {
+            case "George Hammerschmidt":
+                ability1.onClick.AddListener(GeorgeHammerschmidt.action1);
+                ability2.onClick.AddListener(GeorgeHammerschmidt.action2);
+                ability3.onClick.AddListener(GeorgeHammerschmidt.action3);
+                break;
+            case "Demetri Wolfgang":
+                ability1.onClick.AddListener(DemetriWolfgang.action1);
+                ability2.onClick.AddListener(DemetriWolfgang.action2);
+                ability3.onClick.AddListener(DemetriWolfgang.action3);
+                break;
+            case "Garry Nation":
+                ability1.onClick.AddListener(GarryNation.action1);
+                ability2.onClick.AddListener(GarryNation.action2);
+                ability3.onClick.AddListener(GarryNation.action3);
+                break;
+            case "Chang":
+                ability1.onClick.AddListener(Chang.action1);
+                ability2.onClick.AddListener(Chang.action2);
+                ability3.onClick.AddListener(Chang.action3);
+                break;
+        }
     }
 
     public void DisplayActionBar()

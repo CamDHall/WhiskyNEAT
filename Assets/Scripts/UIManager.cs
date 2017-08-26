@@ -91,7 +91,6 @@ public class UIManager : MonoBehaviour {
                         else if (!Paths.reachableTiles.Contains(hit.transform.gameObject))
                         {
                             NothingSelected();
-                            Paths.ResetTiles();
                         }
                     }
                 }
@@ -101,6 +100,7 @@ public class UIManager : MonoBehaviour {
 
     void NothingSelected()
     {
+        Paths.ResetTiles();
         if (GameManager.selectedCharacter != null)
         {
             GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
