@@ -122,7 +122,6 @@ public abstract class BaseCharacter : AbilitiesBase {
     // Idle
     protected virtual void EnterIdle()
     {
-        // Debug.Log("ENETERED IDLE");
         // if the amount of characters that have moved equals the size of a team, change states
 
         ExitState(State.Idle);

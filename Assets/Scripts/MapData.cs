@@ -12,7 +12,7 @@ public class MapData : MonoBehaviour {
     public static List<GameObject> enemies;
     public static List<GameObject> friends;
 
-	void Start () {
+	void Awake () {
         // Declare and clear statics
         enemies = new List<GameObject>();
         friends = new List<GameObject>();

@@ -8,7 +8,6 @@ public class CharacterData : MonoBehaviour {
     public List<Button> buttonsIP = new List<Button>();
 
     public int health, courage;
-    public int currentMana, mana;
     public int currentNumberofMoves, moves;
     public int currentNumberofAttacks, numberofAttacks;
 

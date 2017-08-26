@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour {
 
             if (Physics.Raycast(hoveringRay, out hoveringHit))
             {
+//                Debug.Log(hoveringHit.transform.gameObject.name);
                 if ((hoveringHit.transform.tag == "Friend" || hoveringHit.transform.tag == "Enemy") && GameManager.selectedCharacter != null && 
                     GameManager.selectedCharacter.tag != hoveringHit.transform.tag && 
                     hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.selectedBaseCharacter)
@@ -74,13 +75,13 @@ public class UIManager : MonoBehaviour {
                 name.text = "Name: " + GameManager.selectedCharacterData.name.ToString();
             }
 
+            // General Selections
             if (Input.GetMouseButtonDown(0))
             {
                 if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
-
                     if (Physics.Raycast(ray, out hit))
                     {
                         if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "Friend")

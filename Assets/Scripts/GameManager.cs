@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 
     // General info
     public static int turns;
-    public static string currentTeam;
+    public static CharacterTeam currentTeam;
 
     public static Confirmation confirmationState;
 
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         characterTeam = CharacterTeam.Friend;
+        currentTeam = CharacterTeam.Friend;
 
     }
 
@@ -38,7 +39,6 @@ public class GameManager : MonoBehaviour {
         confirmationState = Confirmation.Idle;
 
         turns = 0;
-        currentTeam = "Friends";
         selectedCharacter = null;
         selectedCharacterData = null;
         selectedBaseCharacter = null;
@@ -46,10 +46,10 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if(characterTeam == CharacterTeam.Friend && haveGone == MapData.friends.Count)
+        if(currentTeam == CharacterTeam.Friend && haveGone == MapData.friends.Count)
         {
             ChangeTeams();
-        } else if(characterTeam == CharacterTeam.Enemy && haveGone == MapData.enemies.Count)
+        } else if(currentTeam == CharacterTeam.Enemy && haveGone == MapData.enemies.Count)
         {
             ChangeTeams();
         }

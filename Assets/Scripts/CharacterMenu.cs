@@ -11,7 +11,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public Image indicator;
     List<Image> imgs;
-    public Canvas worldCanvas;
+    Canvas worldCanvas;
 
     private void Awake()
     {
@@ -20,11 +20,28 @@ public class CharacterMenu : MonoBehaviour {
 
     void Start()
     {
+        worldCanvas = GameObject.FindGameObjectWithTag("worldCanvas").GetComponent<Canvas>();
         menu.SetActive(false);
         imgs = new List<Image>();
 
         if (baseCharacter.characterData.rangedDistance == 0)
             rangedButton = null;
+
+        // Assign buttons from menu
+        GameObject abilityBar = menu.transform.GetChild(0).gameObject;
+
+        ability1 = abilityBar.transform.GetChild(0).gameObject.GetComponent<Button>();
+        ability2 = abilityBar.transform.GetChild(1).gameObject.GetComponent<Button>();
+        ability3 = abilityBar.transform.GetChild(2).gameObject.GetComponent<Button>();
+
+        if(menu.transform.childCount == 3)
+        {
+            rangedButton = menu.transform.GetChild(1).gameObject;
+            meleeButton = menu.transform.GetChild(2).gameObject;
+        } else
+        {
+            meleeButton = menu.transform.GetChild(1).gameObject;
+        }
 
         // Ability names
         ability1.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility1;
