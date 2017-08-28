@@ -11,6 +11,8 @@ public class CharacterData : MonoBehaviour {
     public int currentNumberofMoves, moves;
     public int currentNumberofAttacks, numberofAttacks;
 
+    public string characterName;
+
     // Abilities
     public string nameAbility1, nameAbility2, nameAbility3;
 
