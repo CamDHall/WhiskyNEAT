@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour {
 
     public GameObject[] heroList = new GameObject[4];
     GameObject[] _heros = new GameObject[4];
-    GameObject[] deck1, deck2;
+    public GameObject[] deck1, deck2;
     public int selectedHero = 0, player = 0;
     Vector3 heroPos;
 
@@ -42,78 +42,28 @@ public class PlayerManager : MonoBehaviour {
         deck2 = new GameObject[playerInfo.deckPlayer2.Count];
 
         // Spawn deck inactive
-        for(int i = 0; i < deck1.Length; i++)
+        if (player == 1)
         {
-            Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
-            var card = Instantiate(playerInfo.deckPlayer1[i], Pos, playerInfo.deckPlayer1[i].transform.rotation);
-            deck1[i] = card;
-            deck1[i].SetActive(false);
-        }
-
-        for(int i = 0; i < deck2.Length; i++)
-        {
-            Vector3 Pos = new Vector3(-6 + (i * 3), -4, 0);
-            var card = Instantiate(playerInfo.deckPlayer2[i], Pos, playerInfo.deckPlayer2[i].transform.rotation);
-            deck2[i] = card;
-            deck2[i].SetActive(false);
-        }
-
-        selectedHero = 0;
-        DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
-    }
-
-    // For selecting followers
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            for (int i = 0; i < deck1.Length; i++)
             {
-                if (player == 1)
-                {
-                    foreach (GameObject follower in deck1)
-                    {
-                        if (hit.transform.position == follower.transform.position)
-                        {
-                            if (playerInfo.followerPlayer1.Count < 3)
-                            {
-                                if (playerInfo.followerPlayer1.Contains(follower))
-                                {
-                                    playerInfo.followerPlayer1.Remove(follower);
-                                }
-                                else
-                                {
-                                    playerInfo.followerPlayer1.Add(follower);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (GameObject follower in deck2)
-                    {
-                        if (transform.position == follower.transform.position)
-                        {
-                            if (playerInfo.followerPlayer2.Count < 3)
-                            {
-                                if(playerInfo.followerPlayer2.Contains(follower))
-                                {
-                                    playerInfo.followerPlayer2.Remove(follower);
-                                } else
-                                {
-                                    playerInfo.followerPlayer2.Add(follower);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
+                Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
+                var card = Instantiate(playerInfo.deckPlayer1[i], Pos, playerInfo.deckPlayer1[i].transform.rotation);
+                deck1[i] = card;
+                deck1[i].SetActive(false);
+            }
+        } else
+        {
+
+            for (int i = 0; i < deck2.Length; i++)
+            {
+                Vector3 Pos = new Vector3(-6 + (i * 3), -4, 0);
+                var card = Instantiate(playerInfo.deckPlayer2[i], Pos, playerInfo.deckPlayer2[i].transform.rotation);
+                deck2[i] = card;
+                deck2[i].SetActive(false);
             }
         }
+        selectedHero = 0;
+        DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
     }
 
     public void NextCharacter()
@@ -176,6 +126,12 @@ public class PlayerManager : MonoBehaviour {
             + "\nRanged Strength: \t" + data.rangedStrength;
     }
 
+    void DisplayStats(Text stat, CharacterData data)
+    {
+        stat.text = data.characterName + "\nHealth: \t" + data.health + "\nCourage: \t" + data.courage + "\nMoves: \t" + data.moves + "\nMelee Strength: \t" + data.meleeStrength
+            + "\nRanged Strength: \t" + data.rangedStrength;
+    }
+
     public void ConfirmHero()
     {
         // Set heros and turn them off
@@ -190,8 +146,8 @@ public class PlayerManager : MonoBehaviour {
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 stat.GetComponent<RectTransform>().anchoredPosition = statPos;
                 CharacterData data = deck1[i].GetComponent<CharacterData>();
-                stat.text = data.characterName + "\nHealth: \t" + data.health + "\nCourage: \t" + data.courage + "\nMoves: \t" + data.moves + "\nMelee Strength: \t" + data.meleeStrength
-            + "\nRanged Strength: \t" + data.rangedStrength;
+                DisplayStats(stat, data);
+                stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
             }
         } else
         {
