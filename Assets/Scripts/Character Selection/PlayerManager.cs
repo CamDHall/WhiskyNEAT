@@ -62,6 +62,60 @@ public class PlayerManager : MonoBehaviour {
         DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
     }
 
+    // For selecting followers
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (player == 1)
+                {
+                    foreach (GameObject follower in deck1)
+                    {
+                        if (hit.transform.position == follower.transform.position)
+                        {
+                            if (playerInfo.followerPlayer1.Count < 3)
+                            {
+                                if (playerInfo.followerPlayer1.Contains(follower))
+                                {
+                                    playerInfo.followerPlayer1.Remove(follower);
+                                }
+                                else
+                                {
+                                    playerInfo.followerPlayer1.Add(follower);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (GameObject follower in deck2)
+                    {
+                        if (transform.position == follower.transform.position)
+                        {
+                            if (playerInfo.followerPlayer2.Count < 3)
+                            {
+                                if(playerInfo.followerPlayer2.Contains(follower))
+                                {
+                                    playerInfo.followerPlayer2.Remove(follower);
+                                } else
+                                {
+                                    playerInfo.followerPlayer2.Add(follower);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void NextCharacter()
     {
         // Set index for current character
