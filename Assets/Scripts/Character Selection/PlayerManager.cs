@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour {
 
     private void Start()
     {
+        playerInfo = GameObject.FindGameObjectWithTag("PlayerInfo").GetComponent<PlayerInfo>();
         if(player == 1)
         {
             heroPos = new Vector3(0, 4.5f, 0);
