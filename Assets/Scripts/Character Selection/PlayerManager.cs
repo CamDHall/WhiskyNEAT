@@ -7,9 +7,11 @@ public class PlayerManager : MonoBehaviour {
 
     public GameObject[] heroList = new GameObject[4];
     GameObject[] _heros = new GameObject[4];
-    public GameObject[] deck1, deck2;
     public int selectedHero = 0, player = 0;
     Vector3 heroPos;
+
+    // List of selected Followers
+    public List<GameObject> selectedFollowers;
 
     public PlayerInfo playerInfo;
 
@@ -39,28 +41,25 @@ public class PlayerManager : MonoBehaviour {
                 _heros[i].SetActive(true);
         }
 
-        deck1 = new GameObject[playerInfo.deckPlayer1.Count];
-        deck2 = new GameObject[playerInfo.deckPlayer2.Count];
-
         // Spawn deck inactive
         if (player == 1)
         {
-            for (int i = 0; i < deck1.Length; i++)
+            for (int i = 0; i < PlayerInfo.Instance.deck1.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
-                var card = Instantiate(playerInfo.deckPlayer1[i], Pos, playerInfo.deckPlayer1[i].transform.rotation);
-                deck1[i] = card;
-                deck1[i].SetActive(false);
+                var card = Instantiate(playerInfo.deck1[i], Pos, playerInfo.deck1[i].transform.rotation);
+                PlayerInfo.Instance.deck1[i] = card;
+                PlayerInfo.Instance.deck1[i].SetActive(false);
             }
         } else
         {
 
-            for (int i = 0; i < deck2.Length; i++)
+            for (int i = 0; i < PlayerInfo.Instance.deck2.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -4, 0);
-                var card = Instantiate(playerInfo.deckPlayer2[i], Pos, playerInfo.deckPlayer2[i].transform.rotation);
-                deck2[i] = card;
-                deck2[i].SetActive(false);
+                var card = Instantiate(playerInfo.deck2[i], Pos, playerInfo.deck2[i].transform.rotation);
+                PlayerInfo.Instance.deck2[i] = card;
+                PlayerInfo.Instance.deck2[i].SetActive(false);
             }
         }
         selectedHero = 0;
@@ -140,20 +139,20 @@ public class PlayerManager : MonoBehaviour {
         {
             playerInfo.heroPlayer1 = selectedHero;
             // Display deck
-            for(int i = 0; i < deck1.Length; i++)
+            for(int i = 0; i < PlayerInfo.Instance.deck1.Count; i++)
             {
-                deck1[i].SetActive(true);
+                PlayerInfo.Instance.deck1[i].SetActive(true);
                 Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 stat.GetComponent<RectTransform>().anchoredPosition = statPos;
-                CharacterData data = deck1[i].GetComponent<CharacterData>();
+                CharacterData data = PlayerInfo.Instance.deck1[i].GetComponent<CharacterData>();
                 DisplayStats(stat, data);
                 stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
             }
         } else
         {
             playerInfo.heroPlayer2 = selectedHero;
-            foreach (GameObject card in deck1)
+            foreach (GameObject card in PlayerInfo.Instance.deck1)
             {
                 card.SetActive(true);
             }
