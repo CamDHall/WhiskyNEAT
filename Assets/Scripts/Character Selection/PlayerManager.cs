@@ -7,7 +7,8 @@ public class PlayerManager : MonoBehaviour {
 
     public GameObject[] heroList = new GameObject[4];
     GameObject[] _heros = new GameObject[4];
-    public int selectedHero = 0, player = 0;
+    public int selectedHero = 0;
+    public int player;
     Vector3 heroPos;
 
     // List of selected Followers
@@ -20,9 +21,14 @@ public class PlayerManager : MonoBehaviour {
 
     // UI Compents
     public Text stats;
+    public GameObject readyButton;
+
+    public bool playerReady;
 
     private void Start()
     {
+        playerReady = false;
+
         playerInfo = GameObject.FindGameObjectWithTag("PlayerInfo").GetComponent<PlayerInfo>();
         if(player == 1)
         {
@@ -56,7 +62,6 @@ public class PlayerManager : MonoBehaviour {
             for (int i = 0; i < playerInfo.deck2.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
-                Debug.Log(Pos.y);
                 var card = Instantiate(playerInfo.deck2[i], Pos, playerInfo.deck2[i].transform.rotation);
                 playerInfo.deck2[i] = card;
                 playerInfo.deck2[i].SetActive(false);
@@ -64,6 +69,19 @@ public class PlayerManager : MonoBehaviour {
         }
         selectedHero = 0;
         DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
+    }
+
+    private void Update()
+    {
+        Debug.Log(selectedFollowers.Count);
+        // Show ready button when all followers are selected
+        if(selectedFollowers.Count == 3 && !playerReady)
+        {
+            readyButton.SetActive(true);
+        } else
+        {
+            readyButton.SetActive(false);
+        }
     }
 
     public void NextCharacter()

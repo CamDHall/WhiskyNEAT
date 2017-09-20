@@ -9,4 +9,6 @@ public class PlayerInfo : MonoBehaviour {
     public int heroPlayer1, heroPlayer2;
     public List<GameObject> deck1, deck2;
     public List<GameObject> followersPlayer1, followersPlayer2;
+
+
 }

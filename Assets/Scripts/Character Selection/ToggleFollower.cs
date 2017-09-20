@@ -63,7 +63,7 @@ public class ToggleFollower : MonoBehaviour {
                 playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck1[followerIndex]);
             } else if (playerManager.player == 2 && playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
             {
-                playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck1[followerIndex]);
+                playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck2[followerIndex]);
             }
         }
         }
