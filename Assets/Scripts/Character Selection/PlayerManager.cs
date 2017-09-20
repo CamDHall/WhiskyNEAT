@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour {
             heroPos = new Vector3(0, 4.5f, 0);
         } else
         {
-            heroPos = new Vector3(0, -2, 0);
+            heroPos = new Vector3(0, -1.5f, 0);
         }
         for(int i = 0; i < heroList.Length; i++)
         {
@@ -44,22 +44,22 @@ public class PlayerManager : MonoBehaviour {
         // Spawn deck inactive
         if (player == 1)
         {
-            for (int i = 0; i < PlayerInfo.Instance.deck1.Count; i++)
+            for (int i = 0; i < playerInfo.deck1.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
                 var card = Instantiate(playerInfo.deck1[i], Pos, playerInfo.deck1[i].transform.rotation);
-                PlayerInfo.Instance.deck1[i] = card;
-                PlayerInfo.Instance.deck1[i].SetActive(false);
+                playerInfo.deck1[i] = card;
+                playerInfo.deck1[i].SetActive(false);
             }
         } else
         {
-
-            for (int i = 0; i < PlayerInfo.Instance.deck2.Count; i++)
+            for (int i = 0; i < playerInfo.deck2.Count; i++)
             {
-                Vector3 Pos = new Vector3(-6 + (i * 3), -4, 0);
+                Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
+                Debug.Log(Pos.y);
                 var card = Instantiate(playerInfo.deck2[i], Pos, playerInfo.deck2[i].transform.rotation);
-                PlayerInfo.Instance.deck2[i] = card;
-                PlayerInfo.Instance.deck2[i].SetActive(false);
+                playerInfo.deck2[i] = card;
+                playerInfo.deck2[i].SetActive(false);
             }
         }
         selectedHero = 0;
@@ -139,22 +139,29 @@ public class PlayerManager : MonoBehaviour {
         {
             playerInfo.heroPlayer1 = selectedHero;
             // Display deck
-            for(int i = 0; i < PlayerInfo.Instance.deck1.Count; i++)
+            for(int i = 0; i < playerInfo.deck1.Count; i++)
             {
-                PlayerInfo.Instance.deck1[i].SetActive(true);
+                playerInfo.deck1[i].SetActive(true);
                 Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 stat.GetComponent<RectTransform>().anchoredPosition = statPos;
-                CharacterData data = PlayerInfo.Instance.deck1[i].GetComponent<CharacterData>();
+                CharacterData data = playerInfo.deck1[i].GetComponent<CharacterData>();
                 DisplayStats(stat, data);
                 stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
             }
         } else
         {
             playerInfo.heroPlayer2 = selectedHero;
-            foreach (GameObject card in PlayerInfo.Instance.deck1)
+            // Display deck
+            for (int i = 0; i < playerInfo.deck2.Count; i++)
             {
-                card.SetActive(true);
+                playerInfo.deck2[i].SetActive(true);
+                Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
+                Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                stat.GetComponent<RectTransform>().anchoredPosition = statPos;
+                CharacterData data = playerInfo.deck2[i].GetComponent<CharacterData>();
+                DisplayStats(stat, data);
+                stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
             }
         }
 

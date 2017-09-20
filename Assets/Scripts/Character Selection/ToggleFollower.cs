@@ -8,37 +8,63 @@ public class ToggleFollower : MonoBehaviour {
 
     public int followerIndex;
     PlayerManager playerManager;
+    Toggle toggle;
 
     private void Start()
     {
         playerManager = transform.parent.GetComponentInParent<PlayerManager>();
+        toggle = GetComponent<Toggle>();
     }
 
     private void Update()
     {
-        if(GetComponent<Toggle>().isOn)
+        if(toggle.isOn)
         {
             // Check if selected characters is less than the maximum size, insure no duplicates are added
-            if(playerManager.player == 1)
+            if (playerManager.selectedFollowers.Count >= playerManager.playerInfo.numberOfFollowers)
             {
-                if(playerManager.selectedFollowers.Count == PlayerInfo.Instance.numberOfFollowers)
+
+                // if current isn't in list, toggle off
+                if(playerManager.player == 1)
                 {
-                    GetComponent<Toggle>().isOn = false;
-                } else if (!playerManager.selectedFollowers.Contains(PlayerInfo.Instance.deck1[followerIndex]) && playerManager.selectedFollowers.Count <= PlayerInfo.Instance.numberOfFollowers)
-                {
-                    playerManager.selectedFollowers.Add(PlayerInfo.Instance.deck1[followerIndex]);
-                }
-            } else
-            {
-                if (!playerManager.selectedFollowers.Contains(PlayerInfo.Instance.deck2[followerIndex]) && playerManager.selectedFollowers.Count <= PlayerInfo.Instance.numberOfFollowers)
-                {
-                    playerManager.selectedFollowers.Add(PlayerInfo.Instance.deck2[followerIndex]);
+                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck1[followerIndex]))
+                    {
+                        toggle.isOn = false;
+                    }
                 } else
                 {
-                    GetComponent<Toggle>().isOn = false;
+                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
+                    {
+                        toggle.isOn = false;
+                    }
                 }
             }
-            // Debug.Log(followerIndex);
+            else
+            {
+                if (playerManager.player == 1)
+                {
+                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck1[followerIndex]))
+                    {
+                        playerManager.selectedFollowers.Add(playerManager.playerInfo.deck1[followerIndex]);
+                    }
+                }
+                else
+                {
+                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
+                    {
+                        playerManager.selectedFollowers.Add(playerManager.playerInfo.deck2[followerIndex]);
+                    }
+                }
+            }
+        } else // Remove from selected if stil contained 
+        {
+            if(playerManager.player == 1 && playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck1[followerIndex]))
+            {
+                playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck1[followerIndex]);
+            } else if (playerManager.player == 2 && playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
+            {
+                playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck1[followerIndex]);
+            }
         }
-    }
+        }
 }
