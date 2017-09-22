@@ -9,6 +9,9 @@ public class MapData : MonoBehaviour {
     public static Dictionary<Vector3, float> friendsInfo;
 
     public static GameObject[] tiles;
+
+    // For spawning
+    public List<Transform> p1_startingTiles, p2_startingTiles;
     public static List<GameObject> enemies;
     public static List<GameObject> friends;
 

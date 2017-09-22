@@ -62,6 +62,11 @@ public class PlayerManager : MonoBehaviour {
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
                 var card = Instantiate(playerInfo.deck1[i], Pos, playerInfo.deck1[i].transform.rotation);
+                // Disable scripts on prefab
+                card.GetComponent<Attacking>().enabled = false;
+                card.GetComponent<Movement>().enabled = false;
+                card.GetComponent<CharacterMenu>().enabled = false;
+                card.GetComponent<BaseCharacter>().enabled = false;
                 card.name = playerInfo.deck1[i].name;
                 playerInfo.deck1[i] = card;
                 playerInfo.deck1[i].SetActive(false);
@@ -72,6 +77,11 @@ public class PlayerManager : MonoBehaviour {
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
                 var card = Instantiate(playerInfo.deck2[i], Pos, playerInfo.deck2[i].transform.rotation);
+                // Disable scripts on prefab
+                card.GetComponent<Attacking>().enabled = false;
+                card.GetComponent<Movement>().enabled = false;
+                card.GetComponent<CharacterMenu>().enabled = false;
+                card.GetComponent<BaseCharacter>().enabled = false;
                 card.name = playerInfo.deck2[i].name;
                 playerInfo.deck2[i] = card;
                 playerInfo.deck2[i].SetActive(false);
