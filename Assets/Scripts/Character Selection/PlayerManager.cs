@@ -32,14 +32,22 @@ public class PlayerManager : MonoBehaviour {
         playerInfo = GameObject.FindGameObjectWithTag("PlayerInfo").GetComponent<PlayerInfo>();
         if(player == 1)
         {
-            heroPos = new Vector3(0, 4.5f, 0);
+            heroPos = new Vector3(0, 5.5f, 0);
         } else
         {
-            heroPos = new Vector3(0, -1.5f, 0);
+            heroPos = new Vector3(0, -0.5f, 0);
         }
         for(int i = 0; i < heroList.Length; i++)
         {
             var hero = Instantiate(heroList[i], heroPos, heroList[i].transform.rotation);
+
+            // Disable scripts on prefab
+            hero.GetComponent<Attacking>().enabled = false;
+            hero.GetComponent<Movement>().enabled = false;
+            hero.GetComponent<CharacterMenu>().enabled = false;
+            hero.GetComponent<BaseCharacter>().enabled = false;
+            hero.name = heroList[i].name;
+
             _heros[i] = hero;
             if (i != 0)
                 _heros[i].SetActive(false);
@@ -54,6 +62,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
                 var card = Instantiate(playerInfo.deck1[i], Pos, playerInfo.deck1[i].transform.rotation);
+                card.name = playerInfo.deck1[i].name;
                 playerInfo.deck1[i] = card;
                 playerInfo.deck1[i].SetActive(false);
             }
@@ -63,6 +72,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
                 var card = Instantiate(playerInfo.deck2[i], Pos, playerInfo.deck2[i].transform.rotation);
+                card.name = playerInfo.deck2[i].name;
                 playerInfo.deck2[i] = card;
                 playerInfo.deck2[i].SetActive(false);
             }
@@ -73,7 +83,6 @@ public class PlayerManager : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log(selectedFollowers.Count);
         // Show ready button when all followers are selected
         if(selectedFollowers.Count == 3 && !playerReady)
         {
@@ -155,7 +164,7 @@ public class PlayerManager : MonoBehaviour {
         // Set heros and turn them off
         if(player == 1)
         {
-            playerInfo.heroPlayer1 = selectedHero;
+            PlayerInfo.heroPlayer1 = _heros[selectedHero].name;
             // Display deck
             for(int i = 0; i < playerInfo.deck1.Count; i++)
             {
@@ -169,7 +178,7 @@ public class PlayerManager : MonoBehaviour {
             }
         } else
         {
-            playerInfo.heroPlayer2 = selectedHero;
+            PlayerInfo.heroPlayer2 = _heros[selectedHero].name;
             // Display deck
             for (int i = 0; i < playerInfo.deck2.Count; i++)
             {
