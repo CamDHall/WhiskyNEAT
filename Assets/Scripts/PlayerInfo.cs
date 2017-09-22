@@ -11,7 +11,7 @@ public class PlayerInfo : MonoBehaviour {
     public List<GameObject> followersPlayer1, followersPlayer2;
 
     // Round info
-    public static List<string> p1_followersName = new List<string>(), p2_FollowersName = new List<string>();
+    public static List<string> p1_FollowersName = new List<string>(), p2_FollowersName = new List<string>();
 
     private void Awake()
     {

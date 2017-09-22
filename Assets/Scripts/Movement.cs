@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour {
                         {
                             transform.parent = hit.transform;
                             GameManager.selectedCharacterData.currentNumberofMoves -= (int)MapData.tileInfo[hit.transform.position];
-                            transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+                            transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
                             // Reset tile colors
                             Paths.ResetTiles();
                         }
@@ -53,7 +53,6 @@ public class Movement : MonoBehaviour {
         // Check if state is moving but Handle state hasn't been called yet, then check for raycast to set path and handle movement
         if (GetComponent<BaseCharacter>().currentState == State.Moving && !isMoving)
         {
-            Debug.Log("YES");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 

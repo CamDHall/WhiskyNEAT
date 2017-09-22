@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Paths : MonoBehaviour {
+public class Paths {
 
     public static List<GameObject> reachableTiles = new List<GameObject>();
 
@@ -12,12 +12,14 @@ public class Paths : MonoBehaviour {
         {
             reachableTiles.Clear();
             Transform currentTransform = GameManager.selectedCharacter.transform; // For transform.position
+            Debug.Log(currentTransform.position.x + "Z: " + currentTransform.position.z);
 
             foreach (GameObject tile in MapData.tiles)
             {
                 if (tile.transform.position.y == 0)
                 {
-                    MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z);
+                    MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) 
+                        + Mathf.Abs(tile.transform.position.z - currentTransform.position.z);
                 }
                 else if (tile.transform.position.y == 0.25f)
                     MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.25f;

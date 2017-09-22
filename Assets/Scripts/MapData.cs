@@ -12,10 +12,10 @@ public class MapData : MonoBehaviour {
 
     // For spawning
     public List<Transform> p1_startingTiles, p2_startingTiles;
-    public static List<GameObject> enemies;
-    public static List<GameObject> friends;
+    [SerializeField]public static List<GameObject> enemies;
+    [SerializeField]public static List<GameObject> friends;
 
-	void Awake () {
+	void Start() {
         // Declare and clear statics
         enemies = new List<GameObject>();
         friends = new List<GameObject>();

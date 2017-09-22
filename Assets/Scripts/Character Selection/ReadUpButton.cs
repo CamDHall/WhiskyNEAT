@@ -12,10 +12,11 @@ public class ReadUpButton : MonoBehaviour {
         {
             foreach(GameObject character in playerManager.selectedFollowers)
             {
-                //Debug.Log(character.name);
-                PlayerInfo.p1_followersName.Add(character.name);
+                PlayerInfo.p1_FollowersName.Add(character.name);
             }
-        } else
+        } 
+
+        if(playerManager.player == 2)
         {
             foreach(GameObject character in playerManager.selectedFollowers)
             {

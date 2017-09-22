@@ -67,7 +67,8 @@ public class PlayerManager : MonoBehaviour {
                 card.GetComponent<Movement>().enabled = false;
                 card.GetComponent<CharacterMenu>().enabled = false;
                 card.GetComponent<BaseCharacter>().enabled = false;
-                card.name = playerInfo.deck1[i].name;
+                card.name = playerInfo.deck1[i].name; // Set Name to match prefab
+
                 playerInfo.deck1[i] = card;
                 playerInfo.deck1[i].SetActive(false);
             }
@@ -82,7 +83,8 @@ public class PlayerManager : MonoBehaviour {
                 card.GetComponent<Movement>().enabled = false;
                 card.GetComponent<CharacterMenu>().enabled = false;
                 card.GetComponent<BaseCharacter>().enabled = false;
-                card.name = playerInfo.deck2[i].name;
+                card.name = playerInfo.deck2[i].name; // Set Name to match prefab
+
                 playerInfo.deck2[i] = card;
                 playerInfo.deck2[i].SetActive(false);
             }

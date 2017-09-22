@@ -21,23 +21,43 @@ public class RoundManager : MonoBehaviour {
 
         // Set Data
         p1_Hero.GetComponent<BaseCharacter>().characterData = p1_Hero.GetComponent<CharacterData>();
+        p1_Hero.gameObject.tag = "Friend"; // Set team tag
         p2_Hero.GetComponent<BaseCharacter>().characterData = p2_Hero.GetComponent<CharacterData>();
+        p2_Hero.gameObject.tag = "Enemy";
 
         // Set Menu
         p1_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer1 + " Menu", typeof(RectTransform)) as RectTransform;
         p2_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer2 + " Menu", typeof(RectTransform)) as RectTransform;
 
-        for (int i = 0; i < PlayerInfo.p1_followersName.Count; i++)
+        // p1 Followers
+        for (int i = 0; i < PlayerInfo.p1_FollowersName.Count; i++)
         {
-            Pos = new Vector3(0, 0, 0);
-            GameObject tempPrefab = Resources.Load("Characters/" + PlayerInfo.p1_followersName[i], typeof(GameObject)) as GameObject;
+            Pos = new Vector3(0, 0.5f, 0);
+            GameObject tempPrefab = Resources.Load("Characters/" + PlayerInfo.p1_FollowersName[i], typeof(GameObject)) as GameObject;
             GameObject follower = Instantiate(tempPrefab, Pos, Quaternion.identity, map.p1_startingTiles[i + 1]);
             follower.transform.localPosition = Pos;
+            follower.tag = "Friend"; // Set team tag
 
             // Set Data
             follower.GetComponent<BaseCharacter>().characterData = follower.GetComponent<CharacterData>();
             // Set Menu
-            follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p1_followersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
+            //Debug.Log(PlayerInfo.p1_FollowersName[i]);
+            follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p1_FollowersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
+        }
+
+        // p2 Followers
+        for (int i = 0; i < PlayerInfo.p2_FollowersName.Count; i++)
+        {
+            Pos = new Vector3(0, 0.5f, 0);
+            GameObject tempPrefab = Resources.Load("Characters/" + PlayerInfo.p2_FollowersName[i], typeof(GameObject)) as GameObject;
+            GameObject follower = Instantiate(tempPrefab, Pos, Quaternion.identity, map.p2_startingTiles[i + 1]);
+            follower.transform.localPosition = Pos;
+            follower.tag = "Enemy"; // Set team tag
+
+            // Set Data
+            follower.GetComponent<BaseCharacter>().characterData = follower.GetComponent<CharacterData>();
+            // Set Menu
+            follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p2_FollowersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
         }
     }
 }
