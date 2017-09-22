@@ -53,7 +53,6 @@ public class Attacking : MonoBehaviour {
             {
                 if(hit.transform.position == gameObject.transform.position)
                 {
-                    Debug.Log("HERE");
                     GetComponent<CharacterMenu>().DisplayActionBar();
                 }
             }

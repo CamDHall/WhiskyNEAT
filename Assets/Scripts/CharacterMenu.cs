@@ -16,13 +16,9 @@ public class CharacterMenu : MonoBehaviour {
     public RectTransform menuPrefab;
     RectTransform menu;
 
-    private void Awake()
-    {
-        baseCharacter = GetComponent<BaseCharacter>();
-    }
-
     void Start()
     {
+        baseCharacter = GetComponent<BaseCharacter>();
         worldCanvas = GameObject.FindGameObjectWithTag("worldCanvas").GetComponent<Canvas>();
         ScreenCanvas = GameObject.FindGameObjectWithTag("ScreenCanvas").GetComponent<Canvas>();
 
@@ -30,7 +26,8 @@ public class CharacterMenu : MonoBehaviour {
         menu.anchoredPosition = Vector3.zero;
         menu.gameObject.SetActive(false);
         imgs = new List<Image>();
-
+        if(baseCharacter.characterData == null)
+            Debug.Log(gameObject.name + " " + baseCharacter.characterData);
         if (baseCharacter.characterData.rangedDistance == 0)
             rangedButton = null;
 

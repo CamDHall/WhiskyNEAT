@@ -18,7 +18,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     {
         mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
         movement = GetComponent<Movement>();
-        characterData = GetComponent<CharacterData>();
+
         attacking = GetComponent<Attacking>();
         menu = GetComponent<CharacterMenu>();
 

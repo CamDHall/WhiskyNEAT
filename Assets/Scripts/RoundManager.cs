@@ -19,6 +19,10 @@ public class RoundManager : MonoBehaviour {
         p1_Hero.transform.localPosition = Pos;
         p2_Hero.transform.localPosition = Pos;
 
+        // Set Data
+        p1_Hero.GetComponent<BaseCharacter>().characterData = p1_Hero.GetComponent<CharacterData>();
+        p2_Hero.GetComponent<BaseCharacter>().characterData = p2_Hero.GetComponent<CharacterData>();
+
         // Set Menu
         p1_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer1 + " Menu", typeof(RectTransform)) as RectTransform;
         p2_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer2 + " Menu", typeof(RectTransform)) as RectTransform;
@@ -26,11 +30,13 @@ public class RoundManager : MonoBehaviour {
         for (int i = 0; i < PlayerInfo.p1_followersName.Count; i++)
         {
             Pos = new Vector3(0, 0, 0);
-            Debug.Log(Resources.Load("Characters/Menus/" + PlayerInfo.p1_followersName[i] + " Menu"));
             GameObject tempPrefab = Resources.Load("Characters/" + PlayerInfo.p1_followersName[i], typeof(GameObject)) as GameObject;
             GameObject follower = Instantiate(tempPrefab, Pos, Quaternion.identity, map.p1_startingTiles[i + 1]);
             follower.transform.localPosition = Pos;
 
+            // Set Data
+            follower.GetComponent<BaseCharacter>().characterData = follower.GetComponent<CharacterData>();
+            // Set Menu
             follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p1_followersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
         }
     }
