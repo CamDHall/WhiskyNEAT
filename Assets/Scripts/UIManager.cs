@@ -142,4 +142,6 @@ public class UIManager : MonoBehaviour {
         GameManager.confirmationState = Confirmation.Awaiting;
         confirmationWindow.SetActive(true);
     }
+
+    public virtual void FirstAbility() { }
 }

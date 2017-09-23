@@ -26,6 +26,15 @@ public class CharacterMenu : MonoBehaviour {
         menu.anchoredPosition = Vector3.zero;
         menu.gameObject.SetActive(false);
         imgs = new List<Image>();
+
+        // Set actions
+        Button[] btns = menu.GetComponentsInChildren<Button>();
+
+        btns[0].onClick.AddListener(FirstAbility);
+        btns[1].onClick.AddListener(SecondAbility);
+        btns[2].onClick.AddListener(ThirdAbility);
+        //
+
         if(baseCharacter.characterData == null)
             Debug.Log(gameObject.name + " " + baseCharacter.characterData);
         if (baseCharacter.characterData.rangedDistance == 0)
@@ -180,6 +189,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void FirstAbility()
     {
+        Debug.Log("CLICK");
         if (GameManager.confirmationState == Confirmation.Idle)
         {
             baseCharacter.AbilityOne();

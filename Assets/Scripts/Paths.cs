@@ -12,7 +12,6 @@ public class Paths {
         {
             reachableTiles.Clear();
             Transform currentTransform = GameManager.selectedCharacter.transform; // For transform.position
-            Debug.Log(currentTransform.position.x + "Z: " + currentTransform.position.z);
 
             foreach (GameObject tile in MapData.tiles)
             {

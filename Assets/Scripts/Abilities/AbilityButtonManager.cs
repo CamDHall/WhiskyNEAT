@@ -12,6 +12,8 @@ public class AbilityButtonManager : MonoBehaviour {
     private void Start()
     {
         abilitiesBase = GetComponent<AbilitiesBase>();
+        UIManager uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        Button btn = GetComponent<Button>();
     }
 
     public void ResetButtons(CharacterData data)

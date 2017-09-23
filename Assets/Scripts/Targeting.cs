@@ -24,7 +24,6 @@ public class Targeting {
                     MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - current.transform.position.x) + 
                         Mathf.Abs(enemy.transform.position.z - current.transform.position.z) + 0.5f;
 
-                Debug.Log(MapData.enenmyInfo[enemy.transform.position]);
                 if (MapData.enenmyInfo[enemy.transform.position] <= rangedRange)
                 {
                     attacking._enemiesInRangedRange.Add(enemy);
