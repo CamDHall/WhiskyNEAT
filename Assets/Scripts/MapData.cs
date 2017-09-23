@@ -42,13 +42,13 @@ public class MapData : MonoBehaviour {
         // Enemy
         foreach (GameObject enemy in enemies)
         {
-            enenmyInfo.Add(enemy.transform.position, enemy.transform.position.y);
+            enenmyInfo.Add(enemy.transform.position, enemy.transform.position.y + 1);
         }
 
         // Character
         foreach(GameObject character in friends)
         {
-            friendsInfo.Add(character.transform.position, character.transform.position.y);
+            friendsInfo.Add(character.transform.position, character.transform.position.y +1);
         }
 
         // Tiles
