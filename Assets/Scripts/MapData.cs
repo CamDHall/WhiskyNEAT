@@ -5,8 +5,8 @@ using UnityEngine;
 public class MapData : MonoBehaviour {
 
     public static Dictionary<Vector3, float> tileInfo;
-    public static Dictionary<Vector3, float> enenmyInfo;
-    public static Dictionary<Vector3, float> friendsInfo;
+    public static Dictionary<Vector3, float> enenmyInfo = new Dictionary<Vector3, float>();
+    public static Dictionary<Vector3, float> friendsInfo = new Dictionary<Vector3, float>();
 
     public static GameObject[] tiles;
 
@@ -20,8 +20,6 @@ public class MapData : MonoBehaviour {
         enemies = new List<GameObject>();
         friends = new List<GameObject>();
 
-        enenmyInfo = new Dictionary<Vector3, float>();
-        friendsInfo = new Dictionary<Vector3, float>();
         tiles = GameObject.FindGameObjectsWithTag("Tile");
         tileInfo = new Dictionary<Vector3, float>();
 
@@ -30,31 +28,37 @@ public class MapData : MonoBehaviour {
             enemies.Add(enemy);
         }
 
-        enenmyInfo = new Dictionary<Vector3, float>();
-
         foreach(GameObject friend in GameObject.FindGameObjectsWithTag("Friend"))
         {
             friends.Add(friend);
         }
 
-        friendsInfo = new Dictionary<Vector3, float>();
-
-        // Enemy
-        foreach (GameObject enemy in enemies)
-        {
-            enenmyInfo.Add(enemy.transform.position, enemy.transform.position.y + 1);
-        }
-
-        // Character
-        foreach(GameObject character in friends)
-        {
-            friendsInfo.Add(character.transform.position, character.transform.position.y +1);
-        }
+        // Init info
+        FriendInfo();
+        EnemyInfo();
 
         // Tiles
         foreach (GameObject tile in tiles)
         {
             tileInfo.Add(tile.transform.position, 1 + tile.transform.position.y);
+        }
+    }
+
+    public static void EnemyInfo()
+    {
+        enenmyInfo.Clear();
+        foreach (GameObject enemy in enemies)
+        {
+            enenmyInfo.Add(enemy.transform.position, enemy.transform.position.y + 1);
+        }
+    }
+
+    public static void FriendInfo()
+    {
+        friendsInfo.Clear();
+        foreach (GameObject character in friends)
+        {
+            friendsInfo.Add(character.transform.position, character.transform.position.y + 1);
         }
     }
 }

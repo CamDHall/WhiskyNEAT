@@ -26,7 +26,6 @@ public class UIManager : MonoBehaviour {
 
             if (Physics.Raycast(hoveringRay, out hoveringHit))
             {
-//                Debug.Log(hoveringHit.transform.gameObject.name);
                 if ((hoveringHit.transform.tag == "Friend" || hoveringHit.transform.tag == "Enemy") && GameManager.selectedCharacter != null && 
                     GameManager.selectedCharacter.tag != hoveringHit.transform.tag && 
                     hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.selectedBaseCharacter)

@@ -67,9 +67,11 @@ public class GameManager : MonoBehaviour {
     public static void ChangeTeams()
     {
         haveGone = 0;
-        if (characterTeam == CharacterTeam.Friend)
+        if (currentTeam == CharacterTeam.Friend)
         {
+            MapData.FriendInfo();
             characterTeam = CharacterTeam.Enemy;
+            currentTeam = CharacterTeam.Enemy;
         
             foreach (GameObject enemy in MapData.enemies)
             {
@@ -88,7 +90,10 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
+            MapData.EnemyInfo();
             characterTeam = CharacterTeam.Friend;
+            currentTeam = CharacterTeam.Friend;
+
             foreach(GameObject friend in MapData.friends)
             {
                 // Reset every friend to idle

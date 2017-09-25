@@ -10,7 +10,7 @@ public class CharacterMenu : MonoBehaviour {
     public Button ability1, ability2, ability3;
     BaseCharacter baseCharacter;
 
-    public Image indicator;
+    Image indicator;
     List<Image> imgs;
     Canvas worldCanvas, ScreenCanvas;
     public RectTransform menuPrefab;
@@ -21,6 +21,8 @@ public class CharacterMenu : MonoBehaviour {
         baseCharacter = GetComponent<BaseCharacter>();
         worldCanvas = GameObject.FindGameObjectWithTag("worldCanvas").GetComponent<Canvas>();
         ScreenCanvas = GameObject.FindGameObjectWithTag("ScreenCanvas").GetComponent<Canvas>();
+
+        indicator = Resources.Load("UI/IndicatorImage", typeof(Image)) as Image;
 
         menu = Instantiate(menuPrefab, Vector3.zero, Quaternion.identity, ScreenCanvas.transform);
         menu.anchoredPosition = Vector3.zero;
@@ -40,6 +42,9 @@ public class CharacterMenu : MonoBehaviour {
         if (baseCharacter.characterData.rangedDistance == 0)
             rangedButton = null;
 
+        if (rangedButton != null)
+            rangedButton.GetComponent<Button>().onClick.AddListener(RangedButton);
+
         // Assign buttons from menu
         GameObject abilityBar = menu.transform.GetChild(0).gameObject;
 
@@ -55,6 +60,11 @@ public class CharacterMenu : MonoBehaviour {
         {
             meleeButton = menu.transform.GetChild(1).gameObject;
         }
+
+        // Assign actions to Melee and Ranged
+        meleeButton.GetComponent<Button>().onClick.AddListener(MeleeButton);
+        if(rangedButton != null)
+            rangedButton.GetComponent<Button>().onClick.AddListener(RangedButton);
 
         // Ability names
         ability1.GetComponentInChildren<Text>().text = baseCharacter.characterData.nameAbility1;
@@ -189,7 +199,6 @@ public class CharacterMenu : MonoBehaviour {
 
     public void FirstAbility()
     {
-        Debug.Log("CLICK");
         if (GameManager.confirmationState == Confirmation.Idle)
         {
             baseCharacter.AbilityOne();

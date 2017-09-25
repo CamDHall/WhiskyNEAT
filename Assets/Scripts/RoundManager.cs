@@ -26,8 +26,11 @@ public class RoundManager : MonoBehaviour {
         p2_Hero.gameObject.tag = "Enemy";
 
         // Set Menu
-        p1_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer1 + " Menu", typeof(RectTransform)) as RectTransform;
-        p2_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer2 + " Menu", typeof(RectTransform)) as RectTransform;
+        p1_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer1 + " Menu", 
+            typeof(RectTransform)) as RectTransform;
+
+        p2_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer2 + " Menu", 
+            typeof(RectTransform)) as RectTransform;
 
         // p1 Followers
         for (int i = 0; i < PlayerInfo.p1_FollowersName.Count; i++)
