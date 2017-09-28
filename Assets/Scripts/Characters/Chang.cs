@@ -19,18 +19,24 @@ public class Chang : BaseCharacter {
     public override void AbilityOne()
     {
         base.AbilityOne();
-        EnterState(AbilityState.Start, "NobleFear");
+        EnterState(AbilityState.Start, "AOEHeal");
         menu.ability1.GetComponent<AbilityButtonManager>().count = 3;
         menu.ability1.interactable = false;
     }
 
-    public override void AbilityThree()
-    {
-        base.AbilityTwo();
-    }
-
     public override void AbilityTwo()
     {
+        base.AbilityTwo();
+        EnterState(AbilityState.Start, "WarCry");
+        menu.ability2.GetComponent<AbilityButtonManager>().count = 3;
+        menu.ability2.interactable = false;
+    }
+
+    public override void AbilityThree()
+    {
         base.AbilityThree();
+        EnterState(AbilityState.Start, "MeleeDamageBuff");
+        menu.ability3.GetComponent<AbilityButtonManager>().count = 3;
+        menu.ability3.interactable = false;
     }
 }

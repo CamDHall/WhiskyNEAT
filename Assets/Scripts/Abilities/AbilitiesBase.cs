@@ -17,11 +17,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
     // Amount variables
     int healingAmount = 10;
 
-    void Awake()
-    {
-        characterData = GetComponent<CharacterData>();
-    }
-
     public void EnterState(AbilityState state, string nameOfAbility)
     {
         currentAbilityState = state;
@@ -66,6 +61,7 @@ public abstract class AbilitiesBase : MonoBehaviour {
     {
         switch (abilityInProgress)
         {
+            // Heal
             case "SlowHealLV1":
                 if(slowCount < 3)
                 {
@@ -85,16 +81,24 @@ public abstract class AbilitiesBase : MonoBehaviour {
             case "BasicHeal":
                 Healing.BasicHeal(characterData, healingAmount);
                 break;
-            case "AOEHealLV1":
-                Healing.AOEHealLV1(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+            case "AOEHeal":
+                Healing.AOEHeal(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                 break;
-            case "EnemyWeakHEAL":
-                Healing.EnemyWeakerHEAL(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+            case "CourageousHeal":
+                Healing.CourageousHeal(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+                break;
+            case "IntimidatingHeal":
+                Healing.IntimidatingHeal(GetComponent<BaseCharacter>().singleCharacterTeam);
+                break;
+            case "HealthBomb":
+                Healing.HealthBomb(GetComponent<BaseCharacter>().singleCharacterTeam, 5);
                 break;
 
-            case "ScaredAllyHeal":
-                Healing.ScaredAllyHeal(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
+            case "ReassuringHeal":
+                Healing.ReassuringHeal(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                 break;
+
+            // Courage
             case "CourageBomb":
                 // Pass courage boost either enemies or friends
                 if (gameObject.tag == "Friend")
@@ -103,7 +107,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
                     CourageBoost.CourageBoostBasic(MapData.enemies, 5);
                 if (courageBombCount == 0)
                 {
-                    Healing.CourageBomb(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, characterData.gameObject);
                     wipAbilities.Add("CourageBomb");
                 }
                 else if(courageBombCount >= 3)
@@ -114,20 +117,56 @@ public abstract class AbilitiesBase : MonoBehaviour {
                 }
                 courageBombCount++;
                 break;
-            case "CourageBoostBasic":
-                CourageBoost.CourageBoostBasic(characterData, 50);
+            case "BasicCourageBoost":
+                CourageBoost.CourageBoostBasic(characterData, 20);
                 break;
-            case "CourageForScaredEnemies":
-                CourageBoost.CourageForScaredEnemies(gameObject.GetComponent<BaseCharacter>().singleCharacterTeam, 25);
-                break;
-            case "BasicCourageSubtract":
+            case "MoraleBoost":
                 if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
-                    CourageBoost.SubtractCourage(MapData.enemies, 10);
+                    CourageBoost.MoraleBoost(MapData.friends, characterData, 10);
                 else
-                    CourageBoost.SubtractCourage(MapData.friends, 10);
+                    CourageBoost.MoraleBoost(MapData.enemies, characterData, 10);
                 break;
-            case "NobleFear":
-                CourageBoost.NobleFear(gameObject, 25);
+            case "ScareTactics":
+                if(GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    CourageBoost.ScareTactics(MapData.enemies, characterData, 25);
+                else
+                    CourageBoost.ScareTactics(MapData.friends, characterData, 25);
+                break;
+            case "WarCry":
+                if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    CourageBoost.WarCry(MapData.enemies, characterData, 20);
+                else
+                    CourageBoost.WarCry(MapData.friends, characterData, 20);
+                break;
+            case "BloodCry":
+                if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    CourageBoost.BloodCry(MapData.enemies, characterData);
+                else
+                    CourageBoost.BloodCry(MapData.friends, characterData);
+                break;
+            case "Sacarfice":
+                if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    CourageBoost.Sacrifice(MapData.friends, characterData, 30);
+                break;
+            // Buffs
+            case "MeleeDamageBuff":
+                Buff.MeleeDamageBuff(characterData, 10);
+                break;
+            case "MeleeBuffTeam":
+                Debug.Log("HERE");
+                if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    Buff.MeleeDamageBuffTeam(MapData.friends, 5);
+                else
+                    Buff.MeleeDamageBuffTeam(MapData.enemies, 5);
+                break;
+            case "RangedDamageBuff":
+                Buff.RangedDamageBuff(characterData, 6);
+                break;
+            case "RangedBuffTeam":
+                if (GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
+                    Buff.RangedDamageBuffTeam(MapData.friends, 3);
+                else
+                    Buff.RangedDamageBuffTeam(MapData.enemies, 3);
                 break;
         }
         currentAbilityState = AbilityState.Start;

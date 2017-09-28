@@ -23,7 +23,7 @@ public class Healing : AbilitiesBase {
         BasicHeal(data, 4);
     }
 
-    public static void AOEHealLV1(CharacterTeam team, GameObject user)
+    public static void AOEHeal(CharacterTeam team, GameObject user)
     {
         if (team == CharacterTeam.Enemy)
         {
@@ -31,7 +31,7 @@ public class Healing : AbilitiesBase {
             {
                 if(Vector3.Distance(user.transform.position, character.transform.position) <= 3)
                 {
-                    BasicHeal(character.GetComponent<CharacterData>(), 2);
+                    BasicHeal(character.GetComponent<CharacterData>(), 3);
                 }
             }
         } else
@@ -40,14 +40,14 @@ public class Healing : AbilitiesBase {
             {
                 if(Vector3.Distance(user.transform.position, character.transform.position) <= 3)
                 {
-                    BasicHeal(character.GetComponent<CharacterData>(), 2);
+                    BasicHeal(character.GetComponent<CharacterData>(), 3);
                 }
             }
         }
     }
 
     // Heal for every enemy that has less courage than the user
-    public static void EnemyWeakerHEAL(CharacterTeam team, GameObject user)
+    public static void CourageousHeal(CharacterTeam team, GameObject user)
     {
         if(team == CharacterTeam.Friend)
         {
@@ -76,13 +76,13 @@ public class Healing : AbilitiesBase {
     }
 
     // For every scarred enemy heal 2
-    public static void FearedHealLV1(CharacterTeam team, GameObject user)
+    public static void IntimidatingHeal(CharacterTeam team)
     {
         if(team == CharacterTeam.Friend)
         {
             foreach(GameObject enemy in MapData.enemies)
             {
-                if(enemy.GetComponent<CharacterData>().courage <= 1)
+                if(enemy.GetComponent<CharacterData>().courage <= 5)
                 {
                     BasicHeal(MapData.friends, 2);
                 }
@@ -99,7 +99,7 @@ public class Healing : AbilitiesBase {
         }
     }
 
-    public static void ScaredAllyHeal(CharacterTeam team, GameObject user)
+    public static void ReassuringHeal(CharacterTeam team, GameObject user)
     {
         if(team == CharacterTeam.Friend)
         {
@@ -123,16 +123,16 @@ public class Healing : AbilitiesBase {
     }
 
     // Heal everyteam mate, reduce courage of enemy to 5 for 3 turns
-    public static void CourageBomb(CharacterTeam team, GameObject user)
+    public static void HealthBomb(CharacterTeam team, int amount)
     {
         if(team == CharacterTeam.Friend)
         {
-            BasicHeal(MapData.friends, 3);
-            CourageBoost.CourageBoostBasic(MapData.friends, 5);
+            BasicHeal(MapData.friends, amount);
+            CourageBoost.CourageBoostBasic(MapData.friends, amount);
         } else
         {
-            BasicHeal(MapData.enemies, 3);
-            CourageBoost.CourageBoostBasic(MapData.enemies, 5);
+            BasicHeal(MapData.enemies, amount);
+            CourageBoost.CourageBoostBasic(MapData.enemies, amount);
         }
     }
 

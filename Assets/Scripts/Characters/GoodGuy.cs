@@ -19,7 +19,7 @@ public class GoodGuy : BaseCharacter {
     public override void AbilityOne()
     {
         base.AbilityOne();
-        EnterState(AbilityState.Start, "BasicHeal");
+        EnterState(AbilityState.Start, "IntimidatingHeal");
         menu.ability1.GetComponent<AbilityButtonManager>().count = 3;
         menu.ability1.interactable = false;
     }
@@ -27,7 +27,7 @@ public class GoodGuy : BaseCharacter {
     public override void AbilityTwo()
     {
         base.AbilityTwo();
-        EnterState(AbilityState.Start, "SlowHealLV1");
+        EnterState(AbilityState.Start, "BasicHeal");
         GetComponent<CharacterData>().buttonsIP.Add(menu.ability2);
         menu.ability2.interactable = false;
     }
@@ -35,7 +35,7 @@ public class GoodGuy : BaseCharacter {
     public override void AbilityThree()
     {
         base.AbilityThree();
-        EnterState(AbilityState.Start, "AOEHealLV1");
+        EnterState(AbilityState.Start, "RangedDamageBuff");
         menu.ability3.GetComponent<AbilityButtonManager>().count = 3;
         menu.ability3.interactable = false;
     }
