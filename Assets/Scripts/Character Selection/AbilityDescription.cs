@@ -28,7 +28,6 @@ public class AbilityDescription : MonoBehaviour {
 
     void DisplayStatOn(GameObject target)
     {
-        Debug.Log(gameObject.transform.parent.tag);
         // Activate and Position ui element for hover info
         if (target.transform.parent.tag == gameObject.transform.parent.tag)
         {
@@ -38,7 +37,6 @@ public class AbilityDescription : MonoBehaviour {
 
             // Set text
             CharacterData data = target.GetComponent<CharacterData>();
-            Debug.Log(data);
             hoverUI.GetComponentInChildren<Text>().text = data.nameAbility1 + ": " + data._description1 + "\n" +
                 data.nameAbility2 + ": " + data._description2 + "\n" +
                 data.nameAbility3 + ": " + data._description3 + "\n";

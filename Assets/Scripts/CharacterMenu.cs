@@ -102,6 +102,7 @@ public class CharacterMenu : MonoBehaviour {
         menu.gameObject.SetActive(true);
         if(gameObject.tag == "Friend")
         {
+            Debug.Log(baseCharacter.attacking._enemiesInMeleeRange.Count);
             // Turn melee on and off
             if (baseCharacter.attacking._enemiesInMeleeRange.Count == 0)
                 meleeButton.SetActive(false);

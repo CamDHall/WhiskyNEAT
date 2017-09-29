@@ -18,7 +18,7 @@ public class PlayerInfo : MonoBehaviour {
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(p1_Container);
-        DontDestroyOnLoad(p2_Container);
+        //DontDestroyOnLoad(p1_Container);
+        //DontDestroyOnLoad(p2_Container);
     }
 }
