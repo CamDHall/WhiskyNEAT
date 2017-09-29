@@ -14,17 +14,9 @@ public class Targeting {
             attacking._enemiesInRangedRange.Clear();
             foreach (GameObject enemy in MapData.enemies)
             {
-                if (enemy.transform.parent.position.y == 0)
-                    MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - 
-                        current.transform.position.x) + Mathf.Abs(enemy.transform.position.z - current.transform.position.z);
-                else if (enemy.transform.parent.position.y == 0.25f)
-                    MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - current.transform.position.x) + 
-                        Mathf.Abs(enemy.transform.position.z - current.transform.position.z) + 0.25f;
-                else if (enemy.transform.parent.position.y == 0.5f)
-                    MapData.enenmyInfo[enemy.transform.position] = Mathf.Abs(enemy.transform.position.x - current.transform.position.x) + 
-                        Mathf.Abs(enemy.transform.position.z - current.transform.position.z) + 0.5f;
+                MapData.enenmyInfo[enemy.transform.position] = GeneralMath.DistanceForm(enemy.transform.position, current.transform.position)
+                     + enemy.transform.parent.position.y - 1;
 
-                Debug.Log(MapData.enenmyInfo[enemy.transform.position]);
                 if (MapData.enenmyInfo[enemy.transform.position] <= rangedRange)
                 {
                     attacking._enemiesInRangedRange.Add(enemy);
@@ -53,15 +45,8 @@ public class Targeting {
             attacking._friendsInRangedRange.Clear();
             foreach (GameObject friend in MapData.friends)
             {
-                if (friend.transform.position.y == 0f)
-                    MapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - current.transform.position.x) + 
-                        Mathf.Abs(friend.transform.position.z - current.transform.position.z);
-                else if (friend.transform.position.y == 0.25f)
-                    MapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - current.transform.position.x) + 
-                        Mathf.Abs(friend.transform.position.z - current.transform.position.z) + 0.25f;
-                else if (friend.transform.position.y == 0.5f)
-                    MapData.friendsInfo[friend.transform.position] = Mathf.Abs(friend.transform.position.x - current.transform.position.x) + 
-                        Mathf.Abs(friend.transform.position.z - current.transform.position.z) + 0.5f;
+                MapData.friendsInfo[friend.transform.position] = GeneralMath.DistanceForm(friend.transform.position, current.transform.position) +
+                   friend.transform.parent.position.y - 1;
 
                 if (MapData.friendsInfo[friend.transform.position] <= meleeRange)
                 {
