@@ -48,6 +48,19 @@ public class PlayerManager : MonoBehaviour {
             hero.GetComponent<BaseCharacter>().enabled = false;
             hero.name = heroList[i].name;
 
+            // Parent to container and set tags
+            if (player == 1)
+            {
+                hero.transform.parent = playerInfo.p1_Container.transform;
+                hero.tag = "Friend";
+            }
+            else
+            {
+                hero.transform.parent = playerInfo.p2_Container.transform;
+                hero.tag = "Enemy";
+            }
+
+            // Add to heros list
             _heros[i] = hero;
             if (i != 0)
                 _heros[i].SetActive(false);
@@ -68,6 +81,8 @@ public class PlayerManager : MonoBehaviour {
                 card.GetComponent<CharacterMenu>().enabled = false;
                 card.GetComponent<BaseCharacter>().enabled = false;
                 card.name = playerInfo.deck1[i].name; // Set Name to match prefab
+                card.tag = "Friend";
+                card.transform.parent = playerInfo.p1_Container.transform;
 
                 playerInfo.deck1[i] = card;
                 playerInfo.deck1[i].SetActive(false);
@@ -84,6 +99,8 @@ public class PlayerManager : MonoBehaviour {
                 card.GetComponent<CharacterMenu>().enabled = false;
                 card.GetComponent<BaseCharacter>().enabled = false;
                 card.name = playerInfo.deck2[i].name; // Set Name to match prefab
+                card.tag = "Enemy";
+                card.transform.parent = playerInfo.p2_Container.transform;
 
                 playerInfo.deck2[i] = card;
                 playerInfo.deck2[i].SetActive(false);

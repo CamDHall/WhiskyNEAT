@@ -16,7 +16,7 @@ public class AbilityDescription : MonoBehaviour {
 
         if(Physics.Raycast(ray, out hit))
         {
-            if(hit.transform.tag == "HoverUI")
+            if(hit.transform.tag == "Friend" || hit.transform.tag == "Enemy")
             {
                 DisplayStatOn(hit.transform.gameObject);
             }
@@ -28,17 +28,21 @@ public class AbilityDescription : MonoBehaviour {
 
     void DisplayStatOn(GameObject target)
     {
+        Debug.Log(gameObject.transform.parent.tag);
         // Activate and Position ui element for hover info
-        hoverUI.SetActive(true);
-        Vector2 Pos = new Vector2((target.transform.position.x - 1.5f) * 100, target.transform.position.y * 100);
-        hoverUI.GetComponent<RectTransform>().anchoredPosition = Pos;
+        if (target.transform.parent.tag == gameObject.transform.parent.tag)
+        {
+            hoverUI.SetActive(true);
+            Vector2 Pos = new Vector2((target.transform.position.x) * 100, target.transform.position.y + 400);
+            hoverUI.GetComponent<RectTransform>().anchoredPosition = Pos;
 
-        // Set text
-        CharacterData data = target.GetComponent<CharacterData>();
-        Debug.Log(data);
-        hoverUI.GetComponentInChildren<Text>().text = data.nameAbility1 + ": " + data._description1 + "\n" +
-            data.nameAbility2 + ": " + data._description2 + "\n" +
-            data.nameAbility3 + ": " + data._description3 + "\n";
+            // Set text
+            CharacterData data = target.GetComponent<CharacterData>();
+            Debug.Log(data);
+            hoverUI.GetComponentInChildren<Text>().text = data.nameAbility1 + ": " + data._description1 + "\n" +
+                data.nameAbility2 + ": " + data._description2 + "\n" +
+                data.nameAbility3 + ": " + data._description3 + "\n";
+        }
     }
 
     void DisplayStatOff()

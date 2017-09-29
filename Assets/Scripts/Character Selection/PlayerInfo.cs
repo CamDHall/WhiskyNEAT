@@ -10,11 +10,15 @@ public class PlayerInfo : MonoBehaviour {
     public List<GameObject> deck1, deck2;
     public List<GameObject> followersPlayer1, followersPlayer2;
 
+    public GameObject p1_Container, p2_Container;
+
     // Round info
     public static List<string> p1_FollowersName = new List<string>(), p2_FollowersName = new List<string>();
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad(p1_Container);
+        DontDestroyOnLoad(p2_Container);
     }
 }
