@@ -10,12 +10,13 @@ public class UIManager : MonoBehaviour {
 
     // Confirm
     public GameObject confirmationWindow;
+    public Text confirmInfo;
 
     private Vector3 confirmPos = new Vector3((Screen.width / 2) -50, (Screen.height / 2) + 75, 0);
 
     public GameObject nextPhase;
     public Text turns, currentTeam;
-    public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, name;
+    public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
 	
 	void Update () {
         if (GameManager.confirmationState == Confirmation.Idle)
@@ -71,7 +72,7 @@ public class UIManager : MonoBehaviour {
                 meleeSTR.text = "Melee Strength: " + GameManager.selectedCharacterData.meleeStrength.ToString();
                 rangedSTR.text = "Ranged Strength: " + GameManager.selectedCharacterData.ToString();
                 rangedDistance.text = "Ranged Distance: " + GameManager.selectedCharacterData.rangedDistance.ToString();
-                name.text = "Name: " + GameManager.selectedCharacterData.name.ToString();
+                nameText.text = "Name: " + GameManager.selectedCharacterData.characterName.ToString();
             }
 
             // General Selections
@@ -140,6 +141,12 @@ public class UIManager : MonoBehaviour {
     {
         GameManager.confirmationState = Confirmation.Awaiting;
         confirmationWindow.SetActive(true);
+        // Show Info
+        CharacterData targetData = GameManager.currentAttackingObj.targetObject.GetComponent<CharacterData>();
+
+        confirmInfo.text = targetData.health.ToString() + " --> " +
+            (targetData.health - GameManager.currentAttackingObj.damageAmount).ToString();
+        GameManager.currentAttackingObj.ExecuteAttack();
     }
 
     public virtual void FirstAbility() { }

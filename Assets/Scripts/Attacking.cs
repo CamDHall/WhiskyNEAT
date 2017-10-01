@@ -23,7 +23,7 @@ public class Attacking : MonoBehaviour {
     public bool isAttacking = false;
     public string type;
     public int damageAmount;
-    GameObject targetObject;
+    public GameObject targetObject;
 
     void Awake()
     {
@@ -69,9 +69,9 @@ public class Attacking : MonoBehaviour {
                 {
                     if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))
                     {
-                        uiManager.ConfirmationWindow();
                         targetObject = hit.transform.gameObject;
                         GameManager.currentAttackingObj = this;
+                        uiManager.ConfirmationWindow();
                     }
                 }
             }
