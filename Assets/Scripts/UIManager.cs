@@ -146,7 +146,6 @@ public class UIManager : MonoBehaviour {
 
         confirmInfo.text = targetData.health.ToString() + " --> " +
             (targetData.health - GameManager.currentAttackingObj.damageAmount).ToString();
-        GameManager.currentAttackingObj.ExecuteAttack();
     }
 
     public virtual void FirstAbility() { }

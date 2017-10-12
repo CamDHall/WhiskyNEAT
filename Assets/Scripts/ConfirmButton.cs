@@ -10,6 +10,7 @@ public class ConfirmButton : MonoBehaviour {
 	public void ConfirmAttack()
     {   
         GameManager.confirmationState = Confirmation.Ready;
+        GameManager.currentAttackingObj.ExecuteAttack();
         confirmWindow.SetActive(false);
     }
 

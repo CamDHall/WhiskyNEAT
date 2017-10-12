@@ -151,8 +151,8 @@ public abstract class BaseCharacter : AbilitiesBase {
         Destroy(gameObject);
 
         if (attacker.tag == "Friend" && MapData.enemies.Count == 0)
-            EndGame.instance.End(CharacterTeam.Friend);
+            GameManager.Instance.EndGame(CharacterTeam.Enemy);
         else if (attacker.tag == "Enemy" && MapData.friends.Count == 0)
-            EndGame.instance.End(CharacterTeam.Enemy);
+            GameManager.Instance.EndGame(CharacterTeam.Friend);
     }
 }

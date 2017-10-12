@@ -23,9 +23,4 @@ public class CharacterData : MonoBehaviour {
     {
         currentNumberofMoves = moves;
     }
-
-    void Update()
-    {
-
-    }
 }

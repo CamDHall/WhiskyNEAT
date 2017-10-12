@@ -7,6 +7,8 @@ public enum CharacterTeam { Friend, Enemy }
 public enum Confirmation { Idle, Awaiting, Ready }
 public class GameManager : MonoBehaviour {
 
+    public static GameManager Instance;
+
     // General info
     public static int turns;
     public static CharacterTeam currentTeam;
@@ -26,6 +28,9 @@ public class GameManager : MonoBehaviour {
     public GameObject selectedTarget;
     public static Attacking currentAttackingObj;
 
+    // UI round managment
+    public GameObject finishScreen;
+
     void Awake()
     {
         characterTeam = CharacterTeam.Friend;
@@ -35,6 +40,7 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
+        Instance = this;
         haveGone = 0;
         confirmationState = Confirmation.Idle;
 
@@ -112,5 +118,11 @@ public class GameManager : MonoBehaviour {
 
             turns++;
         }
+    }
+
+    public void EndGame(CharacterTeam winningTeam)
+    {
+        finishScreen.SetActive(true);
+        finishScreen.GetComponentInChildren<Text>().text = winningTeam.ToString() + " won this round.";
     }
 }

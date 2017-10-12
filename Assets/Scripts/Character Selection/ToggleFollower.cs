@@ -27,13 +27,13 @@ public class ToggleFollower : MonoBehaviour {
                 // if current isn't in list, toggle off
                 if(playerManager.player == 1)
                 {
-                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck1[followerIndex]))
+                    if (!playerManager.selectedFollowers.Contains(PlayerInfo.deck1[followerIndex]))
                     {
                         toggle.isOn = false;
                     }
                 } else
                 {
-                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
+                    if (!playerManager.selectedFollowers.Contains(PlayerInfo.deck2[followerIndex]))
                     {
                         toggle.isOn = false;
                     }
@@ -43,27 +43,27 @@ public class ToggleFollower : MonoBehaviour {
             {
                 if (playerManager.player == 1)
                 {
-                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck1[followerIndex]))
+                    if (!playerManager.selectedFollowers.Contains(PlayerInfo.deck1[followerIndex]))
                     {
-                        playerManager.selectedFollowers.Add(playerManager.playerInfo.deck1[followerIndex]);
+                        playerManager.selectedFollowers.Add(PlayerInfo.deck1[followerIndex]);
                     }
                 }
                 else
                 {
-                    if (!playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
+                    if (!playerManager.selectedFollowers.Contains(PlayerInfo.deck2[followerIndex]))
                     {
-                        playerManager.selectedFollowers.Add(playerManager.playerInfo.deck2[followerIndex]);
+                        playerManager.selectedFollowers.Add(PlayerInfo.deck2[followerIndex]);
                     }
                 }
             }
         } else // Remove from selected if stil contained 
         {
-            if(playerManager.player == 1 && playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck1[followerIndex]))
+            if(playerManager.player == 1 && playerManager.selectedFollowers.Contains(PlayerInfo.deck1[followerIndex]))
             {
-                playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck1[followerIndex]);
-            } else if (playerManager.player == 2 && playerManager.selectedFollowers.Contains(playerManager.playerInfo.deck2[followerIndex]))
+                playerManager.selectedFollowers.Remove(PlayerInfo.deck1[followerIndex]);
+            } else if (playerManager.player == 2 && playerManager.selectedFollowers.Contains(PlayerInfo.deck2[followerIndex]))
             {
-                playerManager.selectedFollowers.Remove(playerManager.playerInfo.deck2[followerIndex]);
+                playerManager.selectedFollowers.Remove(PlayerInfo.deck2[followerIndex]);
             }
         }
         }

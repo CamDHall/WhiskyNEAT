@@ -67,6 +67,7 @@ public class Attacking : MonoBehaviour {
 
                 if (Physics.Raycast(ray, out hit))
                 {
+                    if (gameObject.tag == "Enemy")
                     if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))
                     {
                         targetObject = hit.transform.gameObject;

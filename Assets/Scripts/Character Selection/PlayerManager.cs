@@ -71,39 +71,39 @@ public class PlayerManager : MonoBehaviour {
         // Spawn deck inactive
         if (player == 1)
         {
-            for (int i = 0; i < playerInfo.deck1.Count; i++)
+            for (int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
-                var card = Instantiate(playerInfo.deck1[i], Pos, playerInfo.deck1[i].transform.rotation);
+                var card = Instantiate(PlayerInfo.deck1[i], Pos, PlayerInfo.deck1[i].transform.rotation);
                 // Disable scripts on prefab
                 card.GetComponent<Attacking>().enabled = false;
                 card.GetComponent<Movement>().enabled = false;
                 card.GetComponent<CharacterMenu>().enabled = false;
                 card.GetComponent<BaseCharacter>().enabled = false;
-                card.name = playerInfo.deck1[i].name; // Set Name to match prefab
+                card.name = PlayerInfo.deck1[i].name; // Set Name to match prefab
                 card.tag = "Friend";
                 card.transform.parent = playerInfo.p1_Container.transform;
 
-                playerInfo.deck1[i] = card;
-                playerInfo.deck1[i].SetActive(false);
+                PlayerInfo.deck1[i] = card;
+                PlayerInfo.deck1[i].SetActive(false);
             }
         } else
         {
-            for (int i = 0; i < playerInfo.deck2.Count; i++)
+            for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
-                var card = Instantiate(playerInfo.deck2[i], Pos, playerInfo.deck2[i].transform.rotation);
+                var card = Instantiate(PlayerInfo.deck2[i], Pos, PlayerInfo.deck2[i].transform.rotation);
                 // Disable scripts on prefab
                 card.GetComponent<Attacking>().enabled = false;
                 card.GetComponent<Movement>().enabled = false;
                 card.GetComponent<CharacterMenu>().enabled = false;
                 card.GetComponent<BaseCharacter>().enabled = false;
-                card.name = playerInfo.deck2[i].name; // Set Name to match prefab
+                card.name = PlayerInfo.deck2[i].name; // Set Name to match prefab
                 card.tag = "Enemy";
                 card.transform.parent = playerInfo.p2_Container.transform;
 
-                playerInfo.deck2[i] = card;
-                playerInfo.deck2[i].SetActive(false);
+                PlayerInfo.deck2[i] = card;
+                PlayerInfo.deck2[i].SetActive(false);
             }
         }
         selectedHero = 0;
@@ -195,13 +195,13 @@ public class PlayerManager : MonoBehaviour {
         {
             PlayerInfo.heroPlayer1 = _heros[selectedHero].name;
             // Display deck
-            for(int i = 0; i < playerInfo.deck1.Count; i++)
+            for(int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
-                playerInfo.deck1[i].SetActive(true);
+                PlayerInfo.deck1[i].SetActive(true);
                 Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 stat.GetComponent<RectTransform>().anchoredPosition = statPos;
-                CharacterData data = playerInfo.deck1[i].GetComponent<CharacterData>();
+                CharacterData data = PlayerInfo.deck1[i].GetComponent<CharacterData>();
                 DisplayStats(stat, data);
                 stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
             }
@@ -209,13 +209,13 @@ public class PlayerManager : MonoBehaviour {
         {
             PlayerInfo.heroPlayer2 = _heros[selectedHero].name;
             // Display deck
-            for (int i = 0; i < playerInfo.deck2.Count; i++)
+            for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {
-                playerInfo.deck2[i].SetActive(true);
+                PlayerInfo.deck2[i].SetActive(true);
                 Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 stat.GetComponent<RectTransform>().anchoredPosition = statPos;
-                CharacterData data = playerInfo.deck2[i].GetComponent<CharacterData>();
+                CharacterData data = PlayerInfo.deck2[i].GetComponent<CharacterData>();
                 DisplayStats(stat, data);
                 stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
             }
