@@ -9,8 +9,16 @@ public class RemoveDead {
         CharacterData attackerData = attacker.GetComponent<CharacterData>();
         Attacking attacking = attacker.GetComponent<Attacking>();
 
+        string t_name = "Characters/" + target.GetComponent<CharacterData>().characterName;
+        t_name = t_name.Replace(" ", "");
+        Debug.Log(t_name);
+
         if(target.tag == "Enemy")
         {
+            // Change deck
+            PlayerInfo.s_deck2.Remove(t_name);
+            PlayerInfo.s_deck1.Add(t_name);
+
             MapData.enemies.Remove(target);
             // Change each friend
             foreach (GameObject friend in MapData.friends)
@@ -28,6 +36,10 @@ public class RemoveDead {
             }
         } else
         {
+            // Change deck
+            PlayerInfo.s_deck1.Remove(t_name);
+            PlayerInfo.s_deck2.Add(t_name);
+
             MapData.friends.Remove(target);
             foreach (GameObject enemy in MapData.enemies)
             {

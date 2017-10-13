@@ -13,7 +13,6 @@ public class InfoManager : MonoBehaviour {
         {
             GameObject card = Resources.Load(name) as GameObject;
             PlayerInfo.deck1.Add(card);
-            Debug.Log(PlayerInfo.deck1.Count + " " + PlayerInfo.deck1[0]);
         }
 
         foreach (string name in PlayerInfo.s_deck2)
