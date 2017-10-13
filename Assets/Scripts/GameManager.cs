@@ -121,8 +121,20 @@ public class GameManager : MonoBehaviour {
     }
 
     public void EndGame(CharacterTeam winningTeam)
+
     {
+        Button btn = finishScreen.GetComponentInChildren<Button>();
+
         finishScreen.SetActive(true);
-        finishScreen.GetComponentInChildren<Text>().text = winningTeam.ToString() + " won this round.";
+        if (PlayerInfo.rounds < 3)
+        {
+            PlayerInfo.rounds++;
+            finishScreen.GetComponentInChildren<Text>().text = winningTeam.ToString() + " won this round.";
+            btn.GetComponentInChildren<Text>().text = "Next Round";
+        } else
+        {
+            finishScreen.GetComponentInChildren<Text>().text = "Game Over";
+            btn.GetComponentInChildren<Text>().text = "Restart";
+        }
     }
 }

@@ -21,7 +21,7 @@ public class ToggleFollower : MonoBehaviour {
         if(toggle.isOn)
         {
             // Check if selected characters is less than the maximum size, insure no duplicates are added
-            if (playerManager.selectedFollowers.Count >= playerManager.playerInfo.numberOfFollowers)
+            if (playerManager.selectedFollowers.Count >= PlayerInfo.numberOfFollowers)
             {
 
                 // if current isn't in list, toggle off

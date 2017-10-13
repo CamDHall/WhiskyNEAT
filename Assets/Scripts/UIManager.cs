@@ -148,5 +148,6 @@ public class UIManager : MonoBehaviour {
             (targetData.health - GameManager.currentAttackingObj.damageAmount).ToString();
     }
 
-    public virtual void FirstAbility() { }
+    // public virtual void FirstAbility() { }
+
 }

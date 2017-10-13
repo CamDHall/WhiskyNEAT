@@ -16,6 +16,9 @@ public abstract class BaseCharacter : AbilitiesBase {
 
     void Start()
     {
+        if (PlayerInfo.deck1.Contains(this.gameObject) || PlayerInfo.deck2.Contains(this.gameObject))
+            DontDestroyOnLoad(this.gameObject);
+
         mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
         movement = GetComponent<Movement>();
 

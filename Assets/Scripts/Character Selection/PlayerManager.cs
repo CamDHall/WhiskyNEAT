@@ -14,8 +14,6 @@ public class PlayerManager : MonoBehaviour {
     // List of selected Followers
     public List<GameObject> selectedFollowers;
 
-    public PlayerInfo playerInfo;
-
     public GameObject heroSelector, followerSelector;
     public Text followerStatPrefab;
 
@@ -25,19 +23,19 @@ public class PlayerManager : MonoBehaviour {
 
     public bool playerReady;
 
-    private void Start()
+    public void Start()
     {
         playerReady = false;
-
-        playerInfo = GameObject.FindGameObjectWithTag("PlayerInfo").GetComponent<PlayerInfo>();
-        if(player == 1)
+       
+        if (player == 1)
         {
             heroPos = new Vector3(0, 5.5f, 0);
-        } else
+        }
+        else
         {
             heroPos = new Vector3(0, -0.5f, 0);
         }
-        for(int i = 0; i < heroList.Length; i++)
+        for (int i = 0; i < heroList.Length; i++)
         {
             var hero = Instantiate(heroList[i], heroPos, heroList[i].transform.rotation);
 
@@ -51,12 +49,12 @@ public class PlayerManager : MonoBehaviour {
             // Parent to container and set tags
             if (player == 1)
             {
-                hero.transform.parent = playerInfo.p1_Container.transform;
+                hero.transform.parent = PlayerInfo.p1_Container.transform;
                 hero.tag = "Friend";
             }
             else
             {
-                hero.transform.parent = playerInfo.p2_Container.transform;
+                hero.transform.parent = PlayerInfo.p2_Container.transform;
                 hero.tag = "Enemy";
             }
 
@@ -82,16 +80,18 @@ public class PlayerManager : MonoBehaviour {
                 card.GetComponent<BaseCharacter>().enabled = false;
                 card.name = PlayerInfo.deck1[i].name; // Set Name to match prefab
                 card.tag = "Friend";
-                card.transform.parent = playerInfo.p1_Container.transform;
+                card.transform.parent = PlayerInfo.p1_Container.transform;
 
                 PlayerInfo.deck1[i] = card;
                 PlayerInfo.deck1[i].SetActive(false);
             }
-        } else
+        }
+        else
         {
             for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
+
                 var card = Instantiate(PlayerInfo.deck2[i], Pos, PlayerInfo.deck2[i].transform.rotation);
                 // Disable scripts on prefab
                 card.GetComponent<Attacking>().enabled = false;
@@ -100,7 +100,7 @@ public class PlayerManager : MonoBehaviour {
                 card.GetComponent<BaseCharacter>().enabled = false;
                 card.name = PlayerInfo.deck2[i].name; // Set Name to match prefab
                 card.tag = "Enemy";
-                card.transform.parent = playerInfo.p2_Container.transform;
+                card.transform.parent = PlayerInfo.p2_Container.transform;
 
                 PlayerInfo.deck2[i] = card;
                 PlayerInfo.deck2[i].SetActive(false);
@@ -108,6 +108,7 @@ public class PlayerManager : MonoBehaviour {
         }
         selectedHero = 0;
         DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
+
     }
 
     private void Update()

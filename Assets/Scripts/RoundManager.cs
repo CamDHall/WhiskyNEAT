@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoundManager : MonoBehaviour {
 
@@ -61,6 +62,17 @@ public class RoundManager : MonoBehaviour {
             follower.GetComponent<BaseCharacter>().characterData = follower.GetComponent<CharacterData>();
             // Set Menu
             follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p2_FollowersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
+        }
+    }
+
+    public void NextRound()
+    {
+        if (PlayerInfo.rounds < 3)
+        {
+            SceneManager.LoadScene("CharacterSelection");
+        } else
+        {
+            Debug.Log("NAH");
         }
     }
 }
