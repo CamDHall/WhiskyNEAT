@@ -18,8 +18,6 @@ public static class PlayerInfo {
 
     public static List<GameObject> deck2 = new List<GameObject>();
 
-    public static List<GameObject> followersPlayer1, followersPlayer2;
-
     public static GameObject p1_Container, p2_Container;
 
     // Round info
