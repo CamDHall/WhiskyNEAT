@@ -199,12 +199,12 @@ public class PlayerManager : MonoBehaviour {
             for(int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
                 PlayerInfo.deck1[i].SetActive(true);
-                Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
+
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
-                stat.GetComponent<RectTransform>().anchoredPosition = statPos;
                 CharacterData data = PlayerInfo.deck1[i].GetComponent<CharacterData>();
                 DisplayStats(stat, data);
                 stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
+                stat.GetComponent<StatLocation>().playerCard = PlayerInfo.deck1[i];
             }
         } else
         {
@@ -213,12 +213,12 @@ public class PlayerManager : MonoBehaviour {
             for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {
                 PlayerInfo.deck2[i].SetActive(true);
-                Vector3 statPos = new Vector3(-515 + (i * 275), 0, 0);
+
                 Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
-                stat.GetComponent<RectTransform>().anchoredPosition = statPos;
                 CharacterData data = PlayerInfo.deck2[i].GetComponent<CharacterData>();
                 DisplayStats(stat, data);
                 stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
+                stat.GetComponent<StatLocation>().playerCard = PlayerInfo.deck2[i];
             }
         }
 
