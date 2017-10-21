@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class AbilityDescription : MonoBehaviour {
 
     CharacterData data;
+    public CharacterTeam team;
 
     public GameObject hoverUI;
 
@@ -28,9 +29,11 @@ public class AbilityDescription : MonoBehaviour {
 
     void DisplayStatOn(GameObject target)
     {
+        Debug.Log(target.transform.tag);
         // Activate and Position ui element for hover info
-        if (target.transform.parent.tag == gameObject.transform.parent.tag)
+        if (target.transform.tag == team.ToString())
         {
+            Debug.Log("HERE");
             hoverUI.SetActive(true);
             Vector2 Pos = new Vector2((target.transform.position.x) * 100, target.transform.position.y + 400);
             hoverUI.GetComponent<RectTransform>().anchoredPosition = Pos;

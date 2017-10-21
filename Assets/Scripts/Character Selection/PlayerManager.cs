@@ -71,7 +71,7 @@ public class PlayerManager : MonoBehaviour {
         {
             for (int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
-                Vector3 Pos = new Vector3(-6 + (i * 3), 4, 0);
+                Vector3 Pos = new Vector3(-6 + (i * 3), 4.5f, 0);
                 var card = Instantiate(PlayerInfo.deck1[i], Pos, PlayerInfo.deck1[i].transform.rotation);
                 // Disable scripts on prefab
                 card.GetComponent<Attacking>().enabled = false;
@@ -191,10 +191,14 @@ public class PlayerManager : MonoBehaviour {
 
     public void ConfirmHero()
     {
+        
         // Set heros and turn them off
-        if(player == 1)
+        if (player == 1)
         {
             PlayerInfo.heroPlayer1 = _heros[selectedHero].name;
+
+            PlayerInfo.p1_Container.GetComponent<Scrolling>().bar.gameObject.SetActive(true); // Scrollbar
+
             // Display deck
             for(int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
@@ -209,6 +213,9 @@ public class PlayerManager : MonoBehaviour {
         } else
         {
             PlayerInfo.heroPlayer2 = _heros[selectedHero].name;
+
+            PlayerInfo.p2_Container.GetComponent<Scrolling>().bar.gameObject.SetActive(true); // Scrollbar
+
             // Display deck
             for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {

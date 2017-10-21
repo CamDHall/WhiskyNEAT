@@ -12,6 +12,6 @@ public class Scrolling : MonoBehaviour {
 	}
 	
 	void Update () {
-        transform.position = new Vector3(bar.value, transform.position.y, 0);
+        transform.position = new Vector3(-bar.value * 18, transform.position.y, 0);
 	}
 }

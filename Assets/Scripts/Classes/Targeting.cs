@@ -17,12 +17,12 @@ public class Targeting {
                 MapData.enenmyInfo[enemy.transform.position] = GeneralMath.DistanceForm(enemy.transform.position, current.transform.position)
                      + enemy.transform.parent.position.y - 1;
 
-                if (MapData.enenmyInfo[enemy.transform.position] <= rangedRange)
+                if (MapData.enenmyInfo[enemy.transform.position] <= rangedRange - 0.5f)
                 {
                     attacking._enemiesInRangedRange.Add(enemy);
                 }
 
-                if (MapData.enenmyInfo[enemy.transform.position] <= meleeRange)
+                if (MapData.enenmyInfo[enemy.transform.position] <= meleeRange - 0.5f)
                 {
                     attacking._enemiesInMeleeRange.Add(enemy);
                 }
@@ -48,12 +48,13 @@ public class Targeting {
                 MapData.friendsInfo[friend.transform.position] = GeneralMath.DistanceForm(friend.transform.position, current.transform.position) +
                    friend.transform.parent.position.y - 1;
 
-                if (MapData.friendsInfo[friend.transform.position] <= meleeRange)
+                if (MapData.friendsInfo[friend.transform.position] <= meleeRange - 0.5f)
                 {
+					Debug.Log (MapData.friendsInfo[friend.transform.position]);
                     attacking._friendsInMeleeRange.Add(friend);
                 }
 
-                if (MapData.friendsInfo[friend.transform.position] <= rangedRange)
+                if (MapData.friendsInfo[friend.transform.position] <= rangedRange - 0.5f)
                 {
                    attacking._friendsInRangedRange.Add(friend);
                 }

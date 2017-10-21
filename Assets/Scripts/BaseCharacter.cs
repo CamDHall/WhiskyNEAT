@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum State { Moving, Attacking, Idle, Done }
+public enum CharacterType { Hero, Follower }
 [RequireComponent(typeof(Attacking), typeof(Movement))]
 public abstract class BaseCharacter : AbilitiesBase {
 
