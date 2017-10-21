@@ -9,8 +9,7 @@ public class RemoveDead {
 		// Only run if the target isn't a hero
 		CharacterData targetData = target.GetComponent<CharacterData>();
 		CharacterData attackerData = attacker.GetComponent<CharacterData> ();
-	
-		Attacking attacking = attacker.GetComponent<Attacking> ();
+
 
 		string t_name = "Characters/" + target.GetComponent<CharacterData> ().characterName;
 		t_name = t_name.Replace (" ", "");

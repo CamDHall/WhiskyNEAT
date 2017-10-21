@@ -10,8 +10,8 @@ public static class PlayerInfo {
 
     public static string heroPlayer1, heroPlayer2;
 
-    public static List<string> s_deck1 = new List<string>() { "Characters/GoodGuy", "Characters/GoodGuy", "Characters/GoodGuy", "Characters/GoodGuy", "Characters/GoodGuy" };
-    public static List<string> s_deck2 = new List<string>() { "Characters/BadGuy", "Characters/BadGuy", "Characters/BadGuy", "Characters/BadGuy", "Characters/BadGuy" };
+    public static List<string> s_deck1 = new List<string>() { "Characters/GoodGuy", "Characters/BadGuy", "Characters/GoodGuy", "Characters/BadGuy", "Characters/GoodGuy" };
+    public static List<string> s_deck2 = new List<string>() { "Characters/BadGuy", "Characters/GoodGuy", "Characters/BadGuy", "Characters/GoodGuy", "Characters/BadGuy" };
 
     // Save for each round
     public static List<GameObject> deck1 = new List<GameObject>();

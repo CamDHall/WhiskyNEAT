@@ -59,6 +59,8 @@ public abstract class AbilitiesBase : MonoBehaviour {
     // Run sinle turn abilities
     public virtual void HandleAbility()
     {
+        if (UIManager.Instance.abilityInfo.activeSelf)
+            UIManager.Instance.abilityInfo.SetActive(false);
         switch (abilityInProgress)
         {
             // Heal

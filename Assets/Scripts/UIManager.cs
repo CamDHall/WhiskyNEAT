@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+    public static UIManager Instance;
+
+    public GameObject abilityInfo;
+
     public Canvas screenCanvas;
     public HUD hud;
 
@@ -17,8 +21,14 @@ public class UIManager : MonoBehaviour {
     public GameObject nextPhase;
     public Text turns, currentTeam;
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
-	
-	void Update () {
+
+    private void Start()
+    {
+        Instance = this;
+        abilityInfo.SetActive(false);
+    }
+
+    void Update () {
         if (GameManager.confirmationState == Confirmation.Idle)
         {
             // Hovering

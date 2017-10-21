@@ -20,7 +20,6 @@ public class MapBuilder : ScriptableWizard {
     void OnWizardCreate()
     {
         GameObject map = new GameObject();
-        MapData mapData = map.AddComponent<MapData>();
         map.gameObject.name = _mapName;
         map.gameObject.tag = "Map";
 
