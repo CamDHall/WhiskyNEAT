@@ -8,7 +8,6 @@ public enum CharacterType { Hero, Follower }
 [RequireComponent(typeof(Attacking), typeof(Movement))]
 public abstract class BaseCharacter : AbilitiesBase {
 
-    MapData mapData;
     Movement movement;
     public Attacking attacking;
 
@@ -20,7 +19,6 @@ public abstract class BaseCharacter : AbilitiesBase {
         if (PlayerInfo.deck1.Contains(this.gameObject) || PlayerInfo.deck2.Contains(this.gameObject))
             DontDestroyOnLoad(this.gameObject);
 
-        mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
         movement = GetComponent<Movement>();
 
         attacking = GetComponent<Attacking>();
@@ -154,9 +152,13 @@ public abstract class BaseCharacter : AbilitiesBase {
         RemoveDead.Remove(gameObject, attacker);
         Destroy(gameObject);
 
-        if (attacker.tag == "Friend" && MapData.enemies.Count == 0)
-            GameManager.Instance.EndGame(CharacterTeam.Enemy);
-        else if (attacker.tag == "Enemy" && MapData.friends.Count == 0)
-            GameManager.Instance.EndGame(CharacterTeam.Friend);
+        // Hero, end game
+        if (GetComponent<BaseCharacter>().characterData.cType == CharacterType.Hero)
+        {
+            if (attacker.tag == "Friend")
+                GameManager.Instance.EndGame(CharacterTeam.Enemy);
+            else if (attacker.tag == "Enemy")
+                GameManager.Instance.EndGame(CharacterTeam.Friend);
+        }
     }
 }

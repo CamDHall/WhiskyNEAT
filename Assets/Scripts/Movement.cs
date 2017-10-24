@@ -5,11 +5,9 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
 
     public bool isMoving = false;
-    MapData mapData;
     CharacterData characterData;
 
 	void Start () {
-        mapData = GameObject.FindGameObjectWithTag("Map").GetComponent<MapData>();
         characterData = GetComponent<CharacterData>();
 	}
 	

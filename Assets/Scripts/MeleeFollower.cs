@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class MeleeFollower : BaseCharacter {
 
-    int timesAbilityCalled = 0;
     public static UnityAction action1, action2, action3;
 
     private void Awake()

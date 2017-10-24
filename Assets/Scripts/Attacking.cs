@@ -8,8 +8,6 @@ public class Attacking : MonoBehaviour {
     public List<GameObject> _friendsInMeleeRange = new List<GameObject>();
     public List<GameObject> _enemiesInMeleeRange = new List<GameObject>();
 
-    bool determined = false;
-
     UIManager uiManager;
 
     // List of targets in Ranged Range
@@ -65,9 +63,10 @@ public class Attacking : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
+                Debug.Log("HIT");
+
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (gameObject.tag == "Enemy")
                     if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))
                     {
                         targetObject = hit.transform.gameObject;

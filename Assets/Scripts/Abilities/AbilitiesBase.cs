@@ -8,7 +8,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
 
     public CharacterData characterData;
 
-    AbilityState currentAbilityState = AbilityState.Start;
     int slowCount = 0, courageBombCount = 0;
     string abilityInProgress;
     public List<string> wipAbilities = new List<string>();
@@ -19,7 +18,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
 
     public void EnterState(AbilityState state, string nameOfAbility)
     {
-        currentAbilityState = state;
         abilityInProgress = nameOfAbility;
 
         switch (state)
@@ -36,7 +34,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
     // Override Enter state take take ability specefic variables
     public void EnterState(AbilityState state, string nameOfAbility, int HealingAmount)
     {
-        currentAbilityState = state;
         abilityInProgress = nameOfAbility;
         healingAmount = HealingAmount;
         switch (state)
@@ -171,7 +168,6 @@ public abstract class AbilitiesBase : MonoBehaviour {
                     Buff.RangedDamageBuffTeam(MapData.enemies, 3);
                 break;
         }
-        currentAbilityState = AbilityState.Start;
     }
 
     // Define functions for abilities

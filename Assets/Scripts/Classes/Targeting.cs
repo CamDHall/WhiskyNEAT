@@ -50,7 +50,6 @@ public class Targeting {
 
                 if (MapData.friendsInfo[friend.transform.position] <= meleeRange - 0.5f)
                 {
-					Debug.Log (MapData.friendsInfo[friend.transform.position]);
                     attacking._friendsInMeleeRange.Add(friend);
                 }
 

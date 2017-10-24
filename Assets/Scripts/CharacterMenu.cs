@@ -134,12 +134,13 @@ public class CharacterMenu : MonoBehaviour {
 
     public void MeleeButton()
     {
+        Debug.Log("MeleeButton");
         GameManager.selectedBaseCharacter.attacking.damageAmount = GameManager.selectedCharacterData.meleeStrength;
         if(gameObject.tag == "Friend")
         {
             foreach(GameObject target in baseCharacter.attacking._enemiesInMeleeRange)
             {
-                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 0.5f, target.transform.position.z);
+                Vector3 Pos = new Vector3(target.transform.position.x, target.transform.position.y + 1f, target.transform.position.z);
                 Image img = Instantiate(indicator, Pos, indicator.transform.rotation);
                 img.transform.SetParent(worldCanvas.transform);
                 imgs.Add(img);

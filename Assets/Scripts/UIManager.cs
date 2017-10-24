@@ -16,8 +16,6 @@ public class UIManager : MonoBehaviour {
     public GameObject confirmationWindow;
     public Text confirmInfo;
 
-    private Vector3 confirmPos = new Vector3((Screen.width / 2) -50, (Screen.height / 2) + 75, 0);
-
     public GameObject nextPhase;
     public Text turns, currentTeam;
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
