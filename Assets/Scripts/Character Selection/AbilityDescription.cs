@@ -29,7 +29,6 @@ public class AbilityDescription : MonoBehaviour {
 
     void DisplayStatOn(GameObject target)
     {
-        Debug.Log(target.transform.tag);
         // Activate and Position ui element for hover info
         if (target.transform.tag == team.ToString())
         {

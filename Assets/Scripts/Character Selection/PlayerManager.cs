@@ -15,16 +15,20 @@ public class PlayerManager : MonoBehaviour {
     public List<GameObject> selectedFollowers;
 
     public GameObject heroSelector, followerSelector;
-    public Text followerStatPrefab;
+
+    public GameObject p_FollowerStats;
+    Text followerStatTxT;
 
     // UI Compents
-    public Text stats;
+    public Text stats, title;
     public GameObject readyButton;
 
     public bool playerReady;
 
     public void Start()
     {
+        followerStatTxT = p_FollowerStats.GetComponentInChildren<Text>();
+
         playerReady = false;
        
         if (player == 1)
@@ -33,7 +37,7 @@ public class PlayerManager : MonoBehaviour {
         }
         else
         {
-            heroPos = new Vector3(0, -0.5f, 0);
+            heroPos = new Vector3(0, 0, 0);
         }
         for (int i = 0; i < heroList.Length; i++)
         {
@@ -179,14 +183,23 @@ public class PlayerManager : MonoBehaviour {
 
     void DisplayStats(CharacterData data)
     {
-        stats.text = data.characterName + "\nHealth: \t" + data.health + "\nCourage: \t" + data.courage + "\nMoves: \t" + data.moves + "\nMelee Strength: \t" + data.meleeStrength
-            + "\nRanged Strength: \t" + data.rangedStrength;
+        title.text = "<size=26>" + data.characterName + "</size>" + "\n\n";
+        // Stats
+        stats.text += "<size=20>  Health:\t\t\t" + "<color=#3784C5FF><b>" + data.health + "</b></color>" + "\n  Courage:\t\t" + 
+            "<color=#3784C5FF><b>" + data.courage + "</b></color>" + "\n  Moves:\t\t\t" + "<color=#3784C5FF><b>" + data.moves + "</b></color>" 
+            + "\n  Melee:\t\t\t" + "<color=#3784C5FF><b>" + data.meleeStrength + "</b></color>" + "\n  Ranged:\t\t" + "<color=#3784C5FF><b>"
+            + data.rangedStrength + "</b></color></size>";
     }
 
     void DisplayStats(Text stat, CharacterData data)
     {
-        stat.text = data.characterName + "\nHealth: \t" + data.health + "\nCourage: \t" + data.courage + "\nMoves: \t" + data.moves + "\nMelee Strength: \t" + data.meleeStrength
-            + "\nRanged Strength: \t" + data.rangedStrength;
+        // Name
+        title.text = "\t" + "<color=#3784C5FF><size=22>" + data.characterName + "</size></color>" + "\n\n";
+        // Stats
+        stat.text += "<size=16>  Health:\t\t" + "<color=#3784C5FF>" + data.health + "</color>" +
+            "\n  Courage:\t" + "<color=#3784C5FF>" + data.courage + "</color>" + "\n  Moves:\t\t" + "<color=#3784C5FF>" + data.moves + 
+            "</color>" + "\n  Melee:\t\t" + "<color=#3784C5FF>" + data.meleeStrength + "</color>" + "\n  Ranged:\t\t" + "<color=#3784C5FF>"
+            + data.rangedStrength + "</color></size>";
     }
 
     public void ConfirmHero()
@@ -204,11 +217,15 @@ public class PlayerManager : MonoBehaviour {
             {
                 PlayerInfo.deck1[i].SetActive(true);
 
-                Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                // Assign card to stat script BEFORE TRYING TO DISPLAY THE STAT
+                p_FollowerStats.GetComponent<StatLocation>().playerCard = PlayerInfo.deck1[i];
+                p_FollowerStats.GetComponentInChildren<ToggleFollower>().followerIndex = i;
+
+                GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                // Text stat = Instantiate(followerStatTxT, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 CharacterData data = PlayerInfo.deck1[i].GetComponent<CharacterData>();
-                DisplayStats(stat, data);
-                stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
-                stat.GetComponent<StatLocation>().playerCard = PlayerInfo.deck1[i];
+
+                DisplayStats(followerStatTxT, data);
             }
         } else
         {
@@ -221,11 +238,14 @@ public class PlayerManager : MonoBehaviour {
             {
                 PlayerInfo.deck2[i].SetActive(true);
 
-                Text stat = Instantiate(followerStatPrefab, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                p_FollowerStats.GetComponentInChildren<ToggleFollower>().followerIndex = i;
+                p_FollowerStats.GetComponent<StatLocation>().playerCard = PlayerInfo.deck2[i];
+
+                GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                // Text stat = Instantiate(followerStatTxT, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 CharacterData data = PlayerInfo.deck2[i].GetComponent<CharacterData>();
-                DisplayStats(stat, data);
-                stat.GetComponentInChildren<ToggleFollower>().followerIndex = i;
-                stat.GetComponent<StatLocation>().playerCard = PlayerInfo.deck2[i];
+
+                DisplayStats(followerStatTxT, data);
             }
         }
 
