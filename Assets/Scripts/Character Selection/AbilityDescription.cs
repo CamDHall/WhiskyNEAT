@@ -8,7 +8,18 @@ public class AbilityDescription : MonoBehaviour {
     CharacterData data;
     public CharacterTeam team;
 
-    public GameObject hoverUI;
+    Text stats, abilityTxt, title;
+
+    private void Start()
+    {
+        Text[] items = GetComponentsInChildren<Text>();
+
+        stats = items[0];
+        title = items[1];
+        abilityTxt = items[2];
+
+        abilityTxt.enabled = false;
+    }
 
     // Update is called once per frame
     void Update () {
@@ -17,7 +28,7 @@ public class AbilityDescription : MonoBehaviour {
 
         if(Physics.Raycast(ray, out hit))
         {
-            if(hit.transform.tag == "Friend" || hit.transform.tag == "Enemy")
+            if(hit.transform.tag == gameObject.tag)
             {
                 DisplayStatOn(hit.transform.gameObject);
             }
@@ -29,23 +40,22 @@ public class AbilityDescription : MonoBehaviour {
 
     void DisplayStatOn(GameObject target)
     {
-        // Activate and Position ui element for hover info
-        if (target.transform.tag == team.ToString())
-        {
-            hoverUI.SetActive(true);
-            Vector2 Pos = new Vector2((target.transform.position.x) * 100, target.transform.position.y + 400);
-            hoverUI.GetComponent<RectTransform>().anchoredPosition = Pos;
+        // Switch out text and turn off title
+        title.enabled = false;
+        stats.enabled = false;
+        abilityTxt.enabled = true;
 
-            // Set text
-            CharacterData data = target.GetComponent<CharacterData>();
-            hoverUI.GetComponentInChildren<Text>().text = data.nameAbility1 + ": " + data._description1 + "\n" +
-                data.nameAbility2 + ": " + data._description2 + "\n" +
-                data.nameAbility3 + ": " + data._description3 + "\n";
-        }
+        // Set text
+        CharacterData data = target.GetComponent<CharacterData>();
+        abilityTxt.text = "<size=16><color=#3784C5FF>" + data.nameAbility1 + ":</color></size> " + data._description1 + "\n" +
+            "<size=16><color=#3784C5FF>" + data.nameAbility2 + ":</color></size> " + data._description2 + "\n" +
+            "<size=16><color=#3784C5FF>" + data.nameAbility3 + ":</color></size> " + data._description3 + "\n";
     }
 
     void DisplayStatOff()
     {
-        hoverUI.SetActive(false);
+        abilityTxt.enabled = false;
+        title.enabled = true;
+        stats.enabled = true;
     }
 }

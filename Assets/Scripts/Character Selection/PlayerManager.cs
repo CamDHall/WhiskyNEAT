@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour {
         }
         else
         {
-            heroPos = new Vector3(0, 0, 0);
+            heroPos = new Vector3(0, -0.25f, 0);
         }
         for (int i = 0; i < heroList.Length; i++)
         {
@@ -112,7 +112,6 @@ public class PlayerManager : MonoBehaviour {
         }
         selectedHero = 0;
         DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
-
     }
 
     private void Update()
@@ -222,7 +221,6 @@ public class PlayerManager : MonoBehaviour {
                 p_FollowerStats.GetComponentInChildren<ToggleFollower>().followerIndex = i;
 
                 GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
-                // Text stat = Instantiate(followerStatTxT, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 CharacterData data = PlayerInfo.deck1[i].GetComponent<CharacterData>();
 
                 DisplayStats(followerStatTxT, data);
@@ -242,7 +240,6 @@ public class PlayerManager : MonoBehaviour {
                 p_FollowerStats.GetComponent<StatLocation>().playerCard = PlayerInfo.deck2[i];
 
                 GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
-                // Text stat = Instantiate(followerStatTxT, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 CharacterData data = PlayerInfo.deck2[i].GetComponent<CharacterData>();
 
                 DisplayStats(followerStatTxT, data);
