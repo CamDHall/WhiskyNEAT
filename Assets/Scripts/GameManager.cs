@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum CharacterTeam { Friend, Enemy }
+public enum Confirmation { Idle, Awaiting, Ready }
 public class GameManager : MonoBehaviour {
+
+    public static GameManager Instance;
 
     // General info
     public static int turns;
-    public static string currentTeam;
+    public static CharacterTeam currentTeam;
+
+    public static Confirmation confirmationState;
 
     // What team's turn it is and what phase they're on
     public static CharacterTeam characterTeam;
@@ -21,18 +26,25 @@ public class GameManager : MonoBehaviour {
 
     // Targeting
     public GameObject selectedTarget;
+    public static Attacking currentAttackingObj;
+
+    // UI round managment
+    public GameObject finishScreen;
 
     void Awake()
     {
         characterTeam = CharacterTeam.Friend;
+        currentTeam = CharacterTeam.Friend;
+
     }
 
     void Start()
     {
+        Instance = this;
         haveGone = 0;
+        confirmationState = Confirmation.Idle;
 
         turns = 0;
-        currentTeam = "Friends";
         selectedCharacter = null;
         selectedCharacterData = null;
         selectedBaseCharacter = null;
@@ -40,10 +52,10 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if(characterTeam == CharacterTeam.Friend && haveGone == MapData.friends.Count)
+        if(currentTeam == CharacterTeam.Friend && haveGone == MapData.friends.Count)
         {
             ChangeTeams();
-        } else if(characterTeam == CharacterTeam.Enemy && haveGone == MapData.enemies.Count)
+        } else if(currentTeam == CharacterTeam.Enemy && haveGone == MapData.enemies.Count)
         {
             ChangeTeams();
         }
@@ -61,13 +73,14 @@ public class GameManager : MonoBehaviour {
     public static void ChangeTeams()
     {
         haveGone = 0;
-        if (characterTeam == CharacterTeam.Friend)
+        if (currentTeam == CharacterTeam.Friend)
         {
+            MapData.FriendInfo();
             characterTeam = CharacterTeam.Enemy;
+            currentTeam = CharacterTeam.Enemy;
         
             foreach (GameObject enemy in MapData.enemies)
             {
-                enemy.GetComponent<CharacterMenu>().ResetButtons();
                 // Reset every enemy to idle
                 enemy.GetComponent<BaseCharacter>().EnterState(State.Idle);
                 // Run in-progress abilties for every enemy IF THERE ARE ANY
@@ -83,10 +96,12 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
+            MapData.EnemyInfo();
             characterTeam = CharacterTeam.Friend;
+            currentTeam = CharacterTeam.Friend;
+
             foreach(GameObject friend in MapData.friends)
             {
-                friend.GetComponent<CharacterMenu>().ResetButtons();
                 // Reset every friend to idle
                 friend.GetComponent<BaseCharacter>().EnterState(State.Idle);
                 // Reset in-progress abilities for every friend IF THERE ARE ANY
@@ -102,6 +117,24 @@ public class GameManager : MonoBehaviour {
             }
 
             turns++;
+        }
+    }
+
+    public void EndGame(CharacterTeam winningTeam)
+
+    {
+        Button btn = finishScreen.GetComponentInChildren<Button>();
+
+        finishScreen.SetActive(true);
+        if (PlayerInfo.rounds < 3)
+        {
+            PlayerInfo.rounds++;
+            finishScreen.GetComponentInChildren<Text>().text = winningTeam.ToString() + " won this round.";
+            btn.GetComponentInChildren<Text>().text = "Next Round";
+        } else
+        {
+            finishScreen.GetComponentInChildren<Text>().text = "Game Over";
+            btn.GetComponentInChildren<Text>().text = "Restart";
         }
     }
 }

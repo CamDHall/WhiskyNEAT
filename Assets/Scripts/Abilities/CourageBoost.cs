@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CourageBoost : AbilitiesBase {
 
+    // Basic boost
 	public static void CourageBoostBasic(CharacterData character, int amount)
     {
         character.courage += amount;
     }
 
+    // Boost group
     public static void CourageBoostBasic(List<GameObject> characters, int amount)
     {
         foreach(GameObject character in characters)
@@ -17,54 +19,64 @@ public class CourageBoost : AbilitiesBase {
         }
     }
 
-    public static void CourageForScaredEnemies(CharacterTeam team, int amount)
+    // Morale boost
+    public static void MoraleBoost(List<GameObject> characters, CharacterData targetData, int amount)
     {
-        if(team == CharacterTeam.Friend)
+        foreach(GameObject character in characters)
         {
-            foreach(GameObject enemy in MapData.enemies)
+            CharacterData data = character.GetComponent<CharacterData>();
+            if(data.courage <= 5)
             {
-                if (enemy.GetComponent<CharacterData>().courage <= 5)
-                    CourageBoostBasic(MapData.friends, amount);
-            }
-        } else
-        {
-            foreach(GameObject friend in MapData.friends)
-            {
-                if (friend.GetComponent<CharacterData>().courage <= 5)
-                    CourageBoostBasic(MapData.enemies, amount);
+                targetData.courage += amount;
             }
         }
     }
 
-    public static void SubtractCourage(CharacterData target, int amount)
+    // Scare tactics
+    public static void ScareTactics(List<GameObject> targetedCharacters, CharacterData userData, int amount)
     {
-        target.courage -= amount;
-    }
-
-    public static void SubtractCourage(List<GameObject> targets, int amount)
-    {
-        foreach(GameObject target in targets)
+        foreach(GameObject character in targetedCharacters)
         {
-            target.GetComponent<CharacterData>().courage -= amount;
-        }
-    }
-
-    public static void NobleFear(GameObject user, int amount)
-    {
-        if(user.GetComponent<BaseCharacter>().singleCharacterTeam == CharacterTeam.Friend)
-        {
-            foreach(GameObject enemy in MapData.enemies)
+            CharacterData targetData = character.GetComponent<CharacterData>();
+            if(targetData.courage < userData.courage)
             {
-                if(enemy.GetComponent<CharacterData>().courage >= user.GetComponent<CharacterData>().courage)
-                    SubtractCourage(enemy.GetComponent<CharacterData>(), amount);
-            }
-        } else
-        {
-            foreach(GameObject friend in MapData.friends)
-            {
-                if (friend.GetComponent<CharacterData>().courage >= user.GetComponent<CharacterData>().courage)
-                    SubtractCourage(friend.GetComponent<CharacterData>(), amount);
+                targetData.courage -= amount;
             }
         }
+    }
+
+    // Warcry
+    public static void WarCry(List<GameObject> targetedCharacters, CharacterData userData, int amount)
+    {
+        foreach(GameObject character in targetedCharacters)
+        {
+            CharacterData data = character.GetComponent<CharacterData>();
+            if(data.courage > userData.courage)
+            {
+                data.courage -= amount;
+            }
+        }
+    }
+
+    // Bloodcry
+    public static void BloodCry(List<GameObject> targetedCharacters, CharacterData userData)
+    {
+        foreach(GameObject character in targetedCharacters)
+        {
+            character.GetComponent<CharacterData>().courage = 5;
+        }
+
+        userData.health -= 15; 
+    }
+
+    // Sacarfic
+    public static void Sacrifice(List<GameObject> allies, CharacterData userData, int amount)
+    {
+        foreach(GameObject allie in allies)
+        {
+            allie.GetComponent<CharacterData>().health += amount;
+        }
+
+        userData.courage = 1;
     }
 }

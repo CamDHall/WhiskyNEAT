@@ -5,39 +5,17 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
 
     public bool isMoving = false;
-    MapData mapData;
     CharacterData characterData;
 
 	void Start () {
-        mapData = GameObject.FindGameObjectWithTag("Map").GetComponent<MapData>();
         characterData = GetComponent<CharacterData>();
 	}
 	
 	void Update () {
-
         if (characterData.currentNumberofMoves == 0 && GetComponent<BaseCharacter>().currentState == State.Moving)
         {
             isMoving = false;
             GetComponent<BaseCharacter>().ExitState(State.Moving);
-        }
-
-        // Check if state is moving but Handle state hasn't been called yet, then check for raycast to set path and handle movement
-        if(GetComponent<BaseCharacter>().currentState == State.Moving && !isMoving)
-        {
-            if(Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if(Physics.Raycast(ray, out hit))
-                {
-                    if(hit.transform.position == transform.position)
-                    {
-                        Paths.ChangeTiles();
-                        GetComponent<BaseCharacter>().HandleState(State.Moving);
-                    }
-                }
-            }
         }
 
         if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter == this.gameObject)
@@ -55,7 +33,7 @@ public class Movement : MonoBehaviour {
                         {
                             transform.parent = hit.transform;
                             GameManager.selectedCharacterData.currentNumberofMoves -= (int)MapData.tileInfo[hit.transform.position];
-                            transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+                            transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
                             // Reset tile colors
                             Paths.ResetTiles();
                         }
@@ -63,6 +41,25 @@ public class Movement : MonoBehaviour {
                     {
                         Paths.ResetTiles();
                     }
+                }
+            }
+        }
+    }
+
+    public void CheckMovement()
+    {
+        // Check if state is moving but Handle state hasn't been called yet, then check for raycast to set path and handle movement
+        if (GetComponent<BaseCharacter>().currentState == State.Moving && !isMoving)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.position == transform.position)
+                {
+                    Paths.ChangeTiles();
+                    GetComponent<BaseCharacter>().HandleState(State.Moving);
                 }
             }
         }

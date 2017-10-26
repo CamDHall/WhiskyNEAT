@@ -6,18 +6,14 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour {
 
     public GameObject targetingInfo;
-    public Text _name, health, courage, moves, meleeSTR, rangedSTR, rangedDistance;
+    public Text _name, health, courage;
 
 	public void DisplayTargetInfo(CharacterData characterData)
     {
         targetingInfo.SetActive(true);
-        _name.text = "Name: " + characterData.name.ToString();
+        _name.text = "Name: " + characterData.characterName.ToString();
         health.text = "Health: " + characterData.health.ToString();
         courage.text = "Courage: " + characterData.courage.ToString();
-        moves.text = "Moves: " + characterData.moves.ToString();
-        meleeSTR.text = "MeleeSTR: " + characterData.meleeStrength.ToString();
-        rangedSTR.text = "RangedSTR: " + characterData.rangedStrength.ToString();
-        rangedDistance.text = "Ranged Distance: " + characterData.rangedDistance.ToString();
     }
 
     public void OffTargetingInfo()

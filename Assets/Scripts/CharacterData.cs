@@ -8,9 +8,12 @@ public class CharacterData : MonoBehaviour {
     public List<Button> buttonsIP = new List<Button>();
 
     public int health, courage;
-    public int currentMana, mana;
     public int currentNumberofMoves, moves;
     public int currentNumberofAttacks, numberofAttacks;
+
+	public CharacterType cType;
+
+    public string characterName, _description1, _description2, _description3;
 
     // Abilities
     public string nameAbility1, nameAbility2, nameAbility3;
@@ -21,10 +24,5 @@ public class CharacterData : MonoBehaviour {
     void Awake()
     {
         currentNumberofMoves = moves;
-    }
-
-    void Update()
-    {
-
     }
 }

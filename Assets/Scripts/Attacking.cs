@@ -8,23 +8,31 @@ public class Attacking : MonoBehaviour {
     public List<GameObject> _friendsInMeleeRange = new List<GameObject>();
     public List<GameObject> _enemiesInMeleeRange = new List<GameObject>();
 
-    bool determined = false;
+    UIManager uiManager;
 
     // List of targets in Ranged Range
     public List<GameObject> _friendsInRangedRange = new List<GameObject>();
     public List<GameObject> _enemiesInRangedRange = new List<GameObject>();
+    public List<GameObject> _allTargets = new List<GameObject>();
 
     CharacterData characterData;
     BaseCharacter baseCharacter;
 
     public bool isAttacking = false;
     public string type;
+    public int damageAmount;
+    public GameObject targetObject;
 
     void Awake()
     {
         characterData = GetComponent<CharacterData>();
         baseCharacter = GetComponent<BaseCharacter>();
         characterData.currentNumberofAttacks = characterData.numberofAttacks;
+    }
+
+    private void Start()
+    {
+        uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
     }
 
     void Update () {
@@ -55,38 +63,59 @@ public class Attacking : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if(Physics.Raycast(ray, out hit))
+                Debug.Log("HIT");
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if(type == "Melee")
+                    if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))
                     {
-                        if(gameObject.tag == "Friend")
-                        {
-                            if(_enemiesInMeleeRange.Contains(hit.transform.gameObject))
-                            {
-                                AttackTypes.Damage("Melee", gameObject, hit.transform.gameObject);
-                            }
-                        } else
-                        {
-                            if(_friendsInMeleeRange.Contains(hit.transform.gameObject))
-                            {
-                                AttackTypes.Damage("Melee", gameObject, hit.transform.gameObject);
-                            }
-                        }
-                    } else
-                    {
-                        if(_enemiesInRangedRange.Contains(hit.transform.gameObject))
-                        {
-                            AttackTypes.Damage("Ranged", gameObject, hit.transform.gameObject);
-                        } else
-                        {
-                            if(_friendsInRangedRange.Contains(hit.transform.gameObject))
-                            {
-                                AttackTypes.Damage("Ranged", gameObject, hit.transform.gameObject);
-                            }
-                        }
+                        targetObject = hit.transform.gameObject;
+                        GameManager.currentAttackingObj = this;
+                        uiManager.ConfirmationWindow();
                     }
                 }
             }
         }
 	}
+
+    public void ExecuteAttack()
+    {
+        if (type == "Melee")
+        {
+            if (gameObject.tag == "Friend")
+            {
+                if (_enemiesInMeleeRange.Contains(targetObject.transform.gameObject))
+                {
+                    damageAmount = AttackTypes.Damage("Melee", gameObject, targetObject.transform.gameObject);
+                }
+            }
+            else
+            {
+                if (_friendsInMeleeRange.Contains(targetObject.transform.gameObject))
+                {
+                    damageAmount = AttackTypes.Damage("Melee", gameObject, targetObject.transform.gameObject);
+                }
+            }
+        }
+        else
+        {
+            if (_enemiesInRangedRange.Contains(targetObject.transform.gameObject))
+            {
+                damageAmount = AttackTypes.Damage("Ranged", gameObject, targetObject.transform.gameObject);
+            }
+            else
+            {
+                if (_friendsInRangedRange.Contains(targetObject.transform.gameObject))
+                {
+                    damageAmount = AttackTypes.Damage("Ranged", gameObject, targetObject.transform.gameObject);
+                }
+            }
+        }
+
+        // Reset everything
+        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
+        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
+        targetObject = null;
+        GameManager.confirmationState = Confirmation.Idle;
+    }
 }

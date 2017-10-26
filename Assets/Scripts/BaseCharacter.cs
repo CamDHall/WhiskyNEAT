@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum State { Moving, Attacking, Idle, Done }
+public enum CharacterType { Hero, Follower }
 [RequireComponent(typeof(Attacking), typeof(Movement))]
 public abstract class BaseCharacter : AbilitiesBase {
 
-    MapData mapData;
     Movement movement;
     public Attacking attacking;
 
@@ -16,9 +16,11 @@ public abstract class BaseCharacter : AbilitiesBase {
 
     void Start()
     {
-        mapData = GameObject.FindGameObjectWithTag("Map").gameObject.GetComponent<MapData>();
+        if (PlayerInfo.deck1.Contains(this.gameObject) || PlayerInfo.deck2.Contains(this.gameObject))
+            DontDestroyOnLoad(this.gameObject);
+
         movement = GetComponent<Movement>();
-        characterData = GetComponent<CharacterData>();
+
         attacking = GetComponent<Attacking>();
         menu = GetComponent<CharacterMenu>();
 
@@ -33,7 +35,6 @@ public abstract class BaseCharacter : AbilitiesBase {
 
     public void EnterState(State state)
     {
-
         currentState = state;
 
         switch (state)
@@ -123,7 +124,6 @@ public abstract class BaseCharacter : AbilitiesBase {
     // Idle
     protected virtual void EnterIdle()
     {
-        // Debug.Log("ENETERED IDLE");
         // if the amount of characters that have moved equals the size of a team, change states
 
         ExitState(State.Idle);
@@ -152,9 +152,13 @@ public abstract class BaseCharacter : AbilitiesBase {
         RemoveDead.Remove(gameObject, attacker);
         Destroy(gameObject);
 
-        if (attacker.tag == "Friend" && MapData.enemies.Count == 0)
-            EndGame.instance.End(CharacterTeam.Friend);
-        else if (attacker.tag == "Enemy" && MapData.friends.Count == 0)
-            EndGame.instance.End(CharacterTeam.Enemy);
+        // Hero, end game
+        if (GetComponent<BaseCharacter>().characterData.cType == CharacterType.Hero)
+        {
+            if (attacker.tag == "Friend")
+                GameManager.Instance.EndGame(CharacterTeam.Enemy);
+            else if (attacker.tag == "Enemy")
+                GameManager.Instance.EndGame(CharacterTeam.Friend);
+        }
     }
 }
