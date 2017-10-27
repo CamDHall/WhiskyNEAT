@@ -34,11 +34,11 @@ public class AbilityButtonManager : MonoBehaviour, IPointerEnterHandler, IPointe
         UIManager.Instance.abilityInfo.SetActive(true);
 
         if (gameObject.name == "Ability1")
-            abilityInfoTxt.text = GameManager.selectedCharacterData._description1;
+            abilityInfoTxt.text = GameManager.Instance.selectedCharacterData._description1;
         else if (gameObject.name == "Ability2")
-            abilityInfoTxt.text = GameManager.selectedCharacterData._description2;
+            abilityInfoTxt.text = GameManager.Instance.selectedCharacterData._description2;
         else
-            abilityInfoTxt.text = GameManager.selectedCharacterData._description3;
+            abilityInfoTxt.text = GameManager.Instance.selectedCharacterData._description3;
     }
 
     public void OnPointerExit(PointerEventData eventData)

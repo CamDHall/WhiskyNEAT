@@ -6,7 +6,7 @@ public class Highlight : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.selectedCharacter != this.transform.parent.gameObject)
+        if (GameManager.Instance.selectedCharacter != this.transform.parent.gameObject)
         {
             GetComponent<Renderer>().enabled = false;
         } else

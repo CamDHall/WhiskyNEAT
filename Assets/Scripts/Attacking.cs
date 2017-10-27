@@ -70,7 +70,7 @@ public class Attacking : MonoBehaviour {
                     if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))
                     {
                         targetObject = hit.transform.gameObject;
-                        GameManager.currentAttackingObj = this;
+                        GameManager.Instance.currentAttackingObj = this;
                         uiManager.ConfirmationWindow();
                     }
                 }
@@ -113,8 +113,8 @@ public class Attacking : MonoBehaviour {
         }
 
         // Reset everything
-        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
-        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
+        GameManager.Instance.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
+        GameManager.Instance.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
         targetObject = null;
         GameManager.confirmationState = Confirmation.Idle;
     }

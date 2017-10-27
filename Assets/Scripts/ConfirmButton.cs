@@ -10,7 +10,7 @@ public class ConfirmButton : MonoBehaviour {
 	public void ConfirmAttack()
     {   
         GameManager.confirmationState = Confirmation.Ready;
-        GameManager.currentAttackingObj.ExecuteAttack();
+        GameManager.Instance.currentAttackingObj.ExecuteAttack();
         confirmWindow.SetActive(false);
     }
 
@@ -18,7 +18,7 @@ public class ConfirmButton : MonoBehaviour {
     {
         GameManager.confirmationState = Confirmation.Idle;
         confirmWindow.SetActive(false);
-        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
-        GameManager.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
+        GameManager.Instance.currentAttackingObj.GetComponent<CharacterMenu>().DisplayOff();
+        GameManager.Instance.currentAttackingObj.GetComponent<CharacterMenu>().OverlayOff();
     }
 }

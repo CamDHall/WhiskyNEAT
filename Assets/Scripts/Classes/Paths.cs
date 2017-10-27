@@ -8,10 +8,10 @@ public class Paths {
 
     public static void ChangeTiles()
     {
-        if (GameManager.selectedCharacter != null && GameManager.selectedCharacterData.currentNumberofMoves > 0)
+        if (GameManager.Instance.selectedCharacter != null && GameManager.Instance.selectedCharacterData.currentNumberofMoves > 0)
         {
             reachableTiles.Clear();
-            Transform currentTransform = GameManager.selectedCharacter.transform; // For transform.position
+            Transform currentTransform = GameManager.Instance.selectedCharacter.transform; // For transform.position
 
             foreach (GameObject tile in MapData.tiles)
             {
@@ -25,7 +25,7 @@ public class Paths {
                 else if (tile.transform.position.y == 0.5f)
                     MapData.tileInfo[tile.transform.position] = Mathf.Abs(tile.transform.position.x - currentTransform.position.x) + Mathf.Abs(tile.transform.position.z - currentTransform.position.z) + 0.5f;
 
-                if (MapData.tileInfo[tile.transform.position] <= GameManager.selectedCharacterData.currentNumberofMoves &&
+                if (MapData.tileInfo[tile.transform.position] <= GameManager.Instance.selectedCharacterData.currentNumberofMoves &&
                     !(tile.transform.childCount > 0))
                 {
                     reachableTiles.Add(tile);

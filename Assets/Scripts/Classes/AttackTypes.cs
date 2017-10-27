@@ -20,7 +20,7 @@ public class AttackTypes {
         attacker.GetComponent<CharacterData>().currentNumberofAttacks--;
         attacker.GetComponent<CharacterMenu>().OverlayOff();
 
-        GameManager.selectedCharacter = null;
+        GameManager.Instance.selectedCharacter = null;
         if(target.GetComponent<CharacterData>().health <= 0)
         {
             target.GetComponent<BaseCharacter>().Death(attacker);

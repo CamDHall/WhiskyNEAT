@@ -20,13 +20,27 @@ public class UIManager : MonoBehaviour {
     public Text turns, currentTeam;
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
 
+    // Team highlighters
+    GameObject highlighterFriend, highlighterEnemy; 
+
     private void Start()
     {
         Instance = this;
         abilityInfo.SetActive(false);
+
+        GameObject pf_HighlighterFriend = Resources.Load("Highlight") as GameObject;
+        highlighterFriend = Instantiate(pf_HighlighterFriend);
     }
 
     void Update () {
+        if(GameManager.Instance.selectedCharacter != null)
+        {
+            Debug.Log(highlighterFriend);
+            highlighterFriend.transform.parent = GameManager.Instance.selectedCharacter.transform;
+            highlighterFriend.transform.localPosition = Vector3.zero;
+            highlighterFriend.SetActive(true);
+        }
+
         if (GameManager.confirmationState == Confirmation.Idle)
         {
             // Hovering
@@ -35,9 +49,9 @@ public class UIManager : MonoBehaviour {
 
             if (Physics.Raycast(hoveringRay, out hoveringHit))
             {
-                if ((hoveringHit.transform.tag == "Friend" || hoveringHit.transform.tag == "Enemy") && GameManager.selectedCharacter != null && 
-                    GameManager.selectedCharacter.tag != hoveringHit.transform.tag && 
-                    hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.selectedBaseCharacter)
+                if ((hoveringHit.transform.tag == "Friend" || hoveringHit.transform.tag == "Enemy") && GameManager.Instance.selectedCharacter 
+                    != null && GameManager.Instance.selectedCharacter.tag != hoveringHit.transform.tag && 
+                    hoveringHit.transform.gameObject.GetComponent<BaseCharacter>() != GameManager.Instance.selectedBaseCharacter)
                 {
                     hud.DisplayTargetInfo(hoveringHit.transform.gameObject.GetComponent<CharacterData>());
                 }
@@ -48,18 +62,18 @@ public class UIManager : MonoBehaviour {
             }
 
             // Turn change phase button on/off and change text
-            if (GameManager.selectedBaseCharacter != null)
+            if (GameManager.Instance.selectedBaseCharacter != null)
             {
                 nextPhase.SetActive(true);
-                if (GameManager.selectedBaseCharacter.currentState == State.Moving)
+                if (GameManager.Instance.selectedBaseCharacter.currentState == State.Moving)
                 {
                     nextPhase.GetComponentInChildren<Text>().text = "Attack";
                 }
-                else if (GameManager.selectedBaseCharacter.currentState == State.Attacking)
+                else if (GameManager.Instance.selectedBaseCharacter.currentState == State.Attacking)
                 {
                     nextPhase.GetComponentInChildren<Text>().text = "End Turn";
                 }
-                else if (GameManager.selectedBaseCharacter.currentState == State.Done)
+                else if (GameManager.Instance.selectedBaseCharacter.currentState == State.Done)
                 {
                     nextPhase.SetActive(false);
                 }
@@ -70,17 +84,17 @@ public class UIManager : MonoBehaviour {
             }
 
             // Display character info
-            if (GameManager.selectedCharacterData != null)
+            if (GameManager.Instance.selectedCharacterData != null)
             {
                 turns.text = "Turn: " + GameManager.turns.ToString();
                 currentTeam.text = GameManager.currentTeam.ToString() + "'s Turn";
-                health.text = "Health: " + GameManager.selectedCharacterData.health.ToString();
-                movement.text = "Movement: " + GameManager.selectedCharacterData.moves.ToString();
-                courage.text = "Courage: " + GameManager.selectedCharacterData.courage.ToString();
-                meleeSTR.text = "Melee Strength: " + GameManager.selectedCharacterData.meleeStrength.ToString();
-                rangedSTR.text = "Ranged Strength: " + GameManager.selectedCharacterData.ToString();
-                rangedDistance.text = "Ranged Distance: " + GameManager.selectedCharacterData.rangedDistance.ToString();
-                nameText.text = "Name: " + GameManager.selectedCharacterData.characterName.ToString();
+                health.text = "Health: " + GameManager.Instance.selectedCharacterData.health.ToString();
+                movement.text = "Movement: " + GameManager.Instance.selectedCharacterData.moves.ToString();
+                courage.text = "Courage: " + GameManager.Instance.selectedCharacterData.courage.ToString();
+                meleeSTR.text = "Melee Strength: " + GameManager.Instance.selectedCharacterData.meleeStrength.ToString();
+                rangedSTR.text = "Ranged Strength: " + GameManager.Instance.selectedCharacterData.ToString();
+                rangedDistance.text = "Ranged Distance: " + GameManager.Instance.selectedCharacterData.rangedDistance.ToString();
+                nameText.text = "Name: " + GameManager.Instance.selectedCharacterData.characterName.ToString();
             }
 
             // General Selections
@@ -109,39 +123,39 @@ public class UIManager : MonoBehaviour {
     void NothingSelected()
     {
         Paths.ResetTiles();
-        if (GameManager.selectedCharacter != null)
+        if (GameManager.Instance.selectedCharacter != null)
         {
-            GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
-            GameManager.selectedCharacter = null;
-            GameManager.selectedCharacterData = null;
-            GameManager.selectedBaseCharacter = null;
+            GameManager.Instance.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
+            GameManager.Instance.selectedCharacter = null;
+            GameManager.Instance.selectedCharacterData = null;
+            GameManager.Instance.selectedBaseCharacter = null;
         }
     }
 
     void CharacterSelected(string team, CharacterData info, GameObject hit)
     {
-        if (hit != GameManager.selectedCharacter || 
+        if (hit != GameManager.Instance.selectedCharacter || 
             (hit.GetComponent<CharacterData>().currentNumberofMoves < hit.GetComponent<CharacterData>().moves && hit.GetComponent<CharacterData>().currentNumberofMoves > 0))
         {
             if (team == GameManager.characterTeam.ToString())
             {
-                if (GameManager.selectedCharacter != null)
+                if (GameManager.Instance.selectedCharacter != null)
                 {
-                    GameManager.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
+                    GameManager.Instance.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
                     Paths.ResetTiles();
                 }
                 // Assignments
-                GameManager.selectedCharacter = hit;
-                GameManager.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();
-                GameManager.selectedBaseCharacter = GameManager.selectedCharacter.GetComponent<BaseCharacter>();
-                BaseCharacter baseCharacter = GameManager.selectedBaseCharacter;
+                GameManager.Instance.selectedCharacter = hit;
+                GameManager.Instance.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();
+                GameManager.Instance.selectedBaseCharacter = GameManager.Instance.selectedCharacter.GetComponent<BaseCharacter>();
+                BaseCharacter baseCharacter = GameManager.Instance.selectedBaseCharacter;
                 baseCharacter.EnterState(baseCharacter.currentState);
 
-                GameManager.selectedCharacter.GetComponent<Movement>().CheckMovement();
+                GameManager.Instance.selectedCharacter.GetComponent<Movement>().CheckMovement();
             }
         }
 
-        GameManager.selectedCharacterData = info;
+        GameManager.Instance.selectedCharacterData = info;
     }
 
     // Confirmation Window    
@@ -150,10 +164,10 @@ public class UIManager : MonoBehaviour {
         GameManager.confirmationState = Confirmation.Awaiting;
         confirmationWindow.SetActive(true);
         // Show Info
-        CharacterData targetData = GameManager.currentAttackingObj.targetObject.GetComponent<CharacterData>();
+        CharacterData targetData = GameManager.Instance.currentAttackingObj.targetObject.GetComponent<CharacterData>();
 
         confirmInfo.text = targetData.health.ToString() + " --> " +
-            (targetData.health - GameManager.currentAttackingObj.damageAmount).ToString();
+            (targetData.health - GameManager.Instance.currentAttackingObj.damageAmount).ToString();
     }
 
     // public virtual void FirstAbility() { }

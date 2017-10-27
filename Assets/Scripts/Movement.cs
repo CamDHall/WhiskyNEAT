@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour {
             GetComponent<BaseCharacter>().ExitState(State.Moving);
         }
 
-        if (Input.GetMouseButtonDown(0) && isMoving && GameManager.selectedCharacter == this.gameObject)
+        if (Input.GetMouseButtonDown(0) && isMoving && GameManager.Instance.selectedCharacter == this.gameObject)
         {   
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -32,12 +32,12 @@ public class Movement : MonoBehaviour {
                         if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
                         {
                             transform.parent = hit.transform;
-                            GameManager.selectedCharacterData.currentNumberofMoves -= (int)MapData.tileInfo[hit.transform.position];
+                            GameManager.Instance.selectedCharacterData.currentNumberofMoves -= (int)MapData.tileInfo[hit.transform.position];
                             transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
                             // Reset tile colors
                             Paths.ResetTiles();
                         }
-                    } else if(hit.transform.position != GameManager.selectedCharacter.transform.position)
+                    } else if(hit.transform.position != GameManager.Instance.selectedCharacter.transform.position)
                     {
                         Paths.ResetTiles();
                     }

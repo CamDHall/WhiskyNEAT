@@ -20,13 +20,13 @@ public class GameManager : MonoBehaviour {
     public static int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
 
     // Selected info
-    public static GameObject selectedCharacter;
-    public static CharacterData selectedCharacterData;
-    public static BaseCharacter selectedBaseCharacter;
+    public GameObject selectedCharacter;
+    public CharacterData selectedCharacterData;
+    public BaseCharacter selectedBaseCharacter;
 
     // Targeting
     public GameObject selectedTarget;
-    public static Attacking currentAttackingObj;
+    public Attacking currentAttackingObj;
 
     // UI round managment
     public GameObject finishScreen;

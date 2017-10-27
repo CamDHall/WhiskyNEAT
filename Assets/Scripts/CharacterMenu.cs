@@ -135,7 +135,7 @@ public class CharacterMenu : MonoBehaviour {
     public void MeleeButton()
     {
         Debug.Log("MeleeButton");
-        GameManager.selectedBaseCharacter.attacking.damageAmount = GameManager.selectedCharacterData.meleeStrength;
+        GameManager.Instance.selectedBaseCharacter.attacking.damageAmount = GameManager.Instance.selectedCharacterData.meleeStrength;
         if(gameObject.tag == "Friend")
         {
             foreach(GameObject target in baseCharacter.attacking._enemiesInMeleeRange)
@@ -162,7 +162,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void RangedButton()
     {
-        GameManager.selectedBaseCharacter.attacking.damageAmount = GameManager.selectedCharacterData.rangedStrength;
+        GameManager.Instance.selectedBaseCharacter.attacking.damageAmount = GameManager.Instance.selectedCharacterData.rangedStrength;
         if (gameObject.tag == "Friend")
         {
             foreach (GameObject target in baseCharacter.attacking._enemiesInRangedRange)

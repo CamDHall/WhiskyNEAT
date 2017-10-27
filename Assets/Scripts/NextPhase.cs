@@ -7,12 +7,12 @@ public class NextPhase : MonoBehaviour {
 
 	public void Next()
     {
-        if(GameManager.selectedBaseCharacter.currentState == State.Moving)
+        if(GameManager.Instance.selectedBaseCharacter.currentState == State.Moving)
         {
-            GameManager.selectedBaseCharacter.ExitState(State.Moving);
-        } else if (GameManager.selectedBaseCharacter.currentState == State.Attacking)
+            GameManager.Instance.selectedBaseCharacter.ExitState(State.Moving);
+        } else if (GameManager.Instance.selectedBaseCharacter.currentState == State.Attacking)
         {
-            GameManager.selectedBaseCharacter.ExitState(State.Attacking);
+            GameManager.Instance.selectedBaseCharacter.ExitState(State.Attacking);
         }
     }
 }
