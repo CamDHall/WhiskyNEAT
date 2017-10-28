@@ -21,24 +21,42 @@ public class UIManager : MonoBehaviour {
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
 
     // Team highlighters
-    GameObject highlighterFriend, highlighterEnemy; 
+    public GameObject highlighterFriend, highlighterEnemy; 
 
     private void Start()
     {
         Instance = this;
         abilityInfo.SetActive(false);
 
-        GameObject pf_HighlighterFriend = Resources.Load("Highlight") as GameObject;
+        GameObject pf_HighlighterFriend = Resources.Load("FriendHighlight") as GameObject;
+        GameObject pf_EnemyHighlighter = Resources.Load("EnemyHighlight") as GameObject;
+        highlighterEnemy = Instantiate(pf_EnemyHighlighter);
         highlighterFriend = Instantiate(pf_HighlighterFriend);
     }
 
     void Update () {
-        if(GameManager.Instance.selectedCharacter != null)
+        // Update highlighter position, disable if null or doesn't match team color
+        if (GameManager.Instance.selectedCharacter != null && (GameManager.Instance.selectedCharacterData.currentNumberofMoves > 0 ||
+            (GameManager.Instance.selectedCharacterData.currentNumberofAttacks > 0 
+            && GameManager.Instance.selectedBaseCharacter.currentState == State.Attacking)))
         {
-            Debug.Log(highlighterFriend);
-            highlighterFriend.transform.parent = GameManager.Instance.selectedCharacter.transform;
-            highlighterFriend.transform.localPosition = Vector3.zero;
-            highlighterFriend.SetActive(true);
+            if (GameManager.Instance.selectedCharacter.tag == "Friend")
+            {
+                
+                highlighterFriend.transform.parent = GameManager.Instance.selectedCharacter.transform.parent; // Tile not character
+                highlighterFriend.transform.localPosition = new Vector3(0, 0.497f, 0);
+                highlighterFriend.SetActive(true);
+            } else
+            {
+                highlighterFriend.SetActive(false);
+                highlighterEnemy.transform.parent = GameManager.Instance.selectedCharacter.transform.parent;
+                highlighterEnemy.transform.localPosition = new Vector3(0, 0.497f, 0);
+                highlighterEnemy.SetActive(true);
+            }
+        } else
+        {
+            highlighterFriend.SetActive(false);
+            highlighterEnemy.SetActive(false);
         }
 
         if (GameManager.confirmationState == Confirmation.Idle)
@@ -129,6 +147,8 @@ public class UIManager : MonoBehaviour {
             GameManager.Instance.selectedCharacter = null;
             GameManager.Instance.selectedCharacterData = null;
             GameManager.Instance.selectedBaseCharacter = null;
+            highlighterFriend.SetActive(false);
+            highlighterEnemy.SetActive(false);
         }
     }
 

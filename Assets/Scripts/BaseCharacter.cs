@@ -101,6 +101,7 @@ public abstract class BaseCharacter : AbilitiesBase {
         attacking.isAttacking = false;
         EnterState(State.Done);
         GameManager.haveGone++;
+        GameManager.Instance.selectedCharacter = null;
     }
 
     // Moving
@@ -119,6 +120,7 @@ public abstract class BaseCharacter : AbilitiesBase {
         characterData.currentNumberofAttacks = characterData.numberofAttacks;
         EnterState(State.Attacking);
         movement.isMoving = false;
+        GameManager.Instance.selectedCharacter = null;
     }
 
     // Idle
