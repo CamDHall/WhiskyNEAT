@@ -10,6 +10,8 @@ public class AbilityDescription : MonoBehaviour {
 
     Text stats, abilityTxt, title;
 
+    ToggleFollower toggle;
+
     private void Start()
     {
         Text[] items = GetComponentsInChildren<Text>();
@@ -20,6 +22,9 @@ public class AbilityDescription : MonoBehaviour {
             stats = items[0];
             title = items[2];
             abilityTxt = items[3];
+
+            // Toggle
+            toggle = GetComponentInChildren<ToggleFollower>();
         }
         else
         {
@@ -35,16 +40,38 @@ public class AbilityDescription : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit))
+        // For hero hover
+        if (toggle == null)
         {
-            Debug.Log("HERE");
-            if(hit.transform.tag == gameObject.tag)
+            if (Physics.Raycast(ray, out hit))
             {
-                DisplayAbilities(hit.transform.gameObject);
+                if (hit.transform.tag == gameObject.tag)
+                {
+                    DisplayAbilities(hit.transform.gameObject);
+                }
             }
-        } else
+            else
+            {
+                DisplayAbilitiesOff();
+            }
+        } else // For follower hover
         {
-            DisplayStatOff();
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(hit.transform.tag == gameObject.tag)
+                {
+                    if(hit.transform.tag == "Friend" && PlayerInfo.deck1.IndexOf(hit.transform.gameObject) == toggle.followerIndex)
+                    {
+                        DisplayAbilities(hit.transform.gameObject);
+                    } else if(hit.transform.tag == "Enemy" && PlayerInfo.deck2.IndexOf(hit.transform.gameObject) == toggle.followerIndex)
+                    {
+                        DisplayAbilities(hit.transform.gameObject);
+                    }
+                }
+            } else
+            {
+                DisplayAbilitiesOff();
+            }
         }
 	}
 
@@ -86,7 +113,7 @@ public class AbilityDescription : MonoBehaviour {
             "<size=16><color=#3784C5FF>" + data.nameAbility3 + ":</color></size> " + data._description3;
     }
 
-    void DisplayStatOff()
+    void DisplayAbilitiesOff()
     {
         abilityTxt.enabled = false;
         title.enabled = true;

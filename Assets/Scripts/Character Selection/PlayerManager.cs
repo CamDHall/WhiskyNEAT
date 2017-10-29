@@ -209,6 +209,7 @@ public class PlayerManager : MonoBehaviour {
                 p_FollowerStats.GetComponentInChildren<ToggleFollower>().followerIndex = i;
 
                 GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                _followerStat.tag = "Friend";
                 CharacterData data = PlayerInfo.deck1[i].GetComponent<CharacterData>();
 
                 _followerStat.GetComponent<AbilityDescription>().DisplayStats(data);
@@ -228,6 +229,7 @@ public class PlayerManager : MonoBehaviour {
                 p_FollowerStats.GetComponent<StatLocation>().playerCard = PlayerInfo.deck2[i];
 
                 GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
+                _followerStat.tag = "Enemy";
                 CharacterData data = PlayerInfo.deck2[i].GetComponent<CharacterData>();
 
                 p_FollowerStats.GetComponent<AbilityDescription>().DisplayStats(data);
