@@ -184,21 +184,10 @@ public class PlayerManager : MonoBehaviour {
     {
         title.text = "<size=26>" + data.characterName + "</size>" + "\n\n";
         // Stats
-        stats.text += "<size=20>  Health:\t\t\t" + "<color=#3784C5FF><b>" + data.health + "</b></color>" + "\n  Courage:\t\t" + 
+        stats.text = "<size=20>  Health:\t\t\t" + "<color=#3784C5FF><b>" + data.health + "</b></color>" + "\n  Courage:\t\t" + 
             "<color=#3784C5FF><b>" + data.courage + "</b></color>" + "\n  Moves:\t\t\t" + "<color=#3784C5FF><b>" + data.moves + "</b></color>" 
             + "\n  Melee:\t\t\t" + "<color=#3784C5FF><b>" + data.meleeStrength + "</b></color>" + "\n  Ranged:\t\t" + "<color=#3784C5FF><b>"
             + data.rangedStrength + "</b></color></size>";
-    }
-
-    void DisplayStats(Text stat, CharacterData data)
-    {
-        // Name
-        title.text = "\t" + "<color=#3784C5FF><size=22>" + data.characterName + "</size></color>" + "\n\n";
-        // Stats
-        stat.text += "<size=16>  Health:\t\t" + "<color=#3784C5FF>" + data.health + "</color>" +
-            "\n  Courage:\t" + "<color=#3784C5FF>" + data.courage + "</color>" + "\n  Moves:\t\t" + "<color=#3784C5FF>" + data.moves + 
-            "</color>" + "\n  Melee:\t\t" + "<color=#3784C5FF>" + data.meleeStrength + "</color>" + "\n  Ranged:\t\t" + "<color=#3784C5FF>"
-            + data.rangedStrength + "</color></size>";
     }
 
     public void ConfirmHero()
@@ -216,14 +205,13 @@ public class PlayerManager : MonoBehaviour {
             {
                 PlayerInfo.deck1[i].SetActive(true);
 
-                // Assign card to stat script BEFORE TRYING TO DISPLAY THE STAT
                 p_FollowerStats.GetComponent<StatLocation>().playerCard = PlayerInfo.deck1[i];
                 p_FollowerStats.GetComponentInChildren<ToggleFollower>().followerIndex = i;
 
                 GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 CharacterData data = PlayerInfo.deck1[i].GetComponent<CharacterData>();
 
-                DisplayStats(followerStatTxT, data);
+                _followerStat.GetComponent<AbilityDescription>().DisplayStats(data);
             }
         } else
         {
@@ -242,7 +230,7 @@ public class PlayerManager : MonoBehaviour {
                 GameObject _followerStat = Instantiate(p_FollowerStats, Vector3.zero, Quaternion.identity, followerSelector.transform);
                 CharacterData data = PlayerInfo.deck2[i].GetComponent<CharacterData>();
 
-                DisplayStats(followerStatTxT, data);
+                p_FollowerStats.GetComponent<AbilityDescription>().DisplayStats(data);
             }
         }
 

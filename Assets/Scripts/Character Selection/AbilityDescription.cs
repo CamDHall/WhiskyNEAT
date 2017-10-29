@@ -14,10 +14,19 @@ public class AbilityDescription : MonoBehaviour {
     {
         Text[] items = GetComponentsInChildren<Text>();
 
-        stats = items[0];
-        title = items[1];
-        abilityTxt = items[2];
-
+        // Followers have nested elements for the toggle
+        if (items[0].transform.childCount > 0)
+        {
+            stats = items[0];
+            title = items[2];
+            abilityTxt = items[3];
+        }
+        else
+        {
+            stats = items[0];
+            title = items[1];
+            abilityTxt = items[2];
+        }
         abilityTxt.enabled = false;
     }
 
@@ -28,9 +37,10 @@ public class AbilityDescription : MonoBehaviour {
 
         if(Physics.Raycast(ray, out hit))
         {
+            Debug.Log("HERE");
             if(hit.transform.tag == gameObject.tag)
             {
-                DisplayStatOn(hit.transform.gameObject);
+                DisplayAbilities(hit.transform.gameObject);
             }
         } else
         {
@@ -38,7 +48,31 @@ public class AbilityDescription : MonoBehaviour {
         }
 	}
 
-    void DisplayStatOn(GameObject target)
+    public void DisplayStats(CharacterData data_in)
+    {
+        // Assignments for newly created follower prefab
+        Text[] items = GetComponentsInChildren<Text>();
+
+        // Followers have nested elements for the toggle
+        stats = items[0];
+        title = items[2];
+        abilityTxt = items[3];
+
+
+        abilityTxt.enabled = false;
+
+        data = data_in;
+        
+        // Name
+        title.text = "\t" + "<size=26>" + data.characterName + "</size>" + "\n\n";
+        // Stats
+        stats.text = "<size=20>  Health:\t\t\t" + "<color=#3784C5FF><b>" + data.health + "</b></color>" + "\n  Courage:\t\t" +
+            "<color=#3784C5FF><b>" + data.courage + "</b></color>" + "\n  Moves:\t\t\t" + "<color=#3784C5FF><b>" + data.moves + "</b></color>"
+            + "\n  Melee:\t\t\t" + "<color=#3784C5FF><b>" + data.meleeStrength + "</b></color>" + "\n  Ranged:\t\t" + "<color=#3784C5FF><b>"
+            + data.rangedStrength + "</b></color></size>";
+    }
+
+    void DisplayAbilities(GameObject target)
     {
         // Switch out text and turn off title
         title.enabled = false;
