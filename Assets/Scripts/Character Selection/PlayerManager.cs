@@ -33,11 +33,11 @@ public class PlayerManager : MonoBehaviour {
        
         if (player == 1)
         {
-            heroPos = new Vector3(0, 5.5f, 0);
+            heroPos = new Vector3(0, 5.75f, 0);
         }
         else
         {
-            heroPos = new Vector3(0, -0.25f, 0);
+            heroPos = new Vector3(0, 0, 0);
         }
         for (int i = 0; i < heroList.Length; i++)
         {
@@ -75,7 +75,7 @@ public class PlayerManager : MonoBehaviour {
         {
             for (int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
-                Vector3 Pos = new Vector3(-6 + (i * 3), 4.5f, 0);
+                Vector3 Pos = new Vector3(-6 + (i * 3), 5, 0);
                 var card = Instantiate(PlayerInfo.deck1[i], Pos, PlayerInfo.deck1[i].transform.rotation);
                 // Disable scripts on prefab
                 card.GetComponent<Attacking>().enabled = false;
@@ -94,7 +94,7 @@ public class PlayerManager : MonoBehaviour {
         {
             for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {
-                Vector3 Pos = new Vector3(-6 + (i * 3), -1f, 0);
+                Vector3 Pos = new Vector3(-6 + (i * 3), -0.75f, 0);
 
                 var card = Instantiate(PlayerInfo.deck2[i], Pos, PlayerInfo.deck2[i].transform.rotation);
                 // Disable scripts on prefab
@@ -192,7 +192,6 @@ public class PlayerManager : MonoBehaviour {
 
     public void ConfirmHero()
     {
-        
         // Set heros and turn them off
         if (player == 1)
         {

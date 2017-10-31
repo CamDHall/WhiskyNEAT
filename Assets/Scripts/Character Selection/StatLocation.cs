@@ -13,7 +13,7 @@ public class StatLocation : MonoBehaviour {
 	void Start () {
         rt = GetComponent<RectTransform>();
 
-        y = playerCard.transform.position.y - 1.25f;
+        y = playerCard.transform.position.y - 1.6f;
     }
 	
 	// Update is called once per frame
