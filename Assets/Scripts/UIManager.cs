@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour {
     }
 
     void Update () {
+        Debug.Log(GameManager.Instance.selectedCharacter);
+
         // Update highlighter position, disable if null or doesn't match team color
         if (GameManager.Instance.selectedCharacter != null && (GameManager.Instance.selectedCharacterData.currentNumberofMoves > 0 ||
             (GameManager.Instance.selectedCharacterData.currentNumberofAttacks > 0 
@@ -83,6 +85,7 @@ public class UIManager : MonoBehaviour {
             if (GameManager.Instance.selectedBaseCharacter != null)
             {
                 nextPhase.SetActive(true);
+
                 if (GameManager.Instance.selectedBaseCharacter.currentState == State.Moving)
                 {
                     nextPhase.GetComponentInChildren<Text>().text = "Attack";
@@ -138,7 +141,7 @@ public class UIManager : MonoBehaviour {
         }
 	}
 
-    void NothingSelected()
+    public void NothingSelected()
     {
         Paths.ResetTiles();
         if (GameManager.Instance.selectedCharacter != null)
@@ -164,6 +167,7 @@ public class UIManager : MonoBehaviour {
                     GameManager.Instance.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
                     Paths.ResetTiles();
                 }
+
                 // Assignments
                 GameManager.Instance.selectedCharacter = hit;
                 GameManager.Instance.selectedCharacterData = hit.transform.gameObject.GetComponent<CharacterData>();

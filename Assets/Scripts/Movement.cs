@@ -36,13 +36,11 @@ public class Movement : MonoBehaviour {
                             // Reset highlighter before moving
                             if (GameManager.Instance.selectedCharacterData.currentNumberofMoves == 0)
                             {
-                                Debug.Log(GameManager.Instance.selectedCharacterData.currentNumberofMoves);
                                 UIManager.Instance.highlighterEnemy.SetActive(false);
                                 UIManager.Instance.highlighterFriend.SetActive(false);
-
-                                Debug.Log(UIManager.Instance.highlighterFriend.activeSelf);
                             }
                             transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
+                            UIManager.Instance.NothingSelected();
                             // Reset tile colors
                             Paths.ResetTiles();
                         }
