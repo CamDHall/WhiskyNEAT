@@ -17,7 +17,9 @@ public class UIManager : MonoBehaviour {
     public Text confirmInfo;
 
     public GameObject nextPhase;
-    public Text turns, currentTeam;
+    // Top
+    public Text turns, currentTeam, unusedCharacters, captured;
+
     public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
 
     // Team highlighters
@@ -35,8 +37,19 @@ public class UIManager : MonoBehaviour {
     }
 
     void Update () {
-        Debug.Log(GameManager.Instance.selectedCharacter);
-
+        // Top info
+        // Display character info
+        turns.text = "Turn: " + GameManager.Instance.turns.ToString();
+        if (GameManager.Instance.currentTeam == CharacterTeam.Friend)
+        {
+            currentTeam.text = "Player 1's Turn";
+            unusedCharacters.text = "Unused Characters: " + (MapData.friends.Count - GameManager.Instance.haveGone);
+        }
+        else
+        {
+            currentTeam.text = "Player 2's Turn";
+            unusedCharacters.text = "Unused Characters: " + (MapData.enemies.Count - GameManager.Instance.haveGone);
+        }
         // Update highlighter position, disable if null or doesn't match team color
         if (GameManager.Instance.selectedCharacter != null && (GameManager.Instance.selectedCharacterData.currentNumberofMoves > 0 ||
             (GameManager.Instance.selectedCharacterData.currentNumberofAttacks > 0 
@@ -104,20 +117,6 @@ public class UIManager : MonoBehaviour {
                 nextPhase.SetActive(false);
             }
 
-            // Display character info
-            if (GameManager.Instance.selectedCharacterData != null)
-            {
-                turns.text = "Turn: " + GameManager.turns.ToString();
-                currentTeam.text = GameManager.currentTeam.ToString() + "'s Turn";
-                health.text = "Health: " + GameManager.Instance.selectedCharacterData.health.ToString();
-                movement.text = "Movement: " + GameManager.Instance.selectedCharacterData.moves.ToString();
-                courage.text = "Courage: " + GameManager.Instance.selectedCharacterData.courage.ToString();
-                meleeSTR.text = "Melee Strength: " + GameManager.Instance.selectedCharacterData.meleeStrength.ToString();
-                rangedSTR.text = "Ranged Strength: " + GameManager.Instance.selectedCharacterData.ToString();
-                rangedDistance.text = "Ranged Distance: " + GameManager.Instance.selectedCharacterData.rangedDistance.ToString();
-                nameText.text = "Name: " + GameManager.Instance.selectedCharacterData.characterName.ToString();
-            }
-
             // General Selections
             if (Input.GetMouseButtonDown(0))
             {
@@ -160,7 +159,7 @@ public class UIManager : MonoBehaviour {
         if (hit != GameManager.Instance.selectedCharacter || 
             (hit.GetComponent<CharacterData>().currentNumberofMoves < hit.GetComponent<CharacterData>().moves && hit.GetComponent<CharacterData>().currentNumberofMoves > 0))
         {
-            if (team == GameManager.characterTeam.ToString())
+            if (team == GameManager.Instance.characterTeam.ToString())
             {
                 if (GameManager.Instance.selectedCharacter != null)
                 {

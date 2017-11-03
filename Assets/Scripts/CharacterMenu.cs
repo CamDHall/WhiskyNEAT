@@ -54,8 +54,8 @@ public class CharacterMenu : MonoBehaviour {
 
         if(menu.transform.childCount == 3)
         {
-            rangedButton = menu.transform.GetChild(1).gameObject;
-            meleeButton = menu.transform.GetChild(2).gameObject;
+            meleeButton = menu.transform.GetChild(1).gameObject;
+            rangedButton = menu.transform.GetChild(2).gameObject;
         } else
         {
             meleeButton = menu.transform.GetChild(1).gameObject;
@@ -104,10 +104,14 @@ public class CharacterMenu : MonoBehaviour {
         {
             // Turn melee on and off
             if (baseCharacter.attacking._enemiesInMeleeRange.Count == 0)
+            {
                 meleeButton.SetActive(false);
+            }
             else
+            {
+                Debug.Log(baseCharacter.attacking._enemiesInMeleeRange.Count);
                 meleeButton.SetActive(true);
-
+            }
             // Turn ranged on and off
             if (baseCharacter.attacking._enemiesInRangedRange.Count == 0 && baseCharacter.characterData.rangedDistance != 0)
                 rangedButton.SetActive(false);

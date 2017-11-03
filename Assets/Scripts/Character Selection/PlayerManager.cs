@@ -95,7 +95,6 @@ public class PlayerManager : MonoBehaviour {
             for (int i = 0; i < PlayerInfo.deck2.Count; i++)
             {
                 Vector3 Pos = new Vector3(-6 + (i * 3), -0.75f, 0);
-
                 var card = Instantiate(PlayerInfo.deck2[i], Pos, PlayerInfo.deck2[i].transform.rotation);
                 // Disable scripts on prefab
                 card.GetComponent<Attacking>().enabled = false;

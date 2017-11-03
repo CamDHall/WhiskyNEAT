@@ -16,6 +16,9 @@ public class RemoveDead {
 		Debug.Log (t_name);
 
 		if (target.tag == "Enemy") {
+            // Add to friendly captured list
+            PlayerInfo.p1_captured.Add(target);
+
 			// Change deck if target is not a hero
 			if (targetData.cType != CharacterType.Hero) {
 				PlayerInfo.s_deck2.Remove (t_name);
@@ -35,6 +38,9 @@ public class RemoveDead {
 				}
 			}
 		} else {
+            // Add to enemy captured list
+            PlayerInfo.p2_captured.Add(target);
+
 			// Change deck if not target isn't a hero
 			if (targetData.cType != CharacterType.Hero) {
 				PlayerInfo.s_deck1.Remove (t_name);
@@ -55,5 +61,8 @@ public class RemoveDead {
 		}
 
         Targeting.DetermineTargets(attacker.tag, attackerData.rangedDistance, attackerData.meleeDistance, attacker);
+
+        // Captured
+        PlayerInfo.DisplayCaptured();
     }
 }

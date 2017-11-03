@@ -10,14 +10,14 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
 
     // General info
-    public static int turns;
-    public static CharacterTeam currentTeam;
+    public int turns;
+    public CharacterTeam currentTeam;
 
     public static Confirmation confirmationState;
 
     // What team's turn it is and what phase they're on
-    public static CharacterTeam characterTeam;
-    public static int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
+    public CharacterTeam characterTeam;
+    public int haveGone; // Keep track of how many of the current enemies or friends have moved and attacked
 
     // Selected info
     public GameObject selectedCharacter;
@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour {
         characterTeam = CharacterTeam.Friend;
         currentTeam = CharacterTeam.Friend;
 
+        // Reset captured list
+        PlayerInfo.p1_captured.Clear();
+        PlayerInfo.p2_captured.Clear();
     }
 
     void Start()
@@ -70,7 +73,7 @@ public class GameManager : MonoBehaviour {
         menu.ability3.GetComponent<AbilityButtonManager>().ResetButtons(characterData);
     }
 
-    public static void ChangeTeams()
+    public void ChangeTeams()
     {
         haveGone = 0;
         if (currentTeam == CharacterTeam.Friend)

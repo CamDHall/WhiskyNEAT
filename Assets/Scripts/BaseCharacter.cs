@@ -90,7 +90,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     // Attacking
     protected virtual void EnterAttacking()
     {
-        Targeting.DetermineTargets(GameManager.characterTeam.ToString(), characterData.rangedDistance, characterData.meleeDistance, gameObject);
+        Targeting.DetermineTargets(GameManager.Instance.characterTeam.ToString(), characterData.rangedDistance, characterData.meleeDistance, gameObject);
     }
     protected virtual void HandleAttacking()
     {
@@ -100,7 +100,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     {
         attacking.isAttacking = false;
         EnterState(State.Done);
-        GameManager.haveGone++;
+        GameManager.Instance.haveGone++;
         GameManager.Instance.selectedCharacter = null;
     }
 
@@ -129,7 +129,7 @@ public abstract class BaseCharacter : AbilitiesBase {
         // if the amount of characters that have moved equals the size of a team, change states
 
         ExitState(State.Idle);
-        if (MapData.friends.Count == GameManager.haveGone)
+        if (MapData.friends.Count == GameManager.Instance.haveGone)
         {
             EnterState(State.Attacking);
         }
