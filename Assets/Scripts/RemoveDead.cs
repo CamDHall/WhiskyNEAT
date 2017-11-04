@@ -13,7 +13,6 @@ public class RemoveDead {
 
 		string t_name = "Characters/" + target.GetComponent<CharacterData> ().characterName;
 		t_name = t_name.Replace (" ", "");
-		Debug.Log (t_name);
 
 		if (target.tag == "Enemy") {
             // Add to friendly captured list

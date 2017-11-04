@@ -63,8 +63,6 @@ public class Attacking : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                Debug.Log("HIT");
-
                 if (Physics.Raycast(ray, out hit))
                 {
                     if (GameManager.confirmationState == Confirmation.Idle && _allTargets.Contains(hit.transform.gameObject))

@@ -109,7 +109,6 @@ public class CharacterMenu : MonoBehaviour {
             }
             else
             {
-                Debug.Log(baseCharacter.attacking._enemiesInMeleeRange.Count);
                 meleeButton.SetActive(true);
             }
             // Turn ranged on and off
@@ -138,7 +137,6 @@ public class CharacterMenu : MonoBehaviour {
 
     public void MeleeButton()
     {
-        Debug.Log("MeleeButton");
         GameManager.Instance.selectedBaseCharacter.attacking.damageAmount = GameManager.Instance.selectedCharacterData.meleeStrength;
         if(gameObject.tag == "Friend")
         {
