@@ -30,44 +30,48 @@ public class PlayerManager : MonoBehaviour {
         followerStatTxT = p_FollowerStats.GetComponentInChildren<Text>();
 
         playerReady = false;
-       
-        if (player == 1)
-        {
-            heroPos = new Vector3(0, 5.75f, 0);
-        }
-        else
-        {
-            heroPos = new Vector3(0, 0, 0);
-        }
-        for (int i = 0; i < heroList.Length; i++)
-        {
-            var hero = Instantiate(heroList[i], heroPos, heroList[i].transform.rotation);
 
-            // Disable scripts on prefab
-            hero.GetComponent<Attacking>().enabled = false;
-            hero.GetComponent<Movement>().enabled = false;
-            hero.GetComponent<CharacterMenu>().enabled = false;
-            hero.GetComponent<BaseCharacter>().enabled = false;
-            hero.name = heroList[i].name;
-
-            // Parent to container and set tags
+        // Only select hero on first round
+        if (PlayerInfo.rounds == 0)
+        {
             if (player == 1)
             {
-                hero.transform.parent = PlayerInfo.p1_Container.transform;
-                hero.tag = "Friend";
+                heroPos = new Vector3(0, 5.75f, 0);
             }
             else
             {
-                hero.transform.parent = PlayerInfo.p2_Container.transform;
-                hero.tag = "Enemy";
+                heroPos = new Vector3(0, 0, 0);
             }
+            for (int i = 0; i < heroList.Length; i++)
+            {
+                var hero = Instantiate(heroList[i], heroPos, heroList[i].transform.rotation);
 
-            // Add to heros list
-            _heros[i] = hero;
-            if (i != 0)
-                _heros[i].SetActive(false);
-            else
-                _heros[i].SetActive(true);
+                // Disable scripts on prefab
+                hero.GetComponent<Attacking>().enabled = false;
+                hero.GetComponent<Movement>().enabled = false;
+                hero.GetComponent<CharacterMenu>().enabled = false;
+                hero.GetComponent<BaseCharacter>().enabled = false;
+                hero.name = heroList[i].name;
+
+                // Parent to container and set tags
+                if (player == 1)
+                {
+                    hero.transform.parent = PlayerInfo.p1_Container.transform;
+                    hero.tag = "Friend";
+                }
+                else
+                {
+                    hero.transform.parent = PlayerInfo.p2_Container.transform;
+                    hero.tag = "Enemy";
+                }
+
+                // Add to heros list
+                _heros[i] = hero;
+                if (i != 0)
+                    _heros[i].SetActive(false);
+                else
+                    _heros[i].SetActive(true);
+            }
         }
 
         // Spawn deck inactive
@@ -87,7 +91,10 @@ public class PlayerManager : MonoBehaviour {
                 card.transform.parent = PlayerInfo.p1_Container.transform;
 
                 PlayerInfo.deck1[i] = card;
-                PlayerInfo.deck1[i].SetActive(false);
+                if (PlayerInfo.rounds == 0)
+                {
+                    PlayerInfo.deck1[i].SetActive(false);
+                }
             }
         }
         else
@@ -106,11 +113,18 @@ public class PlayerManager : MonoBehaviour {
                 card.transform.parent = PlayerInfo.p2_Container.transform;
 
                 PlayerInfo.deck2[i] = card;
-                PlayerInfo.deck2[i].SetActive(false);
+                if (PlayerInfo.rounds == 0)
+                {
+                    PlayerInfo.deck2[i].SetActive(false);
+                }
             }
         }
-        selectedHero = 0;
-        DisplayStats(_heros[selectedHero].GetComponent<CharacterData>());
+
+        if(PlayerInfo.rounds != 0)
+        {
+            DisplayDeck();
+            heroSelector.SetActive(false);
+        }
     }
 
     private void Update()
@@ -195,14 +209,28 @@ public class PlayerManager : MonoBehaviour {
         if (player == 1)
         {
             PlayerInfo.heroPlayer1 = _heros[selectedHero].name;
+        } else
+        {
+            PlayerInfo.heroPlayer2 = _heros[selectedHero].name;
+        }
 
+        DisplayDeck();
+
+        heroSelector.SetActive(false);
+        _heros[selectedHero].SetActive(false);
+
+    }
+
+    void DisplayDeck()
+    {
+        // Set heros and turn them off
+        if (player == 1)
+        {
             PlayerInfo.p1_Container.GetComponent<Scrolling>().bar.gameObject.SetActive(true); // Scrollbar
-
             // Display deck
-            for(int i = 0; i < PlayerInfo.deck1.Count; i++)
+            for (int i = 0; i < PlayerInfo.deck1.Count; i++)
             {
                 PlayerInfo.deck1[i].SetActive(true);
-
                 p_FollowerStats.GetComponent<StatLocation>().playerCard = PlayerInfo.deck1[i];
                 p_FollowerStats.GetComponentInChildren<ToggleFollower>().followerIndex = i;
 
@@ -212,10 +240,9 @@ public class PlayerManager : MonoBehaviour {
 
                 _followerStat.GetComponent<AbilityDescription>().DisplayStats(data);
             }
-        } else
+        }
+        else
         {
-            PlayerInfo.heroPlayer2 = _heros[selectedHero].name;
-
             PlayerInfo.p2_Container.GetComponent<Scrolling>().bar.gameObject.SetActive(true); // Scrollbar
 
             // Display deck
@@ -233,9 +260,5 @@ public class PlayerManager : MonoBehaviour {
                 p_FollowerStats.GetComponent<AbilityDescription>().DisplayStats(data);
             }
         }
-
-        heroSelector.SetActive(false);
-        _heros[selectedHero].SetActive(false);
-
     }
 }
