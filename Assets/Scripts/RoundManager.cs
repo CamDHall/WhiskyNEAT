@@ -38,7 +38,6 @@ public class RoundManager : MonoBehaviour {
         {
             Pos = new Vector3(0, 0.5f, 0);
             GameObject tempPrefab = Resources.Load("Characters/" + PlayerInfo.p1_FollowersName[i], typeof(GameObject)) as GameObject;
-            Debug.Log(tempPrefab + " " + i + " Count: " + PlayerInfo.p1_FollowersName.Count);
             GameObject follower = Instantiate(tempPrefab, Pos, Quaternion.identity, map.p1_startingTiles[i + 1]);
             follower.transform.localPosition = Pos;
             follower.tag = "Friend"; // Set team tag
