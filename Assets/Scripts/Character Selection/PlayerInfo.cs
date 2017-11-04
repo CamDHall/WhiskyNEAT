@@ -31,6 +31,7 @@ public static class PlayerInfo {
     // Display captured
     public static void DisplayCaptured()
     {
+        /*
         if(GameManager.Instance.currentTeam == CharacterTeam.Friend)
         {
             for(int i = 0; i < p1_captured.Count; i++)
@@ -50,6 +51,6 @@ public static class PlayerInfo {
             {
 
             }
-        }
+        }*/
     }
 }
