@@ -108,9 +108,9 @@ public class AbilityDescription : MonoBehaviour {
 
         // Set text
         CharacterData data = target.GetComponent<CharacterData>();
-        abilityTxt.text = "<size=16><color=#3784C5FF>" + data.nameAbility1 + ":</color></size> " + data._description1 + "\n\n" +
-            "<size=16><color=#3784C5FF>" + data.nameAbility2 + ":</color></size> " + data._description2 + "\n\n" +
-            "<size=16><color=#3784C5FF>" + data.nameAbility3 + ":</color></size> " + data._description3;
+        abilityTxt.text = "<size=20><color=#3784C5FF>" + data.nameAbility1 + ":</color></size> " + "<size=18>" + data._description1 + 
+            "</size>\n <size=20><color=#3784C5FF>" + data.nameAbility2 + ":</color></size> " + "<size=18>" +data._description2 + 
+            "</size>\n <size=20><color=#3784C5FF>" + data.nameAbility3 + ":</color></size> " + "<size=18>" + data._description3 + "</size>";
     }
 
     void DisplayAbilitiesOff()

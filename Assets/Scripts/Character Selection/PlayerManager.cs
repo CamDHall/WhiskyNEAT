@@ -36,11 +36,11 @@ public class PlayerManager : MonoBehaviour {
         {
             if (player == 1)
             {
-                heroPos = new Vector3(0, 5.75f, 0);
+                heroPos = new Vector3(0, 5.5f, 0);
             }
             else
             {
-                heroPos = new Vector3(0, 0, 0);
+                heroPos = new Vector3(0, -0.3f, 0);
             }
             for (int i = 0; i < heroList.Length; i++)
             {
