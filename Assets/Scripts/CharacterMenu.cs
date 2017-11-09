@@ -37,8 +37,6 @@ public class CharacterMenu : MonoBehaviour {
         btns[2].onClick.AddListener(ThirdAbility);
         //
 
-        if(baseCharacter.characterData == null)
-            Debug.Log(gameObject.name + " " + baseCharacter.characterData);
         if (baseCharacter.characterData.rangedDistance == 0)
             rangedButton = null;
 

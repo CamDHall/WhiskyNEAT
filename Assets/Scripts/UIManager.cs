@@ -20,7 +20,8 @@ public class UIManager : MonoBehaviour {
     // Top
     public Text turns, currentTeam, unusedCharacters, captured;
 
-    public Text health, movement, courage, meleeSTR, rangedSTR, rangedDistance, nameText;
+    public Text s_characterInfo, s_characterName;
+    public GameObject infoContainer;
 
     // Team highlighters
     public GameObject highlighterFriend, highlighterEnemy; 
@@ -38,7 +39,6 @@ public class UIManager : MonoBehaviour {
 
     void Update () {
         // Top info
-        // Display character info
         turns.text = "Turn: " + GameManager.Instance.turns.ToString();
         if (GameManager.Instance.currentTeam == CharacterTeam.Friend)
         {
@@ -50,6 +50,32 @@ public class UIManager : MonoBehaviour {
             currentTeam.text = "Player 2's Turn";
             unusedCharacters.text = "Unused Characters: " + (MapData.enemies.Count - GameManager.Instance.haveGone);
         }
+
+        // Selected Character info
+        if(GameManager.Instance.selectedCharacterData != null)
+        {
+            // Check if turned off
+            if(!infoContainer.activeSelf)
+            {
+                infoContainer.SetActive(true);
+            }
+            s_characterName.text = GameManager.Instance.selectedCharacterData.characterName;
+            s_characterInfo.text = 
+                "\n<size=30><color=#3784C5FF>Health:\t\t\t\t\t\t\t\t</color></size><size=24>" + GameManager.Instance.selectedCharacterData.health + "</size>" +
+                "\n<size=30><color=#3784C5FF>Attacks:\t\t\t\t\t\t\t</color></size><size=24>" + GameManager.Instance.selectedCharacterData.currentNumberofAttacks +
+                "\n</size><size=30><color=#3784C5FF>Courage:\t\t\t\t\t\t</color></size><size=24>" + GameManager.Instance.selectedCharacterData.courage +
+                "\n</size><size=30><color=#3784C5FF>Melee Strength:\t\t\t</color></size><size=24>" + GameManager.Instance.selectedCharacterData.meleeStrength +
+                "\n</size><size=30><color=#3784C5FF>Ranged Strength:\t\t</color></size><size=24>" + GameManager.Instance.selectedCharacterData.rangedStrength +
+                "\n</size><size=30><color=#3784C5FF>Ranged Distance:\t\t</color></size><size=24>" + GameManager.Instance.selectedCharacterData.rangedDistance + "</size>";
+        } else
+        {
+            // Turn off
+            if(infoContainer.activeSelf)
+            {
+                infoContainer.SetActive(false);
+            }
+        }
+
         // Update highlighter position, disable if null or doesn't match team color
         if (GameManager.Instance.selectedCharacter != null && (GameManager.Instance.selectedCharacterData.currentNumberofMoves > 0 ||
             (GameManager.Instance.selectedCharacterData.currentNumberofAttacks > 0 
