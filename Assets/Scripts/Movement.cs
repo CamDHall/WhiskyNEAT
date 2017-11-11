@@ -35,9 +35,9 @@ public class Movement : MonoBehaviour {
                     GameManager.Instance.selectedCharacterData.currentNumberofMoves = Paths.ChangeTiles(hit.transform);
                     if (GameManager.Instance.selectedCharacterData.currentNumberofMoves == 0)
                     {
-                        UIManager.Instance.highlighterEnemy.SetActive(false);
-                        UIManager.Instance.highlighterFriend.SetActive(false);
                         Paths.ResetTiles();
+                        c_menu.DisplayActionBar();
+
                     }
 
                     transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);

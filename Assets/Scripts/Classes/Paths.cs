@@ -8,7 +8,6 @@ public class Paths {
 
     public static void ChangeTiles()
     {
-        Debug.Log("CHANGE");
         if (GameManager.Instance.selectedCharacter != null && GameManager.Instance.selectedCharacterData.currentNumberofMoves > 0)
         {
             reachableTiles.Clear();

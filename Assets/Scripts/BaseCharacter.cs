@@ -120,7 +120,6 @@ public abstract class BaseCharacter : AbilitiesBase {
         characterData.currentNumberofAttacks = characterData.numberofAttacks;
         EnterState(State.Attacking);
         movement.isMoving = false;
-        GameManager.Instance.selectedCharacter = null;
     }
 
     // Idle
