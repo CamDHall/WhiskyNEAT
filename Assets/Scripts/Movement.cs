@@ -7,8 +7,11 @@ public class Movement : MonoBehaviour {
     public bool isMoving = false;
     CharacterData characterData;
 
+    CharacterMenu c_menu;
+
 	void Start () {
         characterData = GetComponent<CharacterData>();
+        c_menu = GetComponent<CharacterMenu>();
 	}
 	
 	void Update () {
@@ -25,29 +28,21 @@ public class Movement : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit))
             {
-                foreach (GameObject tile in Paths.reachableTiles)
+                if(Paths.reachableTiles.Contains(hit.transform.gameObject))
                 {
-                    if (tile.transform.childCount <= 0)
+                    transform.parent = hit.transform;
+                    // Overlaoaded change also returns move amount
+                    GameManager.Instance.selectedCharacterData.currentNumberofMoves = Paths.ChangeTiles(hit.transform);
+                    if (GameManager.Instance.selectedCharacterData.currentNumberofMoves == 0)
                     {
-                        if (tile.transform.position == hit.transform.position && !(hit.transform.position.x == transform.position.x && hit.transform.position.z == transform.position.z))
-                        {
-                            transform.parent = hit.transform;
-                            GameManager.Instance.selectedCharacterData.currentNumberofMoves -= (int)MapData.tileInfo[hit.transform.position];
-                            // Reset highlighter before moving
-                            if (GameManager.Instance.selectedCharacterData.currentNumberofMoves == 0)
-                            {
-                                UIManager.Instance.highlighterEnemy.SetActive(false);
-                                UIManager.Instance.highlighterFriend.SetActive(false);
-                            }
-                            transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
-                            UIManager.Instance.NothingSelected();
-                            // Reset tile colors
-                            Paths.ResetTiles();
-                        }
-                    } else if(hit.transform.position != GameManager.Instance.selectedCharacter.transform.position)
-                    {
+                        UIManager.Instance.highlighterEnemy.SetActive(false);
+                        UIManager.Instance.highlighterFriend.SetActive(false);
                         Paths.ResetTiles();
                     }
+
+                    transform.position = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
+                    // Change for true position
+                    Paths.ChangeTiles();
                 }
             }
         }

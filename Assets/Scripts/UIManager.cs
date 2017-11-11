@@ -156,10 +156,6 @@ public class UIManager : MonoBehaviour {
                         {
                             CharacterSelected(hit.transform.gameObject.tag.ToString(), hit.transform.gameObject.GetComponent<CharacterData>(), hit.transform.gameObject);
                         }
-                        else if (!Paths.reachableTiles.Contains(hit.transform.gameObject))
-                        {
-                            NothingSelected();
-                        }
                     }
                 }
             }
