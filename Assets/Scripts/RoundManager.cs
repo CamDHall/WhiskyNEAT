@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class RoundManager : MonoBehaviour {
 
     public MapData map;
+    public Material mat_p1, mat_p2;
 
     private void Awake()
     {
@@ -16,6 +17,9 @@ public class RoundManager : MonoBehaviour {
 
         GameObject p1_Hero = Instantiate(p1_prefabHero, Pos, Quaternion.identity, map.p1_startingTiles[0]);
         GameObject p2_Hero = Instantiate(p2_prefabHero, Pos, Quaternion.identity, map.p2_startingTiles[0]);
+
+        GenerateMaterial(p1_Hero.transform.GetChild(0).gameObject);
+        GenerateMaterial(p2_Hero.transform.GetChild(0).gameObject);
 
         p1_Hero.transform.localPosition = Pos;
         p2_Hero.transform.localPosition = Pos;
@@ -77,6 +81,44 @@ public class RoundManager : MonoBehaviour {
         } else
         {
             Debug.Log("NAH");
+        }
+    }
+
+    void GenerateMaterial(GameObject model)
+    {
+        if (model.transform.parent.name.Contains("George"))
+        {
+            SkinnedMeshRenderer skin = model.GetComponentInChildren<SkinnedMeshRenderer>();
+            Material[] mats = skin.materials;
+            foreach(Material mat in mats)
+            {
+                //mat.shader = Shader.Find("Specular");
+                // mat.SetColor("_SpecColor", mat_p1.color);
+                mat.SetColor("_Color", mat_p1.GetColor("_TintColor"));
+            }
+        }
+        else
+        {
+            SkinnedMeshRenderer[] skins = model.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (SkinnedMeshRenderer skin in skins)
+            {
+                Material[] mats = new Material[skin.materials.Length];
+
+                for (int i = 0; i < skin.materials.Length; i++)
+                {
+                    if (i < skin.materials.Length - 1)
+                    {
+                        mats[i] = skin.materials[i];
+                    }
+                    else
+                    {
+                        mats[i] = mat_p1;
+                    }
+                }
+
+                skin.materials = mats;
+            }
         }
     }
 }
