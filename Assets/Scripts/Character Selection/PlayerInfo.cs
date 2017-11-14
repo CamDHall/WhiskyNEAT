@@ -11,7 +11,7 @@ public static class PlayerInfo {
     public static string heroPlayer1, heroPlayer2;
 
     public static List<string> s_deck1 = new List<string>() { "Characters/Archer", "Characters/Tank", "Characters/Archer", "Characters/Tank", "Characters/Archer" };
-    public static List<string> s_deck2 = new List<string>() { "Characters/Tank", "Characters/Archer", "Characters/Tank", "Characters/Archer", "Characters/Tank" };
+    public static List<string> s_deck2 = new List<string>() { "Characters/Archer", "Characters/Archer", "Characters/Tank", "Characters/Archer", "Characters/Tank" };
 
     // Save for each round
     public static List<GameObject> deck1 = new List<GameObject>();
