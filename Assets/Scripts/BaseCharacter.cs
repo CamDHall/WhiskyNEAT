@@ -91,6 +91,7 @@ public abstract class BaseCharacter : AbilitiesBase {
     protected virtual void EnterAttacking()
     {
         Targeting.DetermineTargets(GameManager.Instance.characterTeam.ToString(), characterData.rangedDistance, characterData.meleeDistance, gameObject);
+        menu.DisplayActionBar();
     }
     protected virtual void HandleAttacking()
     {

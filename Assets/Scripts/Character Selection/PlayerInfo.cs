@@ -27,6 +27,7 @@ public static class PlayerInfo {
 
     // Round info
     public static List<string> p1_FollowersName = new List<string>(), p2_FollowersName = new List<string>();
+    public static int score_p1, score_p2;
 
     // Display captured
     public static void DisplayCaptured()

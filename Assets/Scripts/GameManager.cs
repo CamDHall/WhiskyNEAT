@@ -33,12 +33,19 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
-        characterTeam = CharacterTeam.Friend;
-        currentTeam = CharacterTeam.Friend;
-
         // Reset captured list
         PlayerInfo.p1_captured.Clear();
         PlayerInfo.p2_captured.Clear();
+
+        if(PlayerInfo.rounds == 0)
+        {
+            currentTeam = CharacterTeam.Friend;
+            characterTeam = CharacterTeam.Friend;
+        } else
+        {
+            currentTeam = CharacterTeam.Enemy;
+            characterTeam = CharacterTeam.Enemy;
+        }
     }
 
     void Start()

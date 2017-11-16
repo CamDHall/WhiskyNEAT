@@ -91,7 +91,13 @@ public class RoundManager : MonoBehaviour {
             SceneManager.LoadScene("CharacterSelection");
         } else
         {
-            Debug.Log("NAH");
+            if(GameManager.Instance.currentTeam == CharacterTeam.Friend)
+            {
+                PlayerInfo.score_p1++;
+            } else
+            {
+                PlayerInfo.score_p2++;
+            }
         }
     }
 
