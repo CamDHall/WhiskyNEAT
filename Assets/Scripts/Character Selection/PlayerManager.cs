@@ -17,7 +17,6 @@ public class PlayerManager : MonoBehaviour {
     public GameObject heroSelector, followerSelector;
 
     public GameObject p_FollowerStats;
-    Text followerStatTxT;
 
     // UI Compents
     public Text stats, title;
@@ -27,8 +26,6 @@ public class PlayerManager : MonoBehaviour {
 
     public void Start()
     {
-        followerStatTxT = p_FollowerStats.GetComponentInChildren<Text>();
-
         playerReady = false;
 
         // Only select hero on first round
