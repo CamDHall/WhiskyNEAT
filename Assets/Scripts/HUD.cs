@@ -11,9 +11,9 @@ public class HUD : MonoBehaviour {
 	public void DisplayTargetInfo(CharacterData characterData)
     {
         targetingInfo.SetActive(true);
-        _name.text = "Name: " + characterData.characterName.ToString();
-        health.text = "Health: " + characterData.health.ToString();
-        courage.text = "Courage: " + characterData.courage.ToString();
+        _name.text = "<size=36>Name: </size>\t" + characterData.characterName.ToString();
+        health.text = "<size=36>Health: </size>\t" + characterData.health.ToString();
+        courage.text = "<size=36>Courage: </size>\t" + characterData.courage.ToString();
     }
 
     public void OffTargetingInfo()
