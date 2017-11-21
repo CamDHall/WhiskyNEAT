@@ -13,9 +13,11 @@ public class CharacterMenu : MonoBehaviour {
     Image indicator;
     List<Image> imgs;
     Canvas worldCanvas, ScreenCanvas;
+
     public RectTransform menuPrefab;
     RectTransform menu;
-
+    GameObject abilityBar;
+    Animator bar;
     void Start()
     {
         baseCharacter = GetComponent<BaseCharacter>();
@@ -26,7 +28,6 @@ public class CharacterMenu : MonoBehaviour {
 
         menu = Instantiate(menuPrefab, Vector3.zero, Quaternion.identity, ScreenCanvas.transform);
         menu.anchoredPosition = Vector3.zero;
-        menu.gameObject.SetActive(false);
         imgs = new List<Image>();
 
         // Set actions
@@ -43,21 +44,23 @@ public class CharacterMenu : MonoBehaviour {
         if (rangedButton != null)
             rangedButton.GetComponent<Button>().onClick.AddListener(RangedButton);
 
-        // Assign buttons from menu
-        GameObject abilityBar = menu.transform.GetChild(0).gameObject;
+
+        if(menu.transform.childCount == 3)
+        {
+            // Assign buttons from menu
+            abilityBar = menu.transform.GetChild(2).gameObject;
+            meleeButton = menu.transform.GetChild(0).gameObject;
+            rangedButton = menu.transform.GetChild(1).gameObject;
+        } else
+        {
+            // Assign buttons from menu
+            abilityBar = menu.transform.GetChild(1).gameObject;
+            meleeButton = menu.transform.GetChild(0).gameObject;
+        }
 
         ability1 = abilityBar.transform.GetChild(0).gameObject.GetComponent<Button>();
         ability2 = abilityBar.transform.GetChild(1).gameObject.GetComponent<Button>();
         ability3 = abilityBar.transform.GetChild(2).gameObject.GetComponent<Button>();
-
-        if(menu.transform.childCount == 3)
-        {
-            meleeButton = menu.transform.GetChild(1).gameObject;
-            rangedButton = menu.transform.GetChild(2).gameObject;
-        } else
-        {
-            meleeButton = menu.transform.GetChild(1).gameObject;
-        }
 
         // Assign actions to Melee and Ranged
         meleeButton.GetComponent<Button>().onClick.AddListener(MeleeButton);
@@ -93,12 +96,14 @@ public class CharacterMenu : MonoBehaviour {
                 ability3.onClick.AddListener(Chang.action3);
                 break;
         }
+
+        bar = menu.GetComponent<Animator>();
     }
 
     public void DisplayActionBar()
     {
-        menu.gameObject.SetActive(true);
-        if(gameObject.tag == "Friend")
+        bar.SetBool("On", true);
+        if (gameObject.tag == "Friend")
         {
             // Turn melee on and off
             if (baseCharacter.attacking._enemiesInMeleeRange.Count == 0)
@@ -112,7 +117,7 @@ public class CharacterMenu : MonoBehaviour {
             // Turn ranged on and off
             if (baseCharacter.attacking._enemiesInRangedRange.Count == 0 && baseCharacter.characterData.rangedDistance != 0)
                 rangedButton.SetActive(false);
-            else if(baseCharacter.characterData.rangedDistance != 0)
+            else if (baseCharacter.characterData.rangedDistance != 0)
                 rangedButton.SetActive(true);
         } else
         {
@@ -130,7 +135,7 @@ public class CharacterMenu : MonoBehaviour {
 
     public void DisplayOff()
     {
-        menu.gameObject.SetActive(false);
+        bar.SetBool("On", false);
     }
 
     public void MeleeButton()
