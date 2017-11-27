@@ -108,34 +108,36 @@ public class CharacterMenu : MonoBehaviour {
             // Turn melee on and off
             if (baseCharacter.attacking._enemiesInMeleeRange.Count == 0)
             {
-                meleeButton.SetActive(false);
+                bar.SetBool("MeleeOn", false);
             }
             else
             {
-                meleeButton.SetActive(true);
+                bar.SetBool("MeleeOn", true);
             }
             // Turn ranged on and off
             if (baseCharacter.attacking._enemiesInRangedRange.Count == 0 && baseCharacter.characterData.rangedDistance != 0)
-                rangedButton.SetActive(false);
+                bar.SetBool("RangedOn", false);
             else if (baseCharacter.characterData.rangedDistance != 0)
-                rangedButton.SetActive(true);
+                bar.SetBool("RangedOn", true);
         } else
         {
             if (baseCharacter.attacking._friendsInMeleeRange.Count == 0)
-                meleeButton.SetActive(false);
+                bar.SetBool("MeleeOn", false);
             else
-                meleeButton.SetActive(true);
+                bar.SetBool("MeleeOn", true);
 
             if (baseCharacter.attacking._friendsInRangedRange.Count == 0 && baseCharacter.characterData.rangedDistance != 0)
-                rangedButton.SetActive(false);
+                bar.SetBool("RangedOn", false);
             else if(baseCharacter.characterData.rangedDistance != 0)
-                rangedButton.SetActive(true);
+                bar.SetBool("RangedOn", true);
         }
     }
 
     public void DisplayOff()
     {
         bar.SetBool("On", false);
+        bar.SetBool("RangedOn", false);
+        bar.SetBool("MeleeOn", false);
     }
 
     public void MeleeButton()
