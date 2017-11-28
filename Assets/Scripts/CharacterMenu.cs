@@ -26,8 +26,8 @@ public class CharacterMenu : MonoBehaviour {
 
         indicator = Resources.Load("UI/IndicatorImage", typeof(Image)) as Image;
 
-        menu = Instantiate(menuPrefab, Vector3.zero, Quaternion.identity, ScreenCanvas.transform);
-        menu.anchoredPosition = Vector3.zero;
+        menu = Instantiate(menuPrefab);
+        menu.parent = ScreenCanvas.transform;
         imgs = new List<Image>();
 
         // Set actions
