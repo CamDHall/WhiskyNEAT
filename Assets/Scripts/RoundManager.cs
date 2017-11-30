@@ -34,13 +34,6 @@ public class RoundManager : MonoBehaviour {
         p2_Hero.GetComponent<BaseCharacter>().characterData = p2_Hero.GetComponent<CharacterData>();
         p2_Hero.gameObject.tag = "Enemy";
 
-        // Set Menu
-        p1_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer1 + " Menu", 
-            typeof(RectTransform)) as RectTransform;
-
-        p2_Hero.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.heroPlayer2 + " Menu", 
-            typeof(RectTransform)) as RectTransform;
-
         // p1 Followers
         for (int i = 0; i < PlayerInfo.p1_FollowersName.Count; i++)
         {
@@ -54,8 +47,6 @@ public class RoundManager : MonoBehaviour {
 
             // Set Data
             follower.GetComponent<BaseCharacter>().characterData = follower.GetComponent<CharacterData>();
-            // Set Menu
-            follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p1_FollowersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
         }
 
         // p2 Followers
@@ -71,8 +62,6 @@ public class RoundManager : MonoBehaviour {
 
             // Set Data
             follower.GetComponent<BaseCharacter>().characterData = follower.GetComponent<CharacterData>();
-            // Set Menu
-            follower.GetComponent<CharacterMenu>().menuPrefab = Resources.Load("Characters/Menus/" + PlayerInfo.p2_FollowersName[i] + " Menu", typeof(RectTransform)) as RectTransform;
         }
 
         // Set highlighters for follower

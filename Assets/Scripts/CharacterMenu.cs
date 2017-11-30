@@ -14,7 +14,6 @@ public class CharacterMenu : MonoBehaviour {
     List<Image> imgs;
     Canvas worldCanvas, ScreenCanvas;
 
-    public RectTransform menuPrefab;
     RectTransform menu;
     GameObject abilityBar;
     Animator bar;
@@ -26,8 +25,10 @@ public class CharacterMenu : MonoBehaviour {
 
         indicator = Resources.Load("UI/IndicatorImage", typeof(Image)) as Image;
 
-        menu = Instantiate(menuPrefab);
-        menu.parent = ScreenCanvas.transform;
+        RectTransform temp = Resources.Load("Characters/Menus/Menu", typeof(RectTransform)) as RectTransform;
+
+        menu = Instantiate(temp);
+        menu.SetParent(ScreenCanvas.transform);
         imgs = new List<Image>();
 
         // Set actions
