@@ -10,8 +10,10 @@ public class RemoveDead {
 		CharacterData targetData = target.GetComponent<CharacterData>();
 		CharacterData attackerData = attacker.GetComponent<CharacterData> ();
 
+        // Add to captured
+        UIManager.Instance.CapturedPieces(GameManager.Instance.selectedCharacterData, target);
 
-		string t_name = "Characters/" + target.GetComponent<CharacterData> ().characterName;
+        string t_name = "Characters/" + target.GetComponent<CharacterData> ().characterName;
 		t_name = t_name.Replace (" ", "");
 
 		if (target.tag == "Enemy") {

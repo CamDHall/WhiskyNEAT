@@ -151,9 +151,6 @@ public abstract class BaseCharacter : AbilitiesBase {
 
     public void Death(GameObject attacker)
     {
-        RemoveDead.Remove(gameObject, attacker);
-        Destroy(gameObject);
-
         // Hero, end game
         if (GetComponent<BaseCharacter>().characterData.cType == CharacterType.Hero)
         {
@@ -162,5 +159,7 @@ public abstract class BaseCharacter : AbilitiesBase {
             else if (attacker.tag == "Enemy")
                 GameManager.Instance.EndGame(CharacterTeam.Friend);
         }
+        RemoveDead.Remove(gameObject, attacker);
+        Destroy(gameObject);
     }
 }

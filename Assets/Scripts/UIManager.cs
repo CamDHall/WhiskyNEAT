@@ -165,6 +165,7 @@ public class UIManager : MonoBehaviour {
     public void NothingSelected()
     {
         Paths.ResetTiles();
+        CapturedOff(GameManager.Instance.selectedCharacterData);
         if (GameManager.Instance.selectedCharacter != null)
         {
             GameManager.Instance.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
@@ -201,6 +202,9 @@ public class UIManager : MonoBehaviour {
         }
 
         GameManager.Instance.selectedCharacterData = info;
+
+        // Display pieces from selected character data
+        CapturedPieces(GameManager.Instance.selectedCharacterData);
     }
 
     // Confirmation Window    
@@ -215,6 +219,29 @@ public class UIManager : MonoBehaviour {
             (targetData.health - GameManager.Instance.currentAttackingObj.damageAmount).ToString();
     }
 
-    // public virtual void FirstAbility() { }
+    public void CapturedPieces(CharacterData selected)
+    {
+        foreach(GameObject icon in selected.capturedIcons)
+        {
+            icon.SetActive(true);
+        }
+    }
+
+    // Update caputred
+    public void CapturedPieces(CharacterData selected, GameObject captured)
+    {
+        string c_name = captured.GetComponent<CharacterData>().characterName;
+        GameObject temp = Instantiate(Resources.Load("Screenshots/" + c_name) as GameObject);
+        temp.transform.SetParent(screenCanvas.transform);
+        selected.capturedIcons.Add(temp);
+    }
+
+    void CapturedOff(CharacterData selected)
+    {
+        foreach(GameObject icon in selected.capturedIcons)
+        {
+            icon.SetActive(false);
+        }
+    }
 
 }

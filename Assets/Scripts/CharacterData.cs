@@ -21,6 +21,9 @@ public class CharacterData : MonoBehaviour {
     public int rangedDistance, meleeDistance;
     public int rangedStrength, meleeStrength;
 
+    // Captured
+    public List<GameObject> capturedIcons = new List<GameObject>();
+
     void Awake()
     {
         currentNumberofMoves = moves;
