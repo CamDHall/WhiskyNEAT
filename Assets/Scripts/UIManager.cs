@@ -19,12 +19,18 @@ public class UIManager : MonoBehaviour {
     public GameObject nextPhase;
     // Top
     public Text turns, currentTeam, unusedCharacters, captured;
+    public RectTransform pieces;
 
     public Text s_characterInfo, s_characterName;
     public GameObject infoContainer;
 
     // Team highlighters
-    public GameObject highlighterFriend, highlighterEnemy; 
+    public GameObject highlighterFriend, highlighterEnemy;
+
+    // Captures
+    [HideInInspector]
+    public List<GameObject> t1_captures = new List<GameObject>();
+    public List<GameObject> t2_captures = new List<GameObject>();
 
     private void Start()
     {
@@ -165,7 +171,13 @@ public class UIManager : MonoBehaviour {
     public void NothingSelected()
     {
         Paths.ResetTiles();
-        CapturedOff(GameManager.Instance.selectedCharacterData);
+        if (GameManager.Instance.selectedCharacterData.tag == "Friend")
+        {
+            CapturedOff(t1_captures);
+        } else
+        {
+            CapturedOff(t2_captures);
+        }
         if (GameManager.Instance.selectedCharacter != null)
         {
             GameManager.Instance.selectedCharacter.GetComponent<CharacterMenu>().DisplayOff();
@@ -204,7 +216,13 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.selectedCharacterData = info;
 
         // Display pieces from selected character data
-        CapturedPieces(GameManager.Instance.selectedCharacterData);
+        if (GameManager.Instance.selectedCharacterData.tag == "Friend")
+        {
+            CapturedPieces(t1_captures);
+        } else
+        {
+            CapturedPieces(t2_captures);
+        }
     }
 
     // Confirmation Window    
@@ -219,26 +237,44 @@ public class UIManager : MonoBehaviour {
             (targetData.health - GameManager.Instance.currentAttackingObj.damageAmount).ToString();
     }
 
-    public void CapturedPieces(CharacterData selected)
+    public void CapturedPieces(List<GameObject> icons)
     {
-        foreach(GameObject icon in selected.capturedIcons)
+        foreach(GameObject icon in icons)
         {
             icon.SetActive(true);
         }
     }
 
     // Update caputred
-    public void CapturedPieces(CharacterData selected, GameObject captured)
+    public void CapturedPieces(GameObject selected, GameObject captured)
     {
+        Vector3 Pos;
+        if(selected.tag == "Friend")
+        {
+            Pos = new Vector3(0 + (t1_captures.Count * 75), 0, 0);
+        } else
+        {
+            Pos = new Vector3(0 + (t2_captures.Count * 75), 0, 0);
+        }
         string c_name = captured.GetComponent<CharacterData>().characterName;
+        Debug.Log(Resources.Load("Screenshots/" + c_name));
         GameObject temp = Instantiate(Resources.Load("Screenshots/" + c_name) as GameObject);
-        temp.transform.SetParent(screenCanvas.transform);
-        selected.capturedIcons.Add(temp);
+        temp.transform.SetParent(pieces.transform);
+        temp.GetComponent<RectTransform>().localPosition = Pos;
+
+        if (selected.tag == "Friend")
+        {
+            t1_captures.Add(temp);
+        }
+        else
+        {
+            t2_captures.Add(temp);
+        }
     }
 
-    void CapturedOff(CharacterData selected)
+    void CapturedOff(List<GameObject> icons)
     {
-        foreach(GameObject icon in selected.capturedIcons)
+        foreach(GameObject icon in icons)
         {
             icon.SetActive(false);
         }
